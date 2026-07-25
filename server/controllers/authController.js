@@ -27,11 +27,6 @@ const register = async (req, res) => {
     const user = new User({ name, email, password });
     await user.save();
 
-    console.log('👉 IN-MEMORY PASSWORD:', user.password);
-
-    const checkUser = await User.findById(user._id);
-    console.log('👉 DATABASE PASSWORD:', checkUser.password);
-
     const { accessToken, refreshToken } = generateTokens(user._id);
 
     res.status(201).json({
@@ -82,4 +77,30 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const refresh = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'Refresh token required' });
+    }
+
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
+      if (err) {
+        return res.status(403).json({ message: 'Invalid or expired refresh token' });
+      }
+
+      const user = await User.findById(decoded.id);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      const { accessToken } = generateTokens(user._id);
+      res.json({ accessToken });
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { register, login, refresh };
