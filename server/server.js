@@ -24,6 +24,9 @@ app.use(limiter);
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
+const complaintRoutes = require('./routes/complaintRoutes');
+app.use('/api/complaints', complaintRoutes);
+
 app.get('/', (req, res) => {
   res.json({ message: 'AI Smart Issue Routing API is running!' });
 });
