@@ -1,5 +1,9 @@
 {
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3"
+  },
+  "dependencies": {
+    "cloudinary": "^2.10.0",
+    "multer": "^2.2.0"
   }
 }
