@@ -70,4 +70,22 @@ const getMyComplaints = async (req, res) => {
   }
 };
 
-module.exports = { createComplaint, getMyComplaints };
+const getComplaintById = async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.params.id);
+
+    if (!complaint) {
+      return res.status(404).json({ message: 'Complaint not found' });
+    }
+
+    if (complaint.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to view this complaint' });
+    }
+
+    res.status(200).json({ complaint });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createComplaint, getMyComplaints, getComplaintById };
