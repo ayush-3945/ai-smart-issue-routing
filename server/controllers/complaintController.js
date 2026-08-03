@@ -46,4 +46,28 @@ const createComplaint = async (req, res) => {
   }
 };
 
-module.exports = { createComplaint };
+const getMyComplaints = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const complaints = await Complaint.find({ user: req.user._id })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Complaint.countDocuments({ user: req.user._id });
+
+    res.status(200).json({
+      complaints,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      totalComplaints: total,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createComplaint, getMyComplaints };
