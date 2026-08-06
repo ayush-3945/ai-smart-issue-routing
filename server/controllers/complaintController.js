@@ -85,7 +85,45 @@ const getComplaintById = async (req, res) => {
     res.status(200).json({ complaint });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  } 
+};
+
+const updateComplaintStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const validStatuses = ['Pending', 'In Progress', 'Resolved', 'Closed'];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value' });
+    }
+
+    const complaint = await Complaint.findById(req.params.id);
+    if (!complaint) {
+      return res.status(404).json({ message: 'Complaint not found' });
+    }
+
+    if (complaint.status === status) {
+      return res.status(400).json({ message: 'Complaint already has this status' });
+    }
+
+    complaint.status = status;
+    await complaint.save();
+
+    // Emit real-time update to the complaint owner only
+    const io = req.app.get('io');
+    io.to(`user:${complaint.user.toString()}`).emit('statusUpdated', {
+      complaintId: complaint._id,
+      status: complaint.status,
+      updatedAt: complaint.updatedAt,
+    });
+
+    res.json({
+      message: 'Status updated successfully',
+      complaint,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-module.exports = { createComplaint, getMyComplaints, getComplaintById };
+module.exports = { createComplaint, getMyComplaints, getComplaintById, updateComplaintStatus };
