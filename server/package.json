@@ -4,7 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage --forceExit",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
+    "testTimeout": 30000,
+    "coverageThreshold": {
+      "global": {
+        "lines": 60
+      }
+    }
   },
   "keywords": [],
   "author": "",
@@ -25,5 +36,10 @@
     "nodemailer": "^9.0.3",
     "socket.io": "^4.8.3",
     "streamifier": "^0.1.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4",
+    "supertest": "^7.0.0"
   }
 }
