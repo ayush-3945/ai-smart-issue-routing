@@ -1,13 +1,10 @@
-const { MongoMemoryServer } = require('mongodb-memory-server');
+require('dotenv').config();
 const mongoose = require('mongoose');
 
-let mongod;
-
 beforeAll(async () => {
-  mongod = await MongoMemoryServer.create();
-  const uri = mongod.getUri();
-  await mongoose.connect(uri);
-}, 60000); // 60 second timeout
+  const testUri = process.env.MONGODB_URI.replace(/\/[^/?]+(\?|$)/, '/test_db$1');
+  await mongoose.connect(testUri);
+}, 30000);
 
 afterEach(async () => {
   const collections = mongoose.connection.collections;
@@ -19,5 +16,4 @@ afterEach(async () => {
 afterAll(async () => {
   await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
-  await mongod.stop();
-}, 60000); // 60 second timeout
+}, 30000);

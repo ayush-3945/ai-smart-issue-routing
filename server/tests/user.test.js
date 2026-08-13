@@ -1,4 +1,7 @@
 const User = require('../models/User');
+beforeAll(async () => {
+  await User.syncIndexes();
+});
 
 describe('User Model Tests', () => {
 
@@ -16,7 +19,7 @@ describe('User Model Tests', () => {
 
   test('should hash password before saving', async () => {
     const user = new User({
-      name: 'Test User',
+      name: 'Hash User',
       email: 'hash@test.com',
       password: '123456'
     });
@@ -32,6 +35,22 @@ describe('User Model Tests', () => {
     await expect(user.save()).rejects.toThrow();
   });
 
+  test('should not save duplicate email', async () => {
+    await new User({
+      name: 'User 1',
+      email: 'dup@test.com',
+      password: '123456'
+    }).save();
+
+    await expect(
+      new User({
+        name: 'User 2',
+        email: 'dup@test.com',
+        password: '123456'
+      }).save()
+    ).rejects.toThrow();
+  });
+
   test('comparePassword should return true for correct password', async () => {
     const user = new User({
       name: 'Compare User',
@@ -45,7 +64,7 @@ describe('User Model Tests', () => {
 
   test('comparePassword should return false for wrong password', async () => {
     const user = new User({
-      name: 'Compare User',
+      name: 'Wrong User',
       email: 'wrong@test.com',
       password: '123456'
     });
