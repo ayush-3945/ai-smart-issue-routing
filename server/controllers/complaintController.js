@@ -1,7 +1,7 @@
 const Complaint = require('../models/Complaint');
 const cloudinary = require('../config/cloudinary');
 const streamifier = require('streamifier');
-const { analyzeComplaint } = require('../services/aiService'); // 🤖 AI Service Import
+const { analyzeComplaint } = require('../services/aiService');
 
 const uploadToCloudinary = (buffer) => {
   return new Promise((resolve, reject) => {
@@ -26,7 +26,7 @@ const createComplaint = async (req, res) => {
       imageUrl = result.secure_url;
     }
 
-    // 🤖 AI Analysis for Category, Priority, Confidence, Summary & Suggested Resolution
+    // AI Analysis for Category, Priority, Confidence, Summary & Resolution
     const aiAnalysis = await analyzeComplaint(title, description);
 
     const complaint = new Complaint({
@@ -76,6 +76,18 @@ const getMyComplaints = async (req, res) => {
   }
 };
 
+const getAllComplaints = async (req, res) => {
+  try {
+    const complaints = await Complaint.find({})
+      .populate('user', 'name email')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ complaints });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const getComplaintById = async (req, res) => {
   try {
     const complaint = await Complaint.findById(req.params.id);
@@ -117,11 +129,13 @@ const updateComplaintStatus = async (req, res) => {
 
     // Emit real-time update to the complaint owner only
     const io = req.app.get('io');
-    io.to(`user:${complaint.user.toString()}`).emit('statusUpdated', {
-      complaintId: complaint._id,
-      status: complaint.status,
-      updatedAt: complaint.updatedAt,
-    });
+    if (io) {
+      io.to(`user:${complaint.user.toString()}`).emit('statusUpdated', {
+        complaintId: complaint._id,
+        status: complaint.status,
+        updatedAt: complaint.updatedAt,
+      });
+    }
 
     res.json({
       message: 'Status updated successfully',
@@ -132,4 +146,10 @@ const updateComplaintStatus = async (req, res) => {
   }
 };
 
-module.exports = { createComplaint, getMyComplaints, getComplaintById, updateComplaintStatus };
+module.exports = { 
+  createComplaint, 
+  getMyComplaints, 
+  getAllComplaints, 
+  getComplaintById, 
+  updateComplaintStatus 
+};
