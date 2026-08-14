@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const complaintSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, 'Title is required'],
+    required: true,
     trim: true
   },
   description: {
     type: String,
-    required: [true, 'Description is required']
+    required: true
   },
   category: {
     type: String,
@@ -25,7 +25,12 @@ const complaintSchema = new mongoose.Schema({
     enum: ['Pending', 'In Progress', 'Resolved', 'Closed'],
     default: 'Pending'
   },
-  department: {
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  image: {
     type: String,
     default: null
   },
@@ -37,14 +42,9 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     default: null
   },
-  image: {
+  suggestedResolution: {
     type: String,
     default: null
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
   }
 }, { timestamps: true });
 

@@ -1,7 +1,7 @@
 const Complaint = require('../models/Complaint');
 const cloudinary = require('../config/cloudinary');
-
 const streamifier = require('streamifier');
+const { analyzeComplaint } = require('../services/aiService'); // 🤖 AI Service Import
 
 const uploadToCloudinary = (buffer) => {
   return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ const uploadToCloudinary = (buffer) => {
 
 const createComplaint = async (req, res) => {
   try {
-    const { title, description, category, priority } = req.body;
+    const { title, description } = req.body;
 
     let imageUrl = null;
     if (req.file) {
@@ -26,19 +26,25 @@ const createComplaint = async (req, res) => {
       imageUrl = result.secure_url;
     }
 
+    // 🤖 AI Analysis for Category, Priority, Confidence, Summary & Suggested Resolution
+    const aiAnalysis = await analyzeComplaint(title, description);
+
     const complaint = new Complaint({
       title,
       description,
-      category,
-      priority,
+      category: req.body.category || aiAnalysis.category || 'General',
+      priority: req.body.priority || aiAnalysis.priority || 'Medium',
       user: req.user._id,
       image: imageUrl,
+      aiConfidence: aiAnalysis.confidence || 0,
+      aiSummary: aiAnalysis.summary || null,
+      suggestedResolution: aiAnalysis.suggestedResolution || null,
     });
 
     await complaint.save();
 
     res.status(201).json({
-      message: 'Complaint created successfully',
+      message: 'Complaint created and analyzed by AI successfully',
       complaint,
     });
   } catch (error) {
