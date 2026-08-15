@@ -1,74 +1,210 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../utils/api';
 
-function Login() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+
     try {
-      const res = await api.post('/auth/login', formData);
+      const res = await api.post('/auth/login', { email, password });
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
-      navigate('/dashboard');
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+
+      if (res.data.user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid credentials');
+      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Login</h2>
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#090d16',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      padding: '20px',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Background Glowing Ambient Orbs */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '25%',
+        width: '350px',
+        height: '350px',
+        backgroundColor: '#6366f1',
+        filter: 'blur(140px)',
+        opacity: 0.25,
+        borderRadius: '50%'
+      }}></div>
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '25%',
+        width: '350px',
+        height: '350px',
+        backgroundColor: '#a855f7',
+        filter: 'blur(140px)',
+        opacity: 0.2,
+        borderRadius: '50%'
+      }}></div>
 
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+      {/* Main Glass Card */}
+      <div style={{
+        width: '100%',
+        maxWidth: '440px',
+        backgroundColor: 'rgba(17, 24, 39, 0.75)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        borderRadius: '24px',
+        padding: '40px',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+        zIndex: 1
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '56px',
+            height: '56px',
+            background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+            borderRadius: '16px',
+            fontSize: '26px',
+            marginBottom: '16px',
+            boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.5)'
+          }}>
+            ⚡
+          </div>
+          <h1 style={{
+            color: '#ffffff',
+            fontSize: '26px',
+            fontWeight: '800',
+            margin: '0 0 8px',
+            letterSpacing: '-0.5px'
+          }}>
+            Welcome Back
+          </h1>
+          <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0 }}>
+            Sign in to AI Smart Issue Routing
+          </p>
+        </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full mb-4 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          className="w-full mb-6 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        {error && (
+          <div style={{
+            backgroundColor: 'rgba(239, 68, 68, 0.15)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            color: '#f87171',
+            padding: '12px 16px',
+            borderRadius: '12px',
+            fontSize: '13px',
+            marginBottom: '20px'
+          }}>
+            {error}
+          </div>
+        )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition disabled:opacity-50"
-        >
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}>
+              Email Address
+            </label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@test.com"
+              style={{
+                width: '100%',
+                padding: '14px 16px',
+                borderRadius: '12px',
+                backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#ffffff',
+                fontSize: '14px',
+                outline: 'none',
+                boxSizing: 'border-box'
+              }}
+            />
+          </div>
 
-        <p className="text-sm text-center mt-4 text-gray-600">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-blue-600 hover:underline">Register</Link>
-        </p>
-      </form>
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}>
+              Password
+            </label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              style={{
+                width: '100%',
+                padding: '14px 16px',
+                borderRadius: '12px',
+                backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#ffffff',
+                fontSize: '14px',
+                outline: 'none',
+                boxSizing: 'border-box'
+              }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              width: '100%',
+              padding: '14px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              color: '#ffffff',
+              fontSize: '15px',
+              fontWeight: '700',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              boxShadow: '0 10px 20px -5px rgba(99, 102, 241, 0.4)',
+              transition: 'transform 0.2s',
+              opacity: loading ? 0.7 : 1
+            }}
+          >
+            {loading ? 'Authenticating...' : 'Sign In ➔'}
+          </button>
+        </form>
+
+        <div style={{ textAlign: 'center', marginTop: '24px' }}>
+          <p style={{ color: '#64748b', fontSize: '13px', margin: 0 }}>
+            Don't have an account?{' '}
+            <Link to="/register" style={{ color: '#818cf8', fontWeight: '600', textDecoration: 'none' }}>
+              Create Account
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default Login;
