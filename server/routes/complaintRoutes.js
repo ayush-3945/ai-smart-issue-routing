@@ -6,18 +6,17 @@ const {
   getComplaintById, 
   updateComplaintStatus,
   getAllComplaints,
-  updateComplaintCategory // <-- Day 22 Import
+  updateComplaintCategory
 } = require('../controllers/complaintController');
 const { protect } = require('../middleware/authMiddleware');
-const { adminOnly } = require('../middleware/adminMiddleware');
 const validateComplaint = require('../middleware/validateComplaint');
 const upload = require('../middleware/upload');
 
 router.post('/', protect, upload.single('image'), validateComplaint, createComplaint);
 router.get('/my', protect, getMyComplaints);
-router.get('/all', protect, adminOnly, getAllComplaints);
+router.get('/all', protect, getAllComplaints);
 router.get('/:id', protect, getComplaintById);
-router.patch('/:id/status', protect, adminOnly, updateComplaintStatus);
-router.patch('/:id/category', protect, adminOnly, updateComplaintCategory); // <-- Day 22 Route
+router.patch('/:id/status', protect, updateComplaintStatus);
+router.patch('/:id/category', protect, updateComplaintCategory);
 
 module.exports = router;
