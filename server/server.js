@@ -13,37 +13,31 @@ connectDB();
 
 const app = express();
 
-// 1. Helmet Security Headers (Protects against clickjacking, sniffing, XSS)
+// 1. Helmet Security Headers
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 
 // 2. Strict CORS Configuration
-const allowedOrigins = [
-  process.env.CLIENT_URL || 'http://localhost:5173',
-  'https://ai-smart-issue-routing.vercel.app'
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Blocked by CORS security policy'));
-    }
-  },
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT']
 }));
 
-// 3. Body Parser with Payload Limiting (Prevents DOS attacks)
+// 3. Body Parser
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// 4. Data Sanitization against NoSQL Query Injection (Blocks $gt, $ne attacks)
-app.use(mongoSanitize());
+// 4. Data Sanitization against NoSQL Query Injection (Express 5 safe)
+app.use((req, res, next) => {
+  if (req.body) {
+    mongoSanitize.sanitize(req.body);
+  }
+  next();
+});
 
-// 5. Global API Rate Limiter (100 requests per 15 minutes)
+// 5. Global API Rate Limiter
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -51,10 +45,10 @@ const globalLimiter = rateLimit({
 });
 app.use('/api', globalLimiter);
 
-// 6. Strict Auth Rate Limiter (Prevents Brute-force Password attacks - 10 attempts per 15 min)
+// 6. Strict Auth Rate Limiter
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: 15,
   message: { message: 'Too many login attempts. Please try again after 15 minutes.' }
 });
 
@@ -72,11 +66,11 @@ app.get('/', (req, res) => {
   res.json({ message: '🛡️ AI Smart Issue Routing API is running securely!' });
 });
 
-// Socket.io Setup with CORS origin validation
+// Socket.io Setup
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: '*',
     methods: ['GET', 'POST', 'PATCH']
   }
 });
