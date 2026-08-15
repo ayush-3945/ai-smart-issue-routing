@@ -24,11 +24,20 @@ const PRIORITY_COLORS = {
   Critical: '#ef4444',
 };
 
+const CATEGORIES = ['All', 'IT', 'HR', 'Finance', 'Operations', 'General'];
+const PRIORITIES = ['All', 'Critical', 'High', 'Medium', 'Low'];
+
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  // Day 22 Search & Filter States
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedPriority, setSelectedPriority] = useState('All');
+
   const socket = useSocket();
 
   const fetchData = async () => {
@@ -57,7 +66,6 @@ const AdminDashboard = () => {
       setComplaints((prev) =>
         prev.map((c) => (c._id === id ? { ...c, status: res.data.complaint.status } : c))
       );
-      // Refresh analytics after status change
       const analRes = await api.get('/analytics/dashboard');
       setAnalytics(analRes.data);
     } catch (err) {
@@ -65,7 +73,36 @@ const AdminDashboard = () => {
     }
   };
 
-  // Format data for charts
+  // Day 22: AI Feedback Loop (Admin Re-classification)
+  const handleCategoryChange = async (id, newCategory) => {
+    try {
+      const res = await api.patch(`/complaints/${id}/category`, { category: newCategory });
+      setComplaints((prev) =>
+        prev.map((c) => (c._id === id ? { ...c, category: res.data.complaint.category } : c))
+      );
+      const analRes = await api.get('/analytics/dashboard');
+      setAnalytics(analRes.data);
+    } catch (err) {
+      alert(err.response?.data?.message || 'Category update failed');
+    }
+  };
+
+  // Filtered complaints logic
+  const filteredComplaints = complaints.filter((c) => {
+    const matchesSearch =
+      c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (c.user?.name && c.user.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    const matchesCategory =
+      selectedCategory === 'All' || c.category === selectedCategory;
+
+    const matchesPriority =
+      selectedPriority === 'All' || c.priority === selectedPriority;
+
+    return matchesSearch && matchesCategory && matchesPriority;
+  });
+
   const categoryData = analytics?.categoryStats?.map((item) => ({
     name: item._id || 'Unassigned',
     value: item.count,
@@ -99,7 +136,7 @@ const AdminDashboard = () => {
 
       {/* Metric Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '32px' }}>
-        <div style={{ padding: '20px', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+        <div style={{ padding: '20px', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
           <span style={{ color: '#64748b', fontSize: '14px', fontWeight: '500' }}>Total Complaints</span>
           <p style={{ fontSize: '32px', fontWeight: '800', margin: '8px 0 0', color: '#0f172a' }}>{total}</p>
         </div>
@@ -117,10 +154,8 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Visual Analytics Charts Section (Day 21) */}
+      {/* Visual Analytics Charts */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '20px', marginBottom: '32px' }}>
-        
-        {/* Category Pie Chart */}
         <div style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
           <h3 style={{ margin: '0 0 16px', color: '#1e293b', fontSize: '16px' }}>🍩 Category Distribution</h3>
           {categoryData.length > 0 ? (
@@ -136,11 +171,10 @@ const AdminDashboard = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <p style={{ color: '#94a3b8', textAlign: 'center', marginTop: '60px' }}>No category data yet</p>
+            <p style={{ color: '#94a3b8', textAlign: 'center', marginTop: '60px' }}>No category data</p>
           )}
         </div>
 
-        {/* Priority Bar Chart */}
         <div style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
           <h3 style={{ margin: '0 0 16px', color: '#1e293b', fontSize: '16px' }}>📊 Priority Breakdown</h3>
           {priorityData.length > 0 ? (
@@ -157,11 +191,10 @@ const AdminDashboard = () => {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <p style={{ color: '#94a3b8', textAlign: 'center', marginTop: '60px' }}>No priority data yet</p>
+            <p style={{ color: '#94a3b8', textAlign: 'center', marginTop: '60px' }}>No priority data</p>
           )}
         </div>
 
-        {/* Daily Trends Line Chart */}
         <div style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
           <h3 style={{ margin: '0 0 16px', color: '#1e293b', fontSize: '16px' }}>📈 Activity Trends (Last 7 Days)</h3>
           {trendData.length > 0 ? (
@@ -174,46 +207,129 @@ const AdminDashboard = () => {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <p style={{ color: '#94a3b8', textAlign: 'center', marginTop: '60px' }}>No trend history yet</p>
+            <p style={{ color: '#94a3b8', textAlign: 'center', marginTop: '60px' }}>No trend history</p>
           )}
         </div>
+      </div>
 
+      {/* Day 22: Search and Filter Control Bar */}
+      <div style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', justifyContent: 'space-between' }}>
+          
+          {/* Live Search Input */}
+          <div style={{ flex: '1 1 300px' }}>
+            <input
+              type="text"
+              placeholder="🔍 Search issues by title, description or user..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                borderRadius: '10px',
+                border: '1px solid #cbd5e1',
+                fontSize: '14px',
+                outline: 'none',
+                boxSizing: 'border-box'
+              }}
+            />
+          </div>
+
+          {/* Category Filter Chips */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <span style={{ fontSize: '13px', fontWeight: '600', color: '#64748b' }}>Category:</span>
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  border: '1px solid',
+                  borderColor: selectedCategory === cat ? '#2563eb' : '#e2e8f0',
+                  backgroundColor: selectedCategory === cat ? '#2563eb' : '#ffffff',
+                  color: selectedCategory === cat ? '#ffffff' : '#475569',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+        </div>
       </div>
 
       {/* Complaints Table */}
-      <h2 style={{ fontSize: '20px', color: '#0f172a', marginBottom: '16px' }}>📋 All Issues & Complaints</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <h2 style={{ fontSize: '20px', color: '#0f172a', margin: 0 }}>
+          📋 Complaints ({filteredComplaints.length})
+        </h2>
+      </div>
       
       {loading ? (
         <p>Loading analytics & complaints...</p>
       ) : error ? (
         <p style={{ color: 'red' }}>{error}</p>
+      ) : filteredComplaints.length === 0 ? (
+        <div style={{ backgroundColor: '#ffffff', padding: '40px', textAlign: 'center', borderRadius: '16px', border: '1px solid #e2e8f0', color: '#64748b' }}>
+          No issues match your current filters.
+        </div>
       ) : (
         <div style={{ overflowX: 'auto', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-                <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>TITLE</th>
-                <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>CATEGORY (AI)</th>
+                <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>ISSUE & DETAILS</th>
+                <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>AI CATEGORY (CORRECT)</th>
                 <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>PRIORITY</th>
                 <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>CONFIDENCE</th>
                 <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>STATUS</th>
-                <th style={{ padding: '16px', color: '#475569', fontSize: '13px', fontWeight: '600' }}>ACTION</th>
               </tr>
             </thead>
             <tbody>
-              {complaints.map((c) => (
+              {filteredComplaints.map((c) => (
                 <tr key={c._id} style={{ borderBottom: '1px solid #f1f5f9' }}>
                   <td style={{ padding: '16px', fontWeight: '500' }}>
-                    <div style={{ color: '#0f172a' }}>{c.title}</div>
-                    <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
+                    <div style={{ color: '#0f172a', fontSize: '15px' }}>{c.title}</div>
+                    <div style={{ fontSize: '13px', color: '#64748b', marginTop: '2px' }}>{c.description}</div>
+                    {c.aiSummary && (
+                      <div style={{ marginTop: '6px', fontSize: '12px', color: '#7c3aed', backgroundColor: '#f5f3ff', padding: '4px 8px', borderRadius: '6px' }}>
+                        🤖 <strong>AI Summary:</strong> {c.aiSummary}
+                      </div>
+                    )}
+                    <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
                       By: {c.user?.name || 'User'} ({c.user?.email || 'N/A'})
                     </div>
                   </td>
+                  
+                  {/* AI Feedback Loop: Admin can edit category */}
                   <td style={{ padding: '16px' }}>
-                    <span style={{ padding: '4px 10px', borderRadius: '8px', backgroundColor: '#f1f5f9', color: '#334155', fontSize: '13px', fontWeight: '500' }}>
-                      {c.category}
-                    </span>
+                    <select
+                      value={c.category}
+                      onChange={(e) => handleCategoryChange(c._id, e.target.value)}
+                      style={{
+                        padding: '6px 10px',
+                        borderRadius: '8px',
+                        border: '1px solid #cbd5e1',
+                        backgroundColor: '#f8fafc',
+                        fontSize: '13px',
+                        fontWeight: '600',
+                        color: '#334155',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <option value="IT">IT</option>
+                      <option value="HR">HR</option>
+                      <option value="Finance">Finance</option>
+                      <option value="Operations">Operations</option>
+                      <option value="General">General</option>
+                    </select>
                   </td>
+
                   <td style={{ padding: '16px' }}>
                     <span
                       style={{
@@ -228,12 +344,11 @@ const AdminDashboard = () => {
                       {c.priority}
                     </span>
                   </td>
+
                   <td style={{ padding: '16px', color: '#2563eb', fontWeight: '700' }}>
                     {c.aiConfidence}%
                   </td>
-                  <td style={{ padding: '16px' }}>
-                    <span style={{ fontSize: '14px', color: '#334155' }}>{c.status}</span>
-                  </td>
+
                   <td style={{ padding: '16px' }}>
                     <select
                       value={c.status}

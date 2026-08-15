@@ -146,10 +146,35 @@ const updateComplaintStatus = async (req, res) => {
   }
 };
 
+// Day 22: AI Feedback Loop - Admin Re-classify
+const updateComplaintCategory = async (req, res) => {
+  try {
+    const { category, priority } = req.body;
+    const complaint = await Complaint.findById(req.params.id);
+
+    if (!complaint) {
+      return res.status(404).json({ message: 'Complaint not found' });
+    }
+
+    if (category) complaint.category = category;
+    if (priority) complaint.priority = priority;
+
+    await complaint.save();
+
+    res.status(200).json({
+      message: 'Complaint re-classified successfully by Admin',
+      complaint,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = { 
   createComplaint, 
   getMyComplaints, 
   getAllComplaints, 
   getComplaintById, 
-  updateComplaintStatus 
+  updateComplaintStatus,
+  updateComplaintCategory // <-- Exported
 };
