@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://ai-smart-issue-routing-production.up.railway.app/api',
 });
 
-// Request interceptor - har request mein access token attach karo
+// Request interceptor
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken');
@@ -16,7 +16,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor - agar token expire ho (401), refresh token se naya token lo
+// Response interceptor
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -27,9 +27,10 @@ api.interceptors.response.use(
 
       try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const res = await axios.post('http://localhost:5000/api/auth/refresh', {
-          refreshToken,
-        });
+        const res = await axios.post(
+          'https://ai-smart-issue-routing-production.up.railway.app/api/auth/refresh',
+          { refreshToken }
+        );
 
         localStorage.setItem('accessToken', res.data.accessToken);
         originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
