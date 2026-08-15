@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSocket } from '../context/SocketContext';
-import api from '../utils/api';
+import axios from 'axios';
 import {
   PieChart,
   Pie,
@@ -25,30 +24,33 @@ const PRIORITY_BADGES = {
 };
 
 const CATEGORIES = ['All', 'IT', 'HR', 'Finance', 'Operations', 'General'];
+const API_BASE = 'https://ai-smart-issue-routing-production.up.railway.app/api';
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedPriority, setSelectedPriority] = useState('All');
   const [updatingId, setUpdatingId] = useState(null);
 
-  const socket = useSocket();
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('accessToken');
+    return { headers: { Authorization: `Bearer ${token}` } };
+  };
 
   const fetchData = async () => {
     try {
       setLoading(true);
+      const headers = getAuthHeaders();
       const [compRes, analRes] = await Promise.all([
-        api.get('/complaints/all'),
-        api.get('/analytics/dashboard'),
+        axios.get(`${API_BASE}/complaints/all`, headers),
+        axios.get(`${API_BASE}/analytics/dashboard`, headers),
       ]);
       setComplaints(compRes.data.complaints || []);
       setAnalytics(analRes.data);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch data');
+      console.error('Admin fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -61,11 +63,15 @@ const AdminDashboard = () => {
   const handleStatusChange = async (id, newStatus) => {
     try {
       setUpdatingId(id);
-      const res = await api.patch(`/complaints/${id}/status`, { status: newStatus });
+      const res = await axios.patch(
+        `${API_BASE}/complaints/${id}/status`,
+        { status: newStatus },
+        getAuthHeaders()
+      );
       setComplaints((prev) =>
         prev.map((c) => (c._id === id ? { ...c, status: res.data.complaint.status } : c))
       );
-      const analRes = await api.get('/analytics/dashboard');
+      const analRes = await axios.get(`${API_BASE}/analytics/dashboard`, getAuthHeaders());
       setAnalytics(analRes.data);
     } catch (err) {
       alert(err.response?.data?.message || 'Status update failed');
@@ -76,11 +82,15 @@ const AdminDashboard = () => {
 
   const handleCategoryChange = async (id, newCategory) => {
     try {
-      const res = await api.patch(`/complaints/${id}/category`, { category: newCategory });
+      const res = await axios.patch(
+        `${API_BASE}/complaints/${id}/category`,
+        { category: newCategory },
+        getAuthHeaders()
+      );
       setComplaints((prev) =>
         prev.map((c) => (c._id === id ? { ...c, category: res.data.complaint.category } : c))
       );
-      const analRes = await api.get('/analytics/dashboard');
+      const analRes = await axios.get(`${API_BASE}/analytics/dashboard`, getAuthHeaders());
       setAnalytics(analRes.data);
     } catch (err) {
       alert(err.response?.data?.message || 'Category update failed');
@@ -94,9 +104,8 @@ const AdminDashboard = () => {
       (c.user?.name && c.user.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const matchesCategory = selectedCategory === 'All' || c.category === selectedCategory;
-    const matchesPriority = selectedPriority === 'All' || c.priority === selectedPriority;
 
-    return matchesSearch && matchesCategory && matchesPriority;
+    return matchesSearch && matchesCategory;
   });
 
   const categoryData = analytics?.categoryStats?.map((item) => ({
@@ -123,59 +132,29 @@ const AdminDashboard = () => {
     <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#f8fafc', fontFamily: 'system-ui, sans-serif', padding: '32px 24px' }}>
       <div style={{ maxWidth: '1350px', margin: '0 auto' }}>
 
-        {/* Top Header with 1-Click User Switch */}
+        {/* Top Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '10px 14px', borderRadius: '12px', fontSize: '20px' }}>
-              ⚡
-            </div>
+            <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '10px 14px', borderRadius: '12px', fontSize: '20px' }}>⚡</div>
             <div>
               <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px' }}>
                 SmartIssue <span style={{ background: 'linear-gradient(90deg, #818cf8, #c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>AI Command Center</span>
               </h1>
-              <p style={{ margin: '4px 0 0', color: '#94a3b8', fontSize: '14px' }}>
-                Autonomous Issue Classification & Real-Time Resolution Ops
-              </p>
+              <p style={{ margin: '4px 0 0', color: '#94a3b8', fontSize: '14px' }}>Autonomous Issue Classification & Real-Time Resolution Ops</p>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '8px 16px', borderRadius: '30px' }}>
-              <span style={{ width: '8px', height: '8px', backgroundColor: '#10b981', borderRadius: '50%', boxShadow: '0 0 10px #10b981' }}></span>
-              <span style={{ fontSize: '13px', color: '#34d399', fontWeight: '600' }}>Live Active</span>
-            </div>
-
             <button
               onClick={() => window.location.href = '/dashboard'}
-              style={{
-                backgroundColor: '#10b981',
-                border: 'none',
-                color: '#ffffff',
-                padding: '9px 16px',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '700',
-                boxShadow: '0 4px 12px rgba(16,185,129,0.3)'
-              }}
+              style={{ backgroundColor: '#10b981', border: 'none', color: '#ffffff', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', boxShadow: '0 4px 12px rgba(16,185,129,0.3)' }}
             >
               📝 Raise New Issue ➔
             </button>
 
             <button
-              onClick={() => {
-                localStorage.clear();
-                window.location.href = '/login';
-              }}
-              style={{
-                backgroundColor: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: '#cbd5e1',
-                padding: '9px 16px',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                fontSize: '13px'
-              }}
+              onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
+              style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#cbd5e1', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px' }}
             >
               Logout
             </button>
@@ -184,8 +163,7 @@ const AdminDashboard = () => {
 
         {/* Hero Glassmorphic Metric Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
-          
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '24px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '24px' }}>
             <span style={{ color: '#94a3b8', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Issues</span>
             <p style={{ fontSize: '38px', fontWeight: '900', margin: '10px 0 0', color: '#ffffff' }}>{total}</p>
           </div>
@@ -204,16 +182,13 @@ const AdminDashboard = () => {
             <span style={{ color: '#34d399', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Resolved / Closed</span>
             <p style={{ fontSize: '38px', fontWeight: '900', margin: '10px 0 0', color: '#34d399' }}>{resolved}</p>
           </div>
-
         </div>
 
-        {/* Interactive Dark Charts Section */}
+        {/* Interactive Charts Section */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '36px' }}>
           
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '24px' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>
-              🍩 Category AI Distribution
-            </h3>
+            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>🍩 Category AI Distribution</h3>
             {categoryData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <PieChart>
@@ -232,9 +207,7 @@ const AdminDashboard = () => {
           </div>
 
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '24px' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>
-              📊 Priority Breakdown
-            </h3>
+            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>📊 Priority Breakdown</h3>
             {priorityData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <BarChart data={priorityData}>
@@ -254,9 +227,7 @@ const AdminDashboard = () => {
           </div>
 
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '24px' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>
-              📈 7-Day Velocity
-            </h3>
+            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>📈 7-Day Velocity</h3>
             {trendData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <LineChart data={trendData}>
@@ -303,7 +274,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Complaints Table Container */}
+        {/* Complaints Table */}
         <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
           <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>📋 Active Issues Queue ({filteredComplaints.length})</h2>
