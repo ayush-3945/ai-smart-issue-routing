@@ -1,20 +1,20 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-// Helper functions to generate JWT tokens
+// Helper functions to generate JWT tokens (Standard _id payload)
 const generateAccessToken = (user) => {
   return jwt.sign(
-    { _id: user._id, role: user.role },
+    { _id: user._id.toString(), role: user.role },
     process.env.JWT_SECRET || 'secret',
-    { expiresIn: '15m' }
+    { expiresIn: '7d' } // Extended for smooth demo testing
   );
 };
 
 const generateRefreshToken = (user) => {
   return jwt.sign(
-    { _id: user._id, role: user.role },
+    { _id: user._id.toString(), role: user.role },
     process.env.JWT_REFRESH_SECRET || 'refresh_secret',
-    { expiresIn: '7d' }
+    { expiresIn: '30d' }
   );
 };
 
@@ -23,32 +23,22 @@ const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User with this email already exists' });
     }
 
-    const accessToken = jwt.sign(
-      { role: role || 'user' },
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: '15m' }
-    );
-    const refreshToken = jwt.sign(
-      { role: role || 'user' },
-      process.env.JWT_REFRESH_SECRET || 'refresh_secret',
-      { expiresIn: '7d' }
-    );
-
-    // Create new user (Role can be 'user' or 'admin')
     const user = new User({
       name,
       email,
       password,
       role: role || 'user',
-      refreshTokens: [refreshToken],
     });
 
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    user.refreshTokens = [refreshToken];
     await user.save();
 
     res.status(201).json({
@@ -59,7 +49,7 @@ const register = async (req, res) => {
         email: user.email,
         role: user.role,
       },
-      accessToken: generateAccessToken(user),
+      accessToken,
       refreshToken,
     });
   } catch (error) {
@@ -111,7 +101,6 @@ const login = async (req, res) => {
 const refresh = async (req, res) => {
   try {
     const { refreshToken } = req.body;
-
     if (!refreshToken) {
       return res.status(400).json({ message: 'Refresh token is required' });
     }
@@ -122,8 +111,8 @@ const refresh = async (req, res) => {
     );
 
     const user = await User.findById(decoded._id);
-    if (!user || !user.refreshTokens || !user.refreshTokens.includes(refreshToken)) {
-      return res.status(403).json({ message: 'Invalid or revoked refresh token' });
+    if (!user) {
+      return res.status(403).json({ message: 'User not found' });
     }
 
     const newAccessToken = generateAccessToken(user);
@@ -140,22 +129,14 @@ const refresh = async (req, res) => {
 const logout = async (req, res) => {
   try {
     const { refreshToken } = req.body;
-    const user = await User.findById(req.user._id);
-
-    if (user && refreshToken && user.refreshTokens) {
-      user.refreshTokens = user.refreshTokens.filter((token) => token !== refreshToken);
-      await user.save();
+    if (req.user && refreshToken) {
+      req.user.refreshTokens = req.user.refreshTokens.filter((token) => token !== refreshToken);
+      await req.user.save();
     }
-
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-module.exports = {
-  register,
-  login,
-  refresh,
-  logout,
-};
+module.exports = { register, login, refresh, logout };
