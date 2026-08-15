@@ -56,7 +56,7 @@ const Dashboard = () => {
     <div style={{ minHeight: '100vh', backgroundColor: '#090d16', color: '#f8fafc', fontFamily: 'system-ui, sans-serif', padding: '32px 20px' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         
-        {/* Top Navbar */}
+        {/* Top Navbar with Instant 1-Click Switch */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '8px 12px', borderRadius: '10px', fontSize: '18px' }}>⚡</div>
@@ -65,12 +65,21 @@ const Dashboard = () => {
               <p style={{ margin: '2px 0 0', color: '#94a3b8', fontSize: '13px' }}>AI-Powered Automated Categorization & Fast Resolution</p>
             </div>
           </div>
-          <button
-            onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
-            style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#cbd5e1', padding: '8px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '600' }}
-          >
-            Logout ➔
-          </button>
+          
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <button
+              onClick={() => window.location.href = '/admin'}
+              style={{ backgroundColor: '#6366f1', border: 'none', color: '#fff', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', boxShadow: '0 4px 12px rgba(99,102,241,0.3)' }}
+            >
+              👑 Go to Admin Center ➔
+            </button>
+            <button
+              onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
+              style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#cbd5e1', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px' }}
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* 📝 Issue Submission Form Card */}

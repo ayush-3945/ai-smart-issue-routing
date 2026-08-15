@@ -123,29 +123,45 @@ const AdminDashboard = () => {
     <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#f8fafc', fontFamily: 'system-ui, sans-serif', padding: '32px 24px' }}>
       <div style={{ maxWidth: '1350px', margin: '0 auto' }}>
 
-        {/* Top Glowing Header */}
+        {/* Top Header with 1-Click User Switch */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '24px' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '10px 14px', borderRadius: '12px', fontSize: '20px' }}>
-                ⚡
-              </div>
-              <div>
-                <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px' }}>
-                  SmartIssue <span style={{ background: 'linear-gradient(90deg, #818cf8, #c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>AI Command Center</span>
-                </h1>
-                <p style={{ margin: '4px 0 0', color: '#94a3b8', fontSize: '14px' }}>
-                  Autonomous Issue Classification & Real-Time Resolution Ops
-                </p>
-              </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '10px 14px', borderRadius: '12px', fontSize: '20px' }}>
+              ⚡
+            </div>
+            <div>
+              <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px' }}>
+                SmartIssue <span style={{ background: 'linear-gradient(90deg, #818cf8, #c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>AI Command Center</span>
+              </h1>
+              <p style={{ margin: '4px 0 0', color: '#94a3b8', fontSize: '14px' }}>
+                Autonomous Issue Classification & Real-Time Resolution Ops
+              </p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '8px 16px', borderRadius: '30px' }}>
               <span style={{ width: '8px', height: '8px', backgroundColor: '#10b981', borderRadius: '50%', boxShadow: '0 0 10px #10b981' }}></span>
-              <span style={{ fontSize: '13px', color: '#34d399', fontWeight: '600' }}>Live WebSockets Active</span>
+              <span style={{ fontSize: '13px', color: '#34d399', fontWeight: '600' }}>Live Active</span>
             </div>
+
+            <button
+              onClick={() => window.location.href = '/dashboard'}
+              style={{
+                backgroundColor: '#10b981',
+                border: 'none',
+                color: '#ffffff',
+                padding: '9px 16px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontSize: '13px',
+                fontWeight: '700',
+                boxShadow: '0 4px 12px rgba(16,185,129,0.3)'
+              }}
+            >
+              📝 Raise New Issue ➔
+            </button>
+
             <button
               onClick={() => {
                 localStorage.clear();
@@ -155,14 +171,13 @@ const AdminDashboard = () => {
                 backgroundColor: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.1)',
                 color: '#cbd5e1',
-                padding: '8px 16px',
+                padding: '9px 16px',
                 borderRadius: '10px',
                 cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '600'
+                fontSize: '13px'
               }}
             >
-              Logout ➔
+              Logout
             </button>
           </div>
         </div>
@@ -171,7 +186,6 @@ const AdminDashboard = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
           
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '24px', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '80px', height: '80px', background: 'rgba(99, 102, 241, 0.15)', borderRadius: '50%', filter: 'blur(20px)' }}></div>
             <span style={{ color: '#94a3b8', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Issues</span>
             <p style={{ fontSize: '38px', fontWeight: '900', margin: '10px 0 0', color: '#ffffff' }}>{total}</p>
           </div>
@@ -197,7 +211,7 @@ const AdminDashboard = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '36px' }}>
           
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '24px' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>
               🍩 Category AI Distribution
             </h3>
             {categoryData.length > 0 ? (
@@ -241,7 +255,7 @@ const AdminDashboard = () => {
 
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '24px' }}>
             <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: '#e2e8f0' }}>
-              📈 7-Day Ingestion Velocity
+              📈 7-Day Velocity
             </h3>
             {trendData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
@@ -259,7 +273,7 @@ const AdminDashboard = () => {
 
         </div>
 
-        {/* Sleek Search & Category Pills Bar */}
+        {/* Search & Filter Pills */}
         <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', padding: '20px 24px', borderRadius: '20px', marginBottom: '28px' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center', justifyContent: 'space-between' }}>
             
@@ -269,17 +283,7 @@ const AdminDashboard = () => {
                 placeholder="🔍 Search issues by title, description or author..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '14px 20px',
-                  borderRadius: '12px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  color: '#ffffff',
-                  fontSize: '14px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
+                style={{ width: '100%', padding: '14px 20px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.12)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
               />
             </div>
 
@@ -289,18 +293,7 @@ const AdminDashboard = () => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: '24px',
-                    border: '1px solid',
-                    borderColor: selectedCategory === cat ? '#6366f1' : 'rgba(255,255,255,0.1)',
-                    backgroundColor: selectedCategory === cat ? '#6366f1' : 'rgba(15, 23, 42, 0.4)',
-                    color: selectedCategory === cat ? '#ffffff' : '#94a3b8',
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                  }}
+                  style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#6366f1' : 'rgba(255,255,255,0.1)', backgroundColor: selectedCategory === cat ? '#6366f1' : 'rgba(15, 23, 42, 0.4)', color: selectedCategory === cat ? '#ffffff' : '#94a3b8', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
                 >
                   {cat}
                 </button>
@@ -312,10 +305,8 @@ const AdminDashboard = () => {
 
         {/* Complaints Table Container */}
         <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
-          <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>
-              📋 Active Issues Queue ({filteredComplaints.length})
-            </h2>
+          <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>📋 Active Issues Queue ({filteredComplaints.length})</h2>
           </div>
 
           {loading ? (
@@ -327,45 +318,33 @@ const AdminDashboard = () => {
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ backgroundColor: 'rgba(15, 23, 42, 0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>ISSUE DETAILS</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>AI CATEGORY</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>PRIORITY</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CONFIDENCE</th>
-                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>LIFECYCLE ACTION</th>
+                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>ISSUE DETAILS</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>AI CATEGORY</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>PRIORITY</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>CONFIDENCE</th>
+                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>LIFECYCLE ACTION</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredComplaints.map((c) => {
                     const pStyle = PRIORITY_BADGES[c.priority] || PRIORITY_BADGES.Medium;
                     return (
-                      <tr key={c._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', transition: 'background 0.2s' }}>
+                      <tr key={c._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                         <td style={{ padding: '20px 24px' }}>
                           <div style={{ color: '#ffffff', fontSize: '15px', fontWeight: '600' }}>{c.title}</div>
-                          <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '4px', lineHeight: '1.4' }}>{c.description}</div>
+                          <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '4px' }}>{c.description}</div>
                           {c.aiSummary && (
-                            <div style={{ marginTop: '8px', fontSize: '12px', color: '#c084fc', backgroundColor: 'rgba(168, 85, 247, 0.1)', border: '1px solid rgba(168, 85, 247, 0.2)', padding: '6px 12px', borderRadius: '8px', display: 'inline-block' }}>
+                            <div style={{ marginTop: '8px', fontSize: '12px', color: '#c084fc', backgroundColor: 'rgba(168, 85, 247, 0.1)', padding: '6px 12px', borderRadius: '8px', display: 'inline-block' }}>
                               ✨ <strong>AI Summary:</strong> {c.aiSummary}
                             </div>
                           )}
-                          <div style={{ fontSize: '12px', color: '#64748b', marginTop: '6px' }}>
-                            Reported by: <span style={{ color: '#cbd5e1' }}>{c.user?.name || 'User'}</span> ({c.user?.email})
-                          </div>
                         </td>
 
                         <td style={{ padding: '20px' }}>
                           <select
                             value={c.category}
                             onChange={(e) => handleCategoryChange(c._id, e.target.value)}
-                            style={{
-                              padding: '8px 12px',
-                              borderRadius: '10px',
-                              backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                              border: '1px solid rgba(255,255,255,0.15)',
-                              color: '#ffffff',
-                              fontSize: '13px',
-                              fontWeight: '600',
-                              cursor: 'pointer'
-                            }}
+                            style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255,255,255,0.15)', color: '#ffffff', fontSize: '13px', cursor: 'pointer' }}
                           >
                             <option value="IT">IT</option>
                             <option value="HR">HR</option>
@@ -376,29 +355,14 @@ const AdminDashboard = () => {
                         </td>
 
                         <td style={{ padding: '20px' }}>
-                          <span
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              padding: '6px 12px',
-                              borderRadius: '20px',
-                              fontSize: '12px',
-                              fontWeight: '700',
-                              backgroundColor: pStyle.bg,
-                              color: pStyle.text,
-                              border: `1px solid ${pStyle.border}`,
-                            }}
-                          >
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '700', backgroundColor: pStyle.bg, color: pStyle.text, border: `1px solid ${pStyle.border}` }}>
                             <span style={{ width: '6px', height: '6px', backgroundColor: pStyle.dot, borderRadius: '50%' }}></span>
                             {c.priority}
                           </span>
                         </td>
 
                         <td style={{ padding: '20px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ color: '#818cf8', fontWeight: '800', fontSize: '14px' }}>{c.aiConfidence}%</span>
-                          </div>
+                          <span style={{ color: '#818cf8', fontWeight: '800', fontSize: '14px' }}>{c.aiConfidence}%</span>
                         </td>
 
                         <td style={{ padding: '20px 24px' }}>
@@ -406,16 +370,7 @@ const AdminDashboard = () => {
                             value={c.status}
                             disabled={updatingId === c._id}
                             onChange={(e) => handleStatusChange(c._id, e.target.value)}
-                            style={{
-                              padding: '8px 14px',
-                              borderRadius: '10px',
-                              backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : 'rgba(15, 23, 42, 0.8)',
-                              border: '1px solid rgba(255,255,255,0.15)',
-                              color: '#ffffff',
-                              fontWeight: '600',
-                              fontSize: '13px',
-                              cursor: 'pointer'
-                            }}
+                            style={{ padding: '8px 14px', borderRadius: '10px', backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255,255,255,0.15)', color: '#ffffff', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}
                           >
                             <option value="Pending">Pending</option>
                             <option value="In Progress">In Progress</option>
