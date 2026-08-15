@@ -20,13 +20,14 @@ const Login = () => {
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
-      if (res.data.user.role === 'admin') {
+      if (res.data.user?.role === 'admin') {
         navigate('/admin');
       } else {
         navigate('/dashboard');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+      console.error('Login error:', err);
+      setError(err.response?.data?.message || 'Invalid email or password. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -133,7 +134,7 @@ const Login = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@test.com"
+              placeholder="boss@test.com"
               style={{
                 width: '100%',
                 padding: '14px 16px',
