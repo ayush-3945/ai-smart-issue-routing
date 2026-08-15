@@ -29,20 +29,26 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'User with this email already exists' });
     }
 
+    const accessToken = jwt.sign(
+      { role: role || 'user' },
+      process.env.JWT_SECRET || 'secret',
+      { expiresIn: '15m' }
+    );
+    const refreshToken = jwt.sign(
+      { role: role || 'user' },
+      process.env.JWT_REFRESH_SECRET || 'refresh_secret',
+      { expiresIn: '7d' }
+    );
+
     // Create new user (Role can be 'user' or 'admin')
     const user = new User({
       name,
       email,
       password,
       role: role || 'user',
+      refreshTokens: [refreshToken],
     });
 
-    await user.save();
-
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
-
-    user.refreshTokens.push(refreshToken);
     await user.save();
 
     res.status(201).json({
@@ -53,7 +59,7 @@ const register = async (req, res) => {
         email: user.email,
         role: user.role,
       },
-      accessToken,
+      accessToken: generateAccessToken(user),
       refreshToken,
     });
   } catch (error) {
@@ -79,6 +85,9 @@ const login = async (req, res) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
+    if (!user.refreshTokens) {
+      user.refreshTokens = [];
+    }
     user.refreshTokens.push(refreshToken);
     await user.save();
 
@@ -113,7 +122,7 @@ const refresh = async (req, res) => {
     );
 
     const user = await User.findById(decoded._id);
-    if (!user || !user.refreshTokens.includes(refreshToken)) {
+    if (!user || !user.refreshTokens || !user.refreshTokens.includes(refreshToken)) {
       return res.status(403).json({ message: 'Invalid or revoked refresh token' });
     }
 
@@ -133,7 +142,7 @@ const logout = async (req, res) => {
     const { refreshToken } = req.body;
     const user = await User.findById(req.user._id);
 
-    if (user && refreshToken) {
+    if (user && refreshToken && user.refreshTokens) {
       user.refreshTokens = user.refreshTokens.filter((token) => token !== refreshToken);
       await user.save();
     }
