@@ -32,6 +32,10 @@ app.use('/api/auth', authRoutes);
 const complaintRoutes = require('./routes/complaintRoutes');
 app.use('/api/complaints', complaintRoutes);
 
+// Day 20: Analytics Route
+const analyticsRoutes = require('./routes/analyticsRoutes');
+app.use('/api/analytics', analyticsRoutes);
+
 app.get('/', (req, res) => {
   res.json({ message: 'AI Smart Issue Routing API is running!' });
 });
