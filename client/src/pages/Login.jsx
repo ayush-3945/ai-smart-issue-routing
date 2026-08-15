@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import api from '../utils/api';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,11 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await api.post('/auth/login', { email, password });
+      const res = await axios.post(
+        'https://ai-smart-issue-routing-production.up.railway.app/api/auth/login',
+        { email, password }
+      );
+      
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -45,7 +49,6 @@ const Login = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Background Glowing Ambient Orbs */}
       <div style={{
         position: 'absolute',
         top: '20%',
@@ -57,19 +60,7 @@ const Login = () => {
         opacity: 0.25,
         borderRadius: '50%'
       }}></div>
-      <div style={{
-        position: 'absolute',
-        bottom: '20%',
-        right: '25%',
-        width: '350px',
-        height: '350px',
-        backgroundColor: '#a855f7',
-        filter: 'blur(140px)',
-        opacity: 0.2,
-        borderRadius: '50%'
-      }}></div>
 
-      {/* Main Glass Card */}
       <div style={{
         width: '100%',
         maxWidth: '440px',
@@ -91,8 +82,7 @@ const Login = () => {
             background: 'linear-gradient(135deg, #6366f1, #a855f7)',
             borderRadius: '16px',
             fontSize: '26px',
-            marginBottom: '16px',
-            boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.5)'
+            marginBottom: '16px'
           }}>
             ⚡
           </div>
@@ -187,7 +177,6 @@ const Login = () => {
               fontWeight: '700',
               cursor: loading ? 'not-allowed' : 'pointer',
               boxShadow: '0 10px 20px -5px rgba(99, 102, 241, 0.4)',
-              transition: 'transform 0.2s',
               opacity: loading ? 0.7 : 1
             }}
           >

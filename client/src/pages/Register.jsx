@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import api from '../utils/api';
+import axios from 'axios';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('user');
+  const [role, setRole] = useState('admin');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,12 +17,15 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await api.post('/auth/register', { name, email, password, role });
+      const res = await axios.post(
+        'https://ai-smart-issue-routing-production.up.railway.app/api/auth/register',
+        { name, email, password, role }
+      );
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
-      if (res.data.user.role === 'admin') {
+      if (res.data.user?.role === 'admin') {
         navigate('/admin');
       } else {
         navigate('/dashboard');
@@ -126,7 +129,7 @@ const Register = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="ayush@example.com"
+              placeholder="admin@mycompany.com"
               style={{
                 width: '100%',
                 padding: '12px 16px',
@@ -184,8 +187,8 @@ const Register = () => {
                 boxSizing: 'border-box'
               }}
             >
-              <option value="user">User (Raise Complaints)</option>
               <option value="admin">Admin (Manage & AI Routing)</option>
+              <option value="user">User (Raise Complaints)</option>
             </select>
           </div>
 
