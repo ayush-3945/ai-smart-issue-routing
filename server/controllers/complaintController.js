@@ -1,7 +1,9 @@
 const Complaint = require('../models/Complaint');
+const User = require('../models/User'); // Import User model for emails
 const cloudinary = require('../config/cloudinary');
 const streamifier = require('streamifier');
 const { analyzeComplaint } = require('../services/aiService');
+const { sendComplaintCreatedEmail, sendStatusUpdatedEmail } = require('../services/emailService'); // Day 23 Email Service
 
 const uploadToCloudinary = (buffer) => {
   return new Promise((resolve, reject) => {
@@ -42,6 +44,11 @@ const createComplaint = async (req, res) => {
     });
 
     await complaint.save();
+
+    // Day 23: Send Async Confirmation Email to User with AI Analysis
+    if (req.user && req.user.email) {
+      sendComplaintCreatedEmail(req.user.email, req.user.name || 'User', complaint);
+    }
 
     res.status(201).json({
       message: 'Complaint created and analyzed by AI successfully',
@@ -137,6 +144,12 @@ const updateComplaintStatus = async (req, res) => {
       });
     }
 
+    // Day 23: Send Async Status Notification Email to User
+    const user = await User.findById(complaint.user);
+    if (user && user.email) {
+      sendStatusUpdatedEmail(user.email, user.name || 'User', complaint);
+    }
+
     res.json({
       message: 'Status updated successfully',
       complaint,
@@ -176,5 +189,5 @@ module.exports = {
   getAllComplaints, 
   getComplaintById, 
   updateComplaintStatus,
-  updateComplaintCategory // <-- Exported
+  updateComplaintCategory
 };
