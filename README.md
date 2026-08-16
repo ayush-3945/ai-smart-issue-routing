@@ -1,21 +1,49 @@
-# 🚀 AI Smart Issue Routing System
+# ⚡ SmartIssue AI — Autonomous Issue Classification & Real-Time Resolution Ops
 
-An AI-powered complaint management system that automatically 
-classifies, prioritizes, and routes issues using Google Gemini API.
+[![Deploy with Vercel](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
+[![Deployed on Railway](https://img.shields.io/badge/Backend-Railway-0B0D0E?style=for-the-badge&logo=railway)](https://railway.app/)
+[![Powered by Gemini AI](https://img.shields.io/badge/AI-Google%20Gemini%201.5-8E75FF?style=for-the-badge&logo=googlegemini)](https://ai.google.dev/)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## 🛠️ Tech Stack
-- **Frontend:** React.js + Tailwind CSS
-- **Backend:** Node.js + Express.js
-- **Database:** MongoDB + Mongoose
-- **AI:** Google Gemini API
-- **Real-time:** Socket.io
-- **Deploy:** Vercel + Render
+> **SmartIssue AI** is an enterprise-grade, full-stack autonomous issue routing platform powered by **Google Gemini AI**. It eliminates manual triage by automatically analyzing incoming user complaints, classifying them into departments (IT, HR, Finance, Operations, General), assigning priority ratings, calculating confidence scores, and providing executive AI summaries in real-time.
 
-## 🎯 Features
-- AI auto-classification with confidence score
-- Real-time status updates
-- Admin analytics dashboard
-- JWT authentication
+---
 
-## 🚧 Status
-> Currently under development - 30 day build challenge!
+## 🌟 Key Features
+
+### 🤖 1. Gemini AI Autonomous Routing
+- **Instant Natural Language Processing**: Analyzes incoming issues using Google Gemini 1.5 Flash.
+- **Categorization**: Automatically routes to `IT`, `HR`, `Finance`, `Operations`, or `General`.
+- **Urgency & Priority Scoring**: Assigns `Critical`, `High`, `Medium`, or `Low` priority badges based on contextual urgency.
+- **Confidence Rating & Executive Summaries**: Generates high-level summaries and confidence scores (up to 98%+) to speed up administrative decision-making.
+
+### 📊 2. Admin Command Center & Analytics
+- **Live Recharts Dashboard**: Interactive visual breakdown using Donut Charts (Categories), Bar Charts (Priorities), and 7-Day Ingestion Velocity Line Charts.
+- **Human-in-the-Loop AI Feedback Loop**: Admins can manually re-classify categories or override AI priority assignments, improving model alignment over time.
+- **Lifecycle Management**: Track and update complaint lifecycles (`Pending` ➔ `In Progress` ➔ `Resolved` ➔ `Closed`).
+- **Live Search & Filter Pills**: Instant real-time filtering by text search or department badges.
+
+### 🛡️ 3. Security & Architecture
+- **Stateless JWT Authentication**: Secure Access Token & Refresh Token rotation workflow.
+- **Role-Based Access Control (RBAC)**: Strict separation of User and Admin permissions.
+- **Security Hardening**: Protected with `Helmet`, Rate Limiting (`express-rate-limit`), CORS controls, and `express-mongo-sanitize` for NoSQL injection prevention.
+
+### 🎨 4. Premium Modern UI/UX
+- **Glassmorphic Dark Theme**: Ultra-sleek UI designed with Tailwind-inspired custom CSS tokens & smooth micro-interactions.
+- **Real-time UX**: Custom sliding Toast notifications, shimmer loading skeletons, animated counter badges, and responsive desktop/mobile layouts.
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD;
+    User[📱 User / Client Portal] -->|HTTP POST + Image| Express[⚡ Express REST API];
+    Express -->|Token Check| AuthMiddleware[🔒 JWT Auth & RBAC];
+    AuthMiddleware -->|Text Context| Gemini[🧠 Google Gemini AI Service];
+    Gemini -->|JSON Analysis: Category, Priority, Summary| Express;
+    Express -->|Media Stream| Cloudinary[☁️ Cloudinary Storage];
+    Express -->|Persist Document| MongoDB[(🍃 MongoDB Atlas Database)];
+    Express -->|Async Notification| Email[📧 Nodemailer Email Service];
+    Express -->|Socket Event| Admin[👑 Admin Command Center];
