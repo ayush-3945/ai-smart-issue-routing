@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { ToastContainer, useToast } from '../components/Toast';
+import ThemeToggle from '../components/ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
 
 const Dashboard = () => {
   const [complaints, setComplaints] = useState([]);
@@ -60,28 +62,32 @@ const Dashboard = () => {
     }
   };
 
+  const { theme } = useTheme();
+
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#090d16', color: '#f8fafc', fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 20px' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 20px', transition: 'all 0.3s ease' }}>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         
         {/* Top Navbar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '8px 12px', borderRadius: '10px', fontSize: '18px' }}>⚡</div>
             <div>
-              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800' }}>SmartIssue Portal</h1>
-              <p style={{ margin: '2px 0 0', color: '#94a3b8', fontSize: '13px' }}>AI-Powered Automated Categorization & Fast Resolution</p>
+              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: theme.textPrimary }}>SmartIssue Portal</h1>
+              <p style={{ margin: '2px 0 0', color: theme.textSecondary, fontSize: '13px' }}>AI-Powered Automated Categorization & Fast Resolution</p>
             </div>
           </div>
           
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <ThemeToggle />
+
             {/* User Avatar */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '12px', backgroundColor: theme.badgeBg, border: `1px solid ${theme.cardBorder}` }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: 'linear-gradient(135deg, #6366f1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff' }}>
                 {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
               </div>
-              <span style={{ fontSize: '13px', fontWeight: '600', color: '#e2e8f0' }}>{user.name || 'User'}</span>
+              <span style={{ fontSize: '13px', fontWeight: '600', color: theme.textPrimary }}>{user.name || 'User'}</span>
             </div>
 
             <button

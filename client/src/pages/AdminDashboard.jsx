@@ -3,6 +3,8 @@ import axios from 'axios';
 import AnimatedCounter from '../components/AnimatedCounter';
 import { ToastContainer, useToast } from '../components/Toast';
 import { exportToCSV } from '../utils/exportCsv';
+import ThemeToggle from '../components/ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
 import {
   PieChart,
   Pie,
@@ -140,24 +142,28 @@ const AdminDashboard = () => {
   const inProgress = complaints.filter((c) => c.status === 'In Progress').length;
   const resolved = complaints.filter((c) => c.status === 'Resolved' || c.status === 'Closed').length;
 
+  const { theme } = useTheme();
+
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#f8fafc', fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 24px' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 24px', transition: 'all 0.3s ease' }}>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
       <div style={{ maxWidth: '1350px', margin: '0 auto' }}>
 
         {/* Top Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '10px 14px', borderRadius: '12px', fontSize: '20px' }}>⚡</div>
             <div>
-              <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px' }}>
+              <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px', color: theme.textPrimary }}>
                 SmartIssue <span style={{ background: 'linear-gradient(90deg, #818cf8, #c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>AI Command Center</span>
               </h1>
-              <p style={{ margin: '4px 0 0', color: '#94a3b8', fontSize: '14px' }}>Autonomous Issue Classification & Real-Time Resolution Ops</p>
+              <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '14px' }}>Autonomous Issue Classification & Real-Time Resolution Ops</p>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <ThemeToggle />
+
             {/* Admin Avatar */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff' }}>

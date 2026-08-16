@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../components/ThemeToggle';
 
 const LandingPage = () => {
   return (
@@ -11,7 +12,8 @@ const LandingPage = () => {
           <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '8px 12px', borderRadius: '12px', fontSize: '18px' }}>⚡</div>
           <span style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '-0.5px' }}>SmartIssue</span>
         </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <ThemeToggle />
           <Link to="/login" style={{ padding: '10px 24px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.15)', color: '#cbd5e1', textDecoration: 'none', fontSize: '14px', fontWeight: '600' }}>
             Sign In
           </Link>
