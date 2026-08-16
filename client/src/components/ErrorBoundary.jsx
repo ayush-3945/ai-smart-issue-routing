@@ -40,6 +40,11 @@ class ErrorBoundary extends React.Component {
             <p style={{ color: '#64748b', fontSize: '14px', margin: '0 0 20px' }}>
               An unexpected error occurred in this view. Don't worry, your data is safe.
             </p>
+            {this.state.error && (
+              <pre style={{ textAlign: 'left', backgroundColor: '#f1f5f9', padding: '12px', borderRadius: '8px', fontSize: '12px', color: '#dc2626', overflowX: 'auto', marginBottom: '16px' }}>
+                {this.state.error.toString()}
+              </pre>
+            )}
             <button
               onClick={() => window.location.reload()}
               style={{
