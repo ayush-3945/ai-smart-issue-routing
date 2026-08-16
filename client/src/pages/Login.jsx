@@ -12,7 +12,11 @@ const Login = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
+    let savedUser = {};
+    try {
+      const raw = localStorage.getItem('user');
+      if (raw && raw !== 'undefined') savedUser = JSON.parse(raw);
+    } catch (e) {}
     if (token) {
       navigate(savedUser.role === 'admin' ? '/admin' : '/dashboard');
     }

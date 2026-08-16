@@ -18,12 +18,15 @@ export function SocketProvider({ children }) {
       console.log('Socket connected:', newSocket.id);
 
       // Get userId from token payload and join personal room
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        newSocket.emit('joinRoom', payload.id);
-      } catch (err) {
-        console.error('Failed to parse token for room join:', err);
+    try {
+      const parts = token.split('.');
+      if (parts.length === 3) {
+        const payload = JSON.parse(atob(parts[1]));
+        newSocket.emit('joinRoom', payload._id || payload.id);
       }
+    } catch (err) {
+      console.error('Failed to parse token for room join:', err);
+    }
     });
 
     newSocket.on('disconnect', () => {

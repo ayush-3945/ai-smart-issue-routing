@@ -11,7 +11,13 @@ const Dashboard = () => {
   const [fetching, setFetching] = useState(true);
   const { toasts, addToast, removeToast } = useToast();
 
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  let user = {};
+  try {
+    const raw = localStorage.getItem('user');
+    if (raw && raw !== 'undefined') user = JSON.parse(raw);
+  } catch (e) {
+    user = {};
+  }
 
   const fetchMyComplaints = async () => {
     try {
