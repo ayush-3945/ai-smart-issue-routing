@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AnimatedCounter from '../components/AnimatedCounter';
+import { ToastContainer, useToast } from '../components/Toast';
 import {
   PieChart,
   Pie,
@@ -33,6 +35,9 @@ const AdminDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [updatingId, setUpdatingId] = useState(null);
+  const { toasts, addToast, removeToast } = useToast();
+
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('accessToken');
@@ -73,8 +78,9 @@ const AdminDashboard = () => {
       );
       const analRes = await axios.get(`${API_BASE}/analytics/dashboard`, getAuthHeaders());
       setAnalytics(analRes.data);
+      addToast(`Status updated to "${newStatus}" successfully!`, newStatus === 'Resolved' ? 'success' : 'info');
     } catch (err) {
-      alert(err.response?.data?.message || 'Status update failed');
+      addToast(err.response?.data?.message || 'Status update failed', 'error');
     } finally {
       setUpdatingId(null);
     }
@@ -92,8 +98,9 @@ const AdminDashboard = () => {
       );
       const analRes = await axios.get(`${API_BASE}/analytics/dashboard`, getAuthHeaders());
       setAnalytics(analRes.data);
+      addToast(`Category re-classified to "${newCategory}"`, 'info');
     } catch (err) {
-      alert(err.response?.data?.message || 'Category update failed');
+      addToast(err.response?.data?.message || 'Category update failed', 'error');
     }
   };
 
@@ -102,9 +109,7 @@ const AdminDashboard = () => {
       c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (c.user?.name && c.user.name.toLowerCase().includes(searchQuery.toLowerCase()));
-
     const matchesCategory = selectedCategory === 'All' || c.category === selectedCategory;
-
     return matchesSearch && matchesCategory;
   });
 
@@ -129,7 +134,8 @@ const AdminDashboard = () => {
   const resolved = complaints.filter((c) => c.status === 'Resolved' || c.status === 'Closed').length;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#f8fafc', fontFamily: 'system-ui, sans-serif', padding: '32px 24px' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#f8fafc', fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 24px' }}>
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
       <div style={{ maxWidth: '1350px', margin: '0 auto' }}>
 
         {/* Top Header */}
@@ -145,11 +151,22 @@ const AdminDashboard = () => {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {/* Admin Avatar */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff' }}>
+                {user.name ? user.name.charAt(0).toUpperCase() : 'A'}
+              </div>
+              <div>
+                <span style={{ fontSize: '13px', fontWeight: '600', color: '#e2e8f0', display: 'block', lineHeight: 1.2 }}>{user.name || 'Admin'}</span>
+                <span style={{ fontSize: '11px', color: '#f59e0b', fontWeight: '700' }}>👑 Admin</span>
+              </div>
+            </div>
+
             <button
               onClick={() => window.location.href = '/dashboard'}
               style={{ backgroundColor: '#10b981', border: 'none', color: '#ffffff', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', boxShadow: '0 4px 12px rgba(16,185,129,0.3)' }}
             >
-              📝 Raise New Issue ➔
+              📝 Raise Issue ➔
             </button>
 
             <button
@@ -161,30 +178,42 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Hero Glassmorphic Metric Cards */}
+        {/* Animated Metric Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '24px' }}>
+          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '24px', transition: 'transform 0.2s' }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
             <span style={{ color: '#94a3b8', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Issues</span>
-            <p style={{ fontSize: '38px', fontWeight: '900', margin: '10px 0 0', color: '#ffffff' }}>{total}</p>
+            <div style={{ marginTop: '10px' }}><AnimatedCounter target={total} color="#ffffff" /></div>
           </div>
 
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '20px', padding: '24px' }}>
+          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '20px', padding: '24px', transition: 'transform 0.2s' }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
             <span style={{ color: '#fbbf24', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Pending Review</span>
-            <p style={{ fontSize: '38px', fontWeight: '900', margin: '10px 0 0', color: '#fbbf24' }}>{pending}</p>
+            <div style={{ marginTop: '10px' }}><AnimatedCounter target={pending} color="#fbbf24" /></div>
           </div>
 
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(59, 130, 246, 0.2)', borderRadius: '20px', padding: '24px' }}>
+          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(59, 130, 246, 0.2)', borderRadius: '20px', padding: '24px', transition: 'transform 0.2s' }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
             <span style={{ color: '#60a5fa', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>In Progress</span>
-            <p style={{ fontSize: '38px', fontWeight: '900', margin: '10px 0 0', color: '#60a5fa' }}>{inProgress}</p>
+            <div style={{ marginTop: '10px' }}><AnimatedCounter target={inProgress} color="#60a5fa" /></div>
           </div>
 
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '20px', padding: '24px' }}>
+          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '20px', padding: '24px', transition: 'transform 0.2s' }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
             <span style={{ color: '#34d399', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Resolved / Closed</span>
-            <p style={{ fontSize: '38px', fontWeight: '900', margin: '10px 0 0', color: '#34d399' }}>{resolved}</p>
+            <div style={{ marginTop: '10px' }}><AnimatedCounter target={resolved} color="#34d399" /></div>
           </div>
         </div>
 
-        {/* Interactive Charts Section */}
+        {/* Charts Section */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '36px' }}>
           
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '24px' }}>
@@ -241,36 +270,27 @@ const AdminDashboard = () => {
               <p style={{ color: '#64748b', textAlign: 'center', marginTop: '70px' }}>No Data</p>
             )}
           </div>
-
         </div>
 
-        {/* Search & Filter Pills */}
+        {/* Search & Filter */}
         <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)', padding: '20px 24px', borderRadius: '20px', marginBottom: '28px' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center', justifyContent: 'space-between' }}>
-            
             <div style={{ flex: '1 1 340px' }}>
-              <input
-                type="text"
-                placeholder="🔍 Search issues by title, description or author..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+              <input type="text" placeholder="🔍 Search issues by title, description or author..."
+                value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
                 style={{ width: '100%', padding: '14px 20px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.12)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
               />
             </div>
-
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '13px', fontWeight: '600', color: '#94a3b8', marginRight: '4px' }}>Category:</span>
+              <span style={{ fontSize: '13px', fontWeight: '600', color: '#94a3b8' }}>Category:</span>
               {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#6366f1' : 'rgba(255,255,255,0.1)', backgroundColor: selectedCategory === cat ? '#6366f1' : 'rgba(15, 23, 42, 0.4)', color: selectedCategory === cat ? '#ffffff' : '#94a3b8', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
+                <button key={cat} onClick={() => setSelectedCategory(cat)}
+                  style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#6366f1' : 'rgba(255,255,255,0.1)', backgroundColor: selectedCategory === cat ? '#6366f1' : 'rgba(15, 23, 42, 0.4)', color: selectedCategory === cat ? '#ffffff' : '#94a3b8', fontSize: '13px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}
                 >
                   {cat}
                 </button>
               ))}
             </div>
-
           </div>
         </div>
 
@@ -281,7 +301,15 @@ const AdminDashboard = () => {
           </div>
 
           {loading ? (
-            <div style={{ padding: '40px', textAlign: 'center', color: '#94a3b8' }}>Loading real-time data...</div>
+            <div style={{ padding: '24px' }}>
+              {[1, 2, 3].map((i) => (
+                <div key={i} style={{ padding: '20px 0', borderBottom: '1px solid rgba(255,255,255,0.04)', animation: 'pulse 1.5s ease-in-out infinite' }}>
+                  <div style={{ height: '16px', width: '50%', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '8px', marginBottom: '10px' }}></div>
+                  <div style={{ height: '12px', width: '80%', backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: '8px' }}></div>
+                </div>
+              ))}
+              <style>{`@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }`}</style>
+            </div>
           ) : filteredComplaints.length === 0 ? (
             <div style={{ padding: '50px', textAlign: 'center', color: '#64748b' }}>No matching complaints found.</div>
           ) : (
@@ -300,7 +328,10 @@ const AdminDashboard = () => {
                   {filteredComplaints.map((c) => {
                     const pStyle = PRIORITY_BADGES[c.priority] || PRIORITY_BADGES.Medium;
                     return (
-                      <tr key={c._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                      <tr key={c._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', transition: 'background-color 0.2s' }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(99,102,241,0.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      >
                         <td style={{ padding: '20px 24px' }}>
                           <div style={{ color: '#ffffff', fontSize: '15px', fontWeight: '600' }}>{c.title}</div>
                           <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '4px' }}>{c.description}</div>
@@ -310,13 +341,9 @@ const AdminDashboard = () => {
                             </div>
                           )}
                         </td>
-
                         <td style={{ padding: '20px' }}>
-                          <select
-                            value={c.category}
-                            onChange={(e) => handleCategoryChange(c._id, e.target.value)}
-                            style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255,255,255,0.15)', color: '#ffffff', fontSize: '13px', cursor: 'pointer' }}
-                          >
+                          <select value={c.category} onChange={(e) => handleCategoryChange(c._id, e.target.value)}
+                            style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255,255,255,0.15)', color: '#ffffff', fontSize: '13px', cursor: 'pointer' }}>
                             <option value="IT">IT</option>
                             <option value="HR">HR</option>
                             <option value="Finance">Finance</option>
@@ -324,25 +351,19 @@ const AdminDashboard = () => {
                             <option value="General">General</option>
                           </select>
                         </td>
-
                         <td style={{ padding: '20px' }}>
                           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '700', backgroundColor: pStyle.bg, color: pStyle.text, border: `1px solid ${pStyle.border}` }}>
                             <span style={{ width: '6px', height: '6px', backgroundColor: pStyle.dot, borderRadius: '50%' }}></span>
                             {c.priority}
                           </span>
                         </td>
-
                         <td style={{ padding: '20px' }}>
                           <span style={{ color: '#818cf8', fontWeight: '800', fontSize: '14px' }}>{c.aiConfidence}%</span>
                         </td>
-
                         <td style={{ padding: '20px 24px' }}>
-                          <select
-                            value={c.status}
-                            disabled={updatingId === c._id}
+                          <select value={c.status} disabled={updatingId === c._id}
                             onChange={(e) => handleStatusChange(c._id, e.target.value)}
-                            style={{ padding: '8px 14px', borderRadius: '10px', backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255,255,255,0.15)', color: '#ffffff', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}
-                          >
+                            style={{ padding: '8px 14px', borderRadius: '10px', backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255,255,255,0.15)', color: '#ffffff', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>
                             <option value="Pending">Pending</option>
                             <option value="In Progress">In Progress</option>
                             <option value="Resolved">Resolved</option>
