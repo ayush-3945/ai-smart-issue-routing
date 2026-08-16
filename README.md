@@ -47,3 +47,44 @@ graph TD;
     Express -->|Persist Document| MongoDB[(🍃 MongoDB Atlas Database)];
     Express -->|Async Notification| Email[📧 Nodemailer Email Service];
     Express -->|Socket Event| Admin[👑 Admin Command Center];
+
+
+    
+---
+
+## 🛠️ Tech Stack
+
+| Domain | Technology / Library |
+| :--- | :--- |
+| **Frontend** | React 18, React Router v6, Recharts, Axios, Pure Vanilla CSS |
+| **Backend** | Node.js, Express.js, Socket.io |
+| **Artificial Intelligence** | Google Generative AI SDK (`@google/generative-ai` - Gemini 1.5 Flash) |
+| **Database & Storage** | MongoDB Atlas, Mongoose ODM, Cloudinary API |
+| **Authentication** | JSON Web Tokens (`jsonwebtoken`), `bcryptjs` |
+| **Security** | Helmet, Express Rate Limit, Mongo Sanitize |
+| **Deployment** | Vercel (Frontend SPA), Railway (Node.js API Engine) |
+
+---
+
+## 📡 API Endpoints Summary
+
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Register a new user/admin | Public |
+| `POST` | `/api/auth/login` | Authenticate user & receive JWT tokens | Public |
+| `POST` | `/api/complaints` | Submit issue for Gemini AI analysis & routing | Protected (User) |
+| `GET` | `/api/complaints/my` | Fetch user's submitted issues | Protected (User) |
+| `GET` | `/api/complaints/all` | Fetch all system issues for management | Protected (Admin) |
+| `PATCH` | `/api/complaints/:id/status` | Update issue lifecycle status | Protected (Admin) |
+| `PATCH` | `/api/complaints/:id/category`| Human-in-the-loop AI category reclassification | Protected (Admin) |
+| `GET` | `/api/analytics/dashboard` | Fetch aggregated metrics & trend stats | Protected (Admin) |
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<p align="center">
+  Designed & Built with ❤️ by <strong>Ayush Pandey</strong>
+</p>
