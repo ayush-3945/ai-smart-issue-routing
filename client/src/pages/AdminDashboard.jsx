@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AnimatedCounter from '../components/AnimatedCounter';
 import { ToastContainer, useToast } from '../components/Toast';
+import { exportToCSV } from '../utils/exportCsv';
 import {
   PieChart,
   Pie,
@@ -161,6 +162,17 @@ const AdminDashboard = () => {
                 <span style={{ fontSize: '11px', color: '#f59e0b', fontWeight: '700' }}>👑 Admin</span>
               </div>
             </div>
+
+            {/* Export CSV Button */}
+            <button
+              onClick={() => {
+                exportToCSV(filteredComplaints);
+                addToast('📥 Exported analytics report to CSV!', 'success');
+              }}
+              style={{ backgroundColor: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}
+            >
+              📥 Export CSV
+            </button>
 
             <button
               onClick={() => window.location.href = '/dashboard'}
