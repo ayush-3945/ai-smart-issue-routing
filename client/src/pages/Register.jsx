@@ -11,6 +11,14 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+    useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (token) {
+      navigate(savedUser.role === 'admin' ? '/admin' : '/dashboard');
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
