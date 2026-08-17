@@ -183,11 +183,59 @@ const updateComplaintCategory = async (req, res) => {
   }
 };
 
+// Add Comment to Issue Discussion
+const addCommentToComplaint = async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message || !message.trim()) {
+      return res.status(400).json({ message: 'Comment message is required' });
+    }
+
+    const complaint = await Complaint.findById(req.params.id);
+    if (!complaint) {
+      return res.status(404).json({ message: 'Complaint not found' });
+    }
+
+    const senderUser = await User.findById(req.user.id || req.user._id);
+    const senderName = senderUser?.name || req.user.name || 'Anonymous';
+    const senderRole = senderUser?.role || req.user.role || 'user';
+
+    const newComment = {
+      sender: req.user.id || req.user._id,
+      senderName,
+      senderRole,
+      message: message.trim(),
+      createdAt: new Date()
+    };
+
+    complaint.comments.push(newComment);
+    await complaint.save();
+
+    // Real-time socket broadcast to both user and admin channels
+    const io = req.app.get('socketio');
+    if (io) {
+      io.emit('newComment', {
+        complaintId: complaint._id,
+        comment: newComment
+      });
+    }
+
+    res.status(201).json({
+      message: 'Comment added successfully',
+      comment: newComment,
+      comments: complaint.comments
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = { 
   createComplaint, 
   getMyComplaints, 
   getAllComplaints, 
   getComplaintById, 
   updateComplaintStatus,
-  updateComplaintCategory
+  updateComplaintCategory,
+  addCommentToComplaint
 };

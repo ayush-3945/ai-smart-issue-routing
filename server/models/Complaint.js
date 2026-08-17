@@ -45,7 +45,33 @@ const complaintSchema = new mongoose.Schema({
   suggestedResolution: {
     type: String,
     default: null
-  }
+  },
+  comments: [
+    {
+      sender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      senderName: {
+        type: String,
+        default: 'Anonymous'
+      },
+      senderRole: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+      },
+      message: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Complaint', complaintSchema);

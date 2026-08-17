@@ -3,6 +3,7 @@ import api from '../utils/api';
 import { ToastContainer, useToast } from '../components/Toast';
 import ThemeToggle from '../components/ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
+import IssueDetailModal from '../components/IssueDetailModal';
 
 const Dashboard = () => {
   const [complaints, setComplaints] = useState([]);
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
   const { toasts, addToast, removeToast } = useToast();
 
   let user = {};
@@ -159,33 +161,57 @@ const Dashboard = () => {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {complaints.map((c) => (
-              <div key={c._id} style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '20px', transition: 'border-color 0.2s, transform 0.2s', cursor: 'default' }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+              <div key={c._id} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '16px', padding: '20px', transition: 'border-color 0.2s, transform 0.2s', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
+                onClick={() => setSelectedComplaint(c)}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(99,102,241,0.5)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = theme.cardBorder; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                  <h3 style={{ margin: 0, fontSize: '16px', color: '#ffffff', fontWeight: '600' }}>{c.title}</h3>
+                  <h3 style={{ margin: 0, fontSize: '16px', color: theme.textPrimary, fontWeight: '600' }}>
+                    {c.title}
+                    {c.comments && c.comments.length > 0 && (
+                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
+                        💬 {c.comments.length}
+                      </span>
+                    )}
+                  </h3>
                   <span style={{ fontSize: '12px', fontWeight: '700', padding: '4px 12px', borderRadius: '20px', backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : '#f59e0b', color: '#fff' }}>
                     {c.status}
                   </span>
                 </div>
                 
-                <p style={{ margin: '0 0 14px', color: '#94a3b8', fontSize: '13px', lineHeight: '1.5' }}>{c.description}</p>
+                <p style={{ margin: '0 0 14px', color: theme.textSecondary, fontSize: '13px', lineHeight: '1.5' }}>{c.description}</p>
                 
-                <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '13px', color: '#cbd5e1', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '12px' }}>
+                <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '13px', color: theme.textSecondary, borderTop: `1px solid ${theme.cardBorder}`, paddingTop: '12px' }}>
                   <span>🏷️ Category: <strong style={{ color: '#818cf8' }}>{c.category}</strong></span>
                   <span>⚡ Priority: <strong style={{ color: c.priority === 'Critical' ? '#f87171' : '#60a5fa' }}>{c.priority}</strong></span>
                   <span>🎯 Confidence: <strong style={{ color: '#34d399' }}>{c.aiConfidence}%</strong></span>
+                  <span style={{ marginLeft: 'auto', color: '#818cf8', fontWeight: '600', fontSize: '12px' }}>Click to view details & chat ➔</span>
                 </div>
                 
                 {c.aiSummary && (
-                  <div style={{ marginTop: '12px', fontSize: '12px', color: '#c084fc', backgroundColor: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.2)', padding: '8px 14px', borderRadius: '10px' }}>
+                  <div style={{ marginTop: '12px', fontSize: '12px', color: theme.isDark ? '#c084fc' : '#7c3aed', backgroundColor: theme.isDark ? 'rgba(168,85,247,0.1)' : 'rgba(124,58,237,0.08)', border: '1px solid rgba(168,85,247,0.2)', padding: '8px 14px', borderRadius: '10px' }}>
                     ✨ <strong>AI Summary:</strong> {c.aiSummary}
                   </div>
                 )}
               </div>
             ))}
           </div>
+        )}
+
+        {/* Issue Detail & Chat Modal */}
+        {selectedComplaint && (
+          <IssueDetailModal
+            complaint={selectedComplaint}
+            currentUser={user}
+            onClose={() => setSelectedComplaint(null)}
+            onComplaintUpdated={(updatedComplaint) => {
+              setComplaints((prev) =>
+                prev.map((item) => (item._id === updatedComplaint._id ? updatedComplaint : item))
+              );
+              setSelectedComplaint(updatedComplaint);
+            }}
+          />
         )}
 
       </div>

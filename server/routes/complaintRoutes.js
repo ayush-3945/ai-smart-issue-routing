@@ -6,7 +6,8 @@ const {
   getComplaintById, 
   updateComplaintStatus,
   getAllComplaints,
-  updateComplaintCategory
+  updateComplaintCategory,
+  addCommentToComplaint
 } = require('../controllers/complaintController');
 const { protect } = require('../middleware/authMiddleware');
 const validateComplaint = require('../middleware/validateComplaint');
@@ -18,5 +19,6 @@ router.get('/all', protect, getAllComplaints);
 router.get('/:id', protect, getComplaintById);
 router.patch('/:id/status', protect, updateComplaintStatus);
 router.patch('/:id/category', protect, updateComplaintCategory);
+router.post('/:id/comments', protect, addCommentToComplaint);
 
 module.exports = router;

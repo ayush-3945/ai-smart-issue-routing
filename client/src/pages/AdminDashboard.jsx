@@ -5,6 +5,7 @@ import { ToastContainer, useToast } from '../components/Toast';
 import { exportToCSV } from '../utils/exportCsv';
 import ThemeToggle from '../components/ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
+import IssueDetailModal from '../components/IssueDetailModal';
 import {
   PieChart,
   Pie,
@@ -38,6 +39,7 @@ const AdminDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [updatingId, setUpdatingId] = useState(null);
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
   const { toasts, addToast, removeToast } = useToast();
 
   let user = {};
@@ -161,43 +163,48 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <ThemeToggle />
 
-            {/* Admin Avatar */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff' }}>
-                {user.name ? user.name.charAt(0).toUpperCase() : 'A'}
-              </div>
-              <div>
-                <span style={{ fontSize: '13px', fontWeight: '600', color: '#e2e8f0', display: 'block', lineHeight: 1.2 }}>{user.name || 'Admin'}</span>
-                <span style={{ fontSize: '11px', color: '#f59e0b', fontWeight: '700' }}>👑 Admin</span>
-              </div>
+            {/* Admin Avatar - Icon Only */}
+            <div title={`${user.name || 'Admin'} (Admin)`} style={{ width: '36px', height: '36px', borderRadius: '12px', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: '800', color: '#fff', cursor: 'default' }}>
+              {user.name ? user.name.charAt(0).toUpperCase() : 'A'}
             </div>
 
-            {/* Export CSV Button */}
+            {/* Export CSV - Icon Only */}
             <button
+              title="Export CSV Report"
               onClick={() => {
                 exportToCSV(filteredComplaints);
                 addToast('📥 Exported analytics report to CSV!', 'success');
               }}
-              style={{ backgroundColor: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}
+              style={{ backgroundColor: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              📥 Export CSV
+              📥
             </button>
 
+            {/* Raise Issue - Icon Only */}
             <button
+              title="Raise New Issue"
               onClick={() => window.location.href = '/dashboard'}
-              style={{ backgroundColor: '#10b981', border: 'none', color: '#ffffff', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', boxShadow: '0 4px 12px rgba(16,185,129,0.3)' }}
+              style={{ backgroundColor: '#10b981', border: 'none', color: '#ffffff', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(16,185,129,0.3)', transition: 'transform 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              📝 Raise Issue ➔
+              ➕
             </button>
 
+            {/* Logout - Icon Only */}
             <button
+              title="Logout"
               onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
-              style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#cbd5e1', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px' }}
+              style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              Logout
+              🚪
             </button>
           </div>
         </div>
@@ -352,12 +359,20 @@ const AdminDashboard = () => {
                   {filteredComplaints.map((c) => {
                     const pStyle = PRIORITY_BADGES[c.priority] || PRIORITY_BADGES.Medium;
                     return (
-                      <tr key={c._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', transition: 'background-color 0.2s' }}
+                      <tr key={c._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', transition: 'background-color 0.2s', cursor: 'pointer' }}
+                        onClick={() => setSelectedComplaint(c)}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(99,102,241,0.05)'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         <td style={{ padding: '20px 24px' }}>
-                          <div style={{ color: theme.textPrimary, fontSize: '15px', fontWeight: '600' }}>{c.title}</div>
+                          <div style={{ color: theme.textPrimary, fontSize: '15px', fontWeight: '600' }}>
+                            {c.title}
+                            {c.comments && c.comments.length > 0 && (
+                              <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
+                                💬 {c.comments.length}
+                              </span>
+                            )}
+                          </div>
                           <div style={{ fontSize: '13px', color: theme.textSecondary, marginTop: '4px' }}>{c.description}</div>
                           {c.aiSummary && (
                             <div style={{ marginTop: '8px', fontSize: '12px', color: theme.isDark ? '#c084fc' : '#7c3aed', backgroundColor: theme.isDark ? 'rgba(168, 85, 247, 0.1)' : 'rgba(124, 58, 237, 0.08)', padding: '6px 12px', borderRadius: '8px', display: 'inline-block' }}>
@@ -365,7 +380,7 @@ const AdminDashboard = () => {
                             </div>
                           )}
                         </td>
-                        <td style={{ padding: '20px' }}>
+                        <td style={{ padding: '20px' }} onClick={(e) => e.stopPropagation()}>
                           <select value={c.category} onChange={(e) => handleCategoryChange(c._id, e.target.value)}
                             style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '13px', cursor: 'pointer' }}>
                             <option value="IT">IT</option>
@@ -384,7 +399,7 @@ const AdminDashboard = () => {
                         <td style={{ padding: '20px' }}>
                           <span style={{ color: '#818cf8', fontWeight: '800', fontSize: '14px' }}>{c.aiConfidence}%</span>
                         </td>
-                        <td style={{ padding: '20px 24px' }}>
+                        <td style={{ padding: '20px 24px' }} onClick={(e) => e.stopPropagation()}>
                           <select value={c.status} disabled={updatingId === c._id}
                             onChange={(e) => handleStatusChange(c._id, e.target.value)}
                             style={{ padding: '8px 14px', borderRadius: '10px', backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: (c.status === 'Resolved' || c.status === 'In Progress') ? '#ffffff' : theme.textPrimary, fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>
@@ -402,6 +417,21 @@ const AdminDashboard = () => {
             </div>
           )}
         </div>
+
+        {/* Issue Discussion & Detail Modal */}
+        {selectedComplaint && (
+          <IssueDetailModal
+            complaint={selectedComplaint}
+            currentUser={user}
+            onClose={() => setSelectedComplaint(null)}
+            onComplaintUpdated={(updatedComplaint) => {
+              setComplaints((prev) =>
+                prev.map((item) => (item._id === updatedComplaint._id ? updatedComplaint : item))
+              );
+              setSelectedComplaint(updatedComplaint);
+            }}
+          />
+        )}
 
       </div>
     </div>
