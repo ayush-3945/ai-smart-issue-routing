@@ -34,6 +34,13 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     default: null
   },
+  attachments: [
+    {
+      url: { type: String, required: true },
+      fileType: { type: String, default: 'image' }, // 'image' | 'document'
+      fileName: { type: String, default: 'Attachment' }
+    }
+  ],
   aiConfidence: {
     type: Number,
     default: 0

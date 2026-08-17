@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
@@ -39,6 +39,12 @@ const Dashboard = () => {
     fetchMyComplaints();
   }, []);
 
+  const handleFileChange = (e) => {
+    if (e.target.files) {
+      setSelectedFiles(Array.from(e.target.files));
+    }
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -47,7 +53,12 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append('title', title);
       formData.append('description', description);
-      if (image) formData.append('image', image);
+      
+      if (selectedFiles.length > 0) {
+        selectedFiles.forEach((file) => {
+          formData.append('files', file);
+        });
+      }
 
       const res = await api.post('/complaints', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -55,7 +66,7 @@ const Dashboard = () => {
 
       setTitle('');
       setDescription('');
-      setImage(null);
+      setSelectedFiles([]);
       addToast(`🤖 "${res.data.complaint?.title || title}" — AI analyzed & submitted!`, 'success', 5000);
       fetchMyComplaints();
     } catch (err) {
@@ -112,57 +123,85 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Issue Submission Form */}
-        <div style={{ backgroundColor: 'rgba(17, 24, 39, 0.75)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '20px', padding: '32px', marginBottom: '36px', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)' }}>
-          <h2 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: '700', color: '#ffffff' }}>🚀 Raise a New Issue</h2>
-          <p style={{ margin: '0 0 20px', color: '#94a3b8', fontSize: '13px' }}>Describe your problem. Google Gemini AI will instantly analyze, prioritize, and route it.</p>
+        {/* Raise Issue Form Card */}
+        <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span style={{ fontSize: '20px' }}>🚀</span>
+            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: theme.textPrimary }}>Raise a New Issue</h2>
+          </div>
+          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>Describe your problem. Google Gemini AI will instantly analyze, prioritize, and route it.</p>
 
-          <form onSubmit={handleCreate}>
-            <div style={{ marginBottom: '18px' }}>
-              <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}>Issue Title</label>
-              <input type="text" required value={title} onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. WiFi connection completely down on 3rd floor office"
-                style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', backgroundColor: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+          <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>Issue Title</label>
+              <input
+                type="text"
+                placeholder="e.g. Salary slip not generated for July month"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                style={{ width: '100%', padding: '14px 18px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
               />
             </div>
 
-            <div style={{ marginBottom: '18px' }}>
-              <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}>Detailed Problem Description</label>
-              <textarea required rows={4} value={description} onChange={(e) => setDescription(e.target.value)}
-                placeholder="Explain what is happening, which systems are affected, and what urgency is needed..."
-                style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', backgroundColor: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>Detailed Problem Description</label>
+              <textarea
+                placeholder="Explain what happened, steps to reproduce, or any relevant details..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                rows={4}
+                style={{ width: '100%', padding: '14px 18px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
               />
             </div>
 
-            <div style={{ marginBottom: '24px' }}>
-              <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}>Attach Screenshot (Optional)</label>
-              <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} style={{ color: '#94a3b8', fontSize: '13px' }} />
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>
+                📎 Attach Documents / Screenshots (Optional, up to 5 files - Images, PDF, Docs)
+              </label>
+              <input
+                type="file"
+                multiple
+                accept="image/*,.pdf,.doc,.docx"
+                onChange={handleFileChange}
+                style={{ color: theme.textSecondary, fontSize: '13px' }}
+              />
+              {selectedFiles.length > 0 && (
+                <div style={{ marginTop: '8px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {selectedFiles.map((f, i) => (
+                    <span key={i} style={{ fontSize: '12px', padding: '4px 10px', borderRadius: '8px', backgroundColor: 'rgba(99,102,241,0.15)', color: '#818cf8', border: '1px solid rgba(99,102,241,0.3)' }}>
+                      📄 {f.name}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
-            <button type="submit" disabled={loading}
-              style={{ width: '100%', padding: '14px', borderRadius: '12px', border: 'none', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', fontSize: '15px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.4)', opacity: loading ? 0.7 : 1 }}
+            <button
+              type="submit"
+              disabled={loading}
+              style={{ padding: '16px', borderRadius: '14px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#ffffff', border: 'none', fontSize: '15px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1, boxShadow: '0 8px 24px rgba(99,102,241,0.4)', transition: 'transform 0.2s' }}
             >
-              {loading ? '🤖 Google Gemini AI Analyzing & Routing...' : 'Submit Issue to AI ➔'}
+              {loading ? '🤖 Gemini AI Analyzing Issue...' : 'Submit Issue to AI ➔'}
             </button>
           </form>
         </div>
 
         {/* Submitted Issues List */}
-        <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: '#ffffff' }}>📜 My Submitted Issues ({complaints.length})</h2>
+        <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: theme.textPrimary }}>📜 My Submitted Issues ({complaints.length})</h2>
         
         {fetching ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[1, 2, 3].map((i) => (
-              <div key={i} style={{ backgroundColor: 'rgba(30, 41, 59, 0.7)', borderRadius: '16px', padding: '24px', animation: 'pulse 1.5s ease-in-out infinite' }}>
+              <div key={i} style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '24px', animation: 'pulse 1.5s ease-in-out infinite' }}>
                 <div style={{ height: '18px', width: '60%', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '8px', marginBottom: '12px' }}></div>
                 <div style={{ height: '14px', width: '90%', backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: '8px', marginBottom: '8px' }}></div>
-                <div style={{ height: '14px', width: '40%', backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: '8px' }}></div>
               </div>
             ))}
-            <style>{`@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }`}</style>
           </div>
         ) : complaints.length === 0 ? (
-          <p style={{ color: '#64748b' }}>No issues filed yet. Submit your first issue above!</p>
+          <p style={{ color: theme.textMuted }}>No issues filed yet. Submit your first issue above!</p>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {complaints.map((c) => (
@@ -177,6 +216,11 @@ const Dashboard = () => {
                     {c.comments && c.comments.length > 0 && (
                       <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
                         💬 {c.comments.length}
+                      </span>
+                    )}
+                    {c.attachments && c.attachments.length > 0 && (
+                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
+                        📎 {c.attachments.length} files
                       </span>
                     )}
                   </h3>

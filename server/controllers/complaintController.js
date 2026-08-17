@@ -5,10 +5,11 @@ const streamifier = require('streamifier');
 const { analyzeComplaint } = require('../services/aiService');
 const { sendComplaintCreatedEmail, sendStatusUpdatedEmail } = require('../services/emailService'); // Day 23 Email Service
 
-const uploadToCloudinary = (buffer) => {
+// Helper to upload buffer to Cloudinary
+const uploadToCloudinary = (buffer, resourceType = 'auto') => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      { folder: 'complaints' },
+      { folder: 'complaints', resource_type: resourceType },
       (error, result) => {
         if (result) resolve(result);
         else reject(error);
@@ -23,9 +24,25 @@ const createComplaint = async (req, res) => {
     const { title, description } = req.body;
 
     let imageUrl = null;
-    if (req.file) {
-      const result = await uploadToCloudinary(req.file.buffer);
-      imageUrl = result.secure_url;
+    let attachments = [];
+
+    // Handle multiple uploaded files (req.files) or single (req.file)
+    const filesToUpload = req.files || (req.file ? [req.file] : []);
+
+    for (const file of filesToUpload) {
+      const isPdfOrDoc = file.mimetype === 'application/pdf' || file.originalname.match(/\.(pdf|doc|docx)$/i);
+      const result = await uploadToCloudinary(file.buffer, isPdfOrDoc ? 'raw' : 'auto');
+
+      const attachmentObj = {
+        url: result.secure_url,
+        fileType: isPdfOrDoc ? 'document' : 'image',
+        fileName: file.originalname
+      };
+      attachments.push(attachmentObj);
+
+      if (!imageUrl && !isPdfOrDoc) {
+        imageUrl = result.secure_url;
+      }
     }
 
     // AI Analysis for Category, Priority, Confidence, Summary & Resolution
@@ -38,6 +55,7 @@ const createComplaint = async (req, res) => {
       priority: req.body.priority || aiAnalysis.priority || 'Medium',
       user: req.user._id,
       image: imageUrl,
+      attachments: attachments,
       aiConfidence: aiAnalysis.confidence || 0,
       aiSummary: aiAnalysis.summary || null,
       suggestedResolution: aiAnalysis.suggestedResolution || null,
@@ -135,9 +153,9 @@ const updateComplaintStatus = async (req, res) => {
     await complaint.save();
 
     // Emit real-time update to the complaint owner only
-    const io = req.app.get('io');
+    const io = req.app.get('io') || req.app.get('socketio');
     if (io) {
-      io.to(`user:${complaint.user.toString()}`).emit('statusUpdated', {
+      io.emit('statusUpdated', {
         complaintId: complaint._id,
         status: complaint.status,
         updatedAt: complaint.updatedAt,
@@ -212,7 +230,7 @@ const addCommentToComplaint = async (req, res) => {
     await complaint.save();
 
     // Real-time socket broadcast to both user and admin channels
-    const io = req.app.get('socketio');
+    const io = req.app.get('socketio') || req.app.get('io');
     if (io) {
       io.emit('newComment', {
         complaintId: complaint._id,

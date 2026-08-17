@@ -13,7 +13,7 @@ const { protect } = require('../middleware/authMiddleware');
 const validateComplaint = require('../middleware/validateComplaint');
 const upload = require('../middleware/upload');
 
-router.post('/', protect, upload.single('image'), validateComplaint, createComplaint);
+router.post('/', protect, upload.array('files', 5), validateComplaint, createComplaint);
 router.get('/my', protect, getMyComplaints);
 router.get('/all', protect, getAllComplaints);
 router.get('/:id', protect, getComplaintById);

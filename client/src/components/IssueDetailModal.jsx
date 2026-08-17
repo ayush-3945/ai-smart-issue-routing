@@ -70,6 +70,10 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
 
   if (!complaint) return null;
 
+  const attachments = complaint.attachments && complaint.attachments.length > 0 
+    ? complaint.attachments 
+    : (complaint.image ? [{ url: complaint.image, fileType: 'image', fileName: 'Screenshot' }] : []);
+
   return (
     <div style={{
       position: 'fixed',
@@ -195,17 +199,37 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
             </div>
           )}
 
-          {/* Screenshot Preview if any */}
-          {complaint.image && (
+          {/* Attachments Section */}
+          {attachments.length > 0 && (
             <div style={{ marginBottom: '24px' }}>
-              <h4 style={{ margin: '0 0 8px', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.5px', color: theme.textMuted }}>
-                Attached Screenshot
+              <h4 style={{ margin: '0 0 10px', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.5px', color: theme.textMuted }}>
+                📎 Attached Files ({attachments.length})
               </h4>
-              <img
-                src={complaint.image}
-                alt="Issue attachment"
-                style={{ maxWidth: '100%', maxHeight: '240px', borderRadius: '12px', border: `1px solid ${theme.cardBorder}`, objectFit: 'cover' }}
-              />
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                {attachments.map((att, i) => (
+                  att.fileType === 'document' ? (
+                    <a
+                      key={i}
+                      href={att.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: '#818cf8', textDecoration: 'none', fontSize: '13px', fontWeight: '600' }}
+                    >
+                      📄 {att.fileName || `Document #${i + 1}`} ➔
+                    </a>
+                  ) : (
+                    <a key={i} href={att.url} target="_blank" rel="noopener noreferrer">
+                      <img
+                        src={att.url}
+                        alt="attachment"
+                        style={{ width: '100px', height: '80px', objectFit: 'cover', borderRadius: '10px', border: `1px solid ${theme.cardBorder}`, cursor: 'pointer', transition: 'transform 0.2s' }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      />
+                    </a>
+                  )
+                ))}
+              </div>
             </div>
           )}
 
