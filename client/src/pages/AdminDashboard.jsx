@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import AnimatedCounter from '../components/AnimatedCounter';
 import { ToastContainer, useToast } from '../components/Toast';
 import { exportToCSV } from '../utils/exportCsv';
@@ -31,7 +31,6 @@ const PRIORITY_BADGES = {
 };
 
 const CATEGORIES = ['All', 'IT', 'HR', 'Finance', 'Operations', 'General'];
-const API_BASE = 'https://ai-smart-issue-routing-production.up.railway.app/api';
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
@@ -51,18 +50,12 @@ const AdminDashboard = () => {
     user = {};
   }
 
-  const getAuthHeaders = () => {
-    const token = localStorage.getItem('accessToken');
-    return { headers: { Authorization: `Bearer ${token}` } };
-  };
-
   const fetchData = async () => {
     try {
       setLoading(true);
-      const headers = getAuthHeaders();
       const [compRes, analRes] = await Promise.all([
-        axios.get(`${API_BASE}/complaints/all`, headers),
-        axios.get(`${API_BASE}/analytics/dashboard`, headers),
+        api.get('/complaints/all'),
+        api.get('/analytics/dashboard'),
       ]);
       setComplaints(compRes.data.complaints || []);
       setAnalytics(analRes.data);
@@ -80,15 +73,11 @@ const AdminDashboard = () => {
   const handleStatusChange = async (id, newStatus) => {
     try {
       setUpdatingId(id);
-      const res = await axios.patch(
-        `${API_BASE}/complaints/${id}/status`,
-        { status: newStatus },
-        getAuthHeaders()
-      );
+      const res = await api.patch(`/complaints/${id}/status`, { status: newStatus });
       setComplaints((prev) =>
         prev.map((c) => (c._id === id ? { ...c, status: res.data.complaint.status } : c))
       );
-      const analRes = await axios.get(`${API_BASE}/analytics/dashboard`, getAuthHeaders());
+      const analRes = await api.get('/analytics/dashboard');
       setAnalytics(analRes.data);
       addToast(`Status updated to "${newStatus}" successfully!`, newStatus === 'Resolved' ? 'success' : 'info');
     } catch (err) {
@@ -100,15 +89,11 @@ const AdminDashboard = () => {
 
   const handleCategoryChange = async (id, newCategory) => {
     try {
-      const res = await axios.patch(
-        `${API_BASE}/complaints/${id}/category`,
-        { category: newCategory },
-        getAuthHeaders()
-      );
+      const res = await api.patch(`/complaints/${id}/category`, { category: newCategory });
       setComplaints((prev) =>
         prev.map((c) => (c._id === id ? { ...c, category: res.data.complaint.category } : c))
       );
-      const analRes = await axios.get(`${API_BASE}/analytics/dashboard`, getAuthHeaders());
+      const analRes = await api.get('/analytics/dashboard');
       setAnalytics(analRes.data);
       addToast(`Category re-classified to "${newCategory}"`, 'info');
     } catch (err) {
