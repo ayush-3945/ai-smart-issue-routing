@@ -6,6 +6,7 @@ import { exportToCSV } from '../utils/exportCsv';
 import ThemeToggle from '../components/ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
 import IssueDetailModal from '../components/IssueDetailModal';
+import NotificationBell from '../components/NotificationBell';
 import {
   PieChart,
   Pie,
@@ -165,6 +166,7 @@ const AdminDashboard = () => {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <ThemeToggle />
+            <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
 
             {/* Admin Avatar - Icon Only */}
             <div title={`${user.name || 'Admin'} (Admin)`} style={{ width: '36px', height: '36px', borderRadius: '12px', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: '800', color: '#fff', cursor: 'default' }}>

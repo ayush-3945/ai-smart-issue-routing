@@ -4,6 +4,7 @@ import { ToastContainer, useToast } from '../components/Toast';
 import ThemeToggle from '../components/ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
 import IssueDetailModal from '../components/IssueDetailModal';
+import NotificationBell from '../components/NotificationBell';
 
 const Dashboard = () => {
   const [complaints, setComplaints] = useState([]);
@@ -83,26 +84,30 @@ const Dashboard = () => {
           
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <ThemeToggle />
+            <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
 
             {/* User Avatar */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '12px', backgroundColor: theme.badgeBg, border: `1px solid ${theme.cardBorder}` }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: 'linear-gradient(135deg, #6366f1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff' }}>
-                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-              </div>
-              <span style={{ fontSize: '13px', fontWeight: '600', color: theme.textPrimary }}>{user.name || 'User'}</span>
+            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '12px', background: 'linear-gradient(135deg, #6366f1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: '800', color: '#fff', cursor: 'default' }}>
+              {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
             </div>
 
             <button
+              title="Admin Command Center"
               onClick={() => window.location.href = '/admin'}
-              style={{ backgroundColor: '#6366f1', border: 'none', color: '#fff', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', boxShadow: '0 4px 12px rgba(99,102,241,0.3)' }}
+              style={{ backgroundColor: '#6366f1', border: 'none', color: '#fff', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(99,102,241,0.3)', transition: 'transform 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              👑 Admin Center ➔
+              👑
             </button>
             <button
+              title="Logout"
               onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
-              style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#cbd5e1', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px' }}
+              style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              Logout
+              🚪
             </button>
           </div>
         </div>
