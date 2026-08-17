@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:5000/api';
+  }
+  return 'https://ai-smart-issue-routing-production.up.railway.app/api';
+};
+
 const api = axios.create({
-  baseURL: 'https://ai-smart-issue-routing-production.up.railway.app/api',
+  baseURL: getBaseURL(),
 });
 
 // Request interceptor
