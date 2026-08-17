@@ -59,6 +59,7 @@ const createComplaint = async (req, res) => {
       aiConfidence: aiAnalysis.confidence || 0,
       aiSummary: aiAnalysis.summary || null,
       suggestedResolution: aiAnalysis.suggestedResolution || null,
+      troubleshootingSteps: aiAnalysis.troubleshootingSteps || [],
     });
 
     await complaint.save();

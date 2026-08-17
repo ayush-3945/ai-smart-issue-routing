@@ -53,6 +53,11 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     default: null
   },
+  troubleshootingSteps: [
+    {
+      type: String
+    }
+  ],
   comments: [
     {
       sender: {

@@ -13,7 +13,12 @@ Return ONLY a valid JSON object with these exact fields:
   "confidence": number between 0 and 100,
   "department": "one of: IT Department, HR Department, Finance Department, Operations Department, General Department",
   "summary": "2-3 line summary of the complaint",
-  "suggestedResolution": "brief suggested next steps for admin"
+  "suggestedResolution": "1-2 line actionable resolution guidance for the support admin team",
+  "troubleshootingSteps": [
+    "Step 1: specific immediate action to diagnose or fix",
+    "Step 2: secondary troubleshooting or verification step",
+    "Step 3: escalation or final resolution step"
+  ]
 }
 
 Return ONLY the JSON, no extra text.`;
@@ -50,7 +55,12 @@ Return ONLY the JSON, no extra text.`;
       confidence: 0,
       department: 'General Department',
       summary: 'AI analysis failed. Manual review required.',
-      suggestedResolution: 'Please manually review and categorize this complaint.'
+      suggestedResolution: 'Please manually review and categorize this complaint.',
+      troubleshootingSteps: [
+        'Verify issue details with the reporting user',
+        'Check system status and related service logs',
+        'Assign to appropriate department lead for resolution'
+      ]
     };
   }
 };

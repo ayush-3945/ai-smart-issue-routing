@@ -181,7 +181,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
           {/* AI Executive Summary Badge */}
           {complaint.aiSummary && (
             <div style={{
-              marginBottom: '24px',
+              marginBottom: '20px',
               padding: '14px 18px',
               borderRadius: '14px',
               background: theme.isDark ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1))' : 'linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(168, 85, 247, 0.06))',
@@ -196,6 +196,61 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
               <p style={{ margin: 0, fontSize: '14px', color: theme.textPrimary, lineHeight: 1.5 }}>
                 {complaint.aiSummary}
               </p>
+            </div>
+          )}
+
+          {/* AI Instant Troubleshooting Recommendations */}
+          {((complaint.troubleshootingSteps && complaint.troubleshootingSteps.length > 0) || complaint.suggestedResolution) && (
+            <div style={{
+              marginBottom: '24px',
+              padding: '16px 20px',
+              borderRadius: '16px',
+              backgroundColor: theme.isDark ? 'rgba(16, 185, 129, 0.08)' : 'rgba(16, 185, 129, 0.06)',
+              border: '1px solid rgba(16, 185, 129, 0.25)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '800', color: '#10b981' }}>
+                  <span>🤖 Gemini Instant Troubleshooting Plan</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const stepsText = complaint.troubleshootingSteps?.length > 0
+                      ? complaint.troubleshootingSteps.join(' | ')
+                      : complaint.suggestedResolution;
+                    setNewComment(`💡 Suggested Action Plan: ${stepsText}`);
+                  }}
+                  style={{
+                    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                    border: '1px solid rgba(16, 185, 129, 0.3)',
+                    color: '#10b981',
+                    fontSize: '11px',
+                    fontWeight: '700',
+                    padding: '4px 10px',
+                    borderRadius: '8px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ⚡ Insert to Reply
+                </button>
+              </div>
+
+              {complaint.suggestedResolution && (
+                <p style={{ margin: '0 0 10px', fontSize: '13px', color: theme.textSecondary, fontStyle: 'italic' }}>
+                  🎯 <strong>Guidance:</strong> {complaint.suggestedResolution}
+                </p>
+              )}
+
+              {complaint.troubleshootingSteps && complaint.troubleshootingSteps.length > 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {complaint.troubleshootingSteps.map((step, idx) => (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: theme.textPrimary }}>
+                      <span style={{ color: '#10b981', fontWeight: '800' }}>✓</span>
+                      <span>{step}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
