@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '../utils/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -28,10 +28,10 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        'https://ai-smart-issue-routing-production.up.railway.app/api/auth/login',
-        { email, password }
-      );
+      const res = await API.post('/auth/login', {
+        email: email.trim().toLowerCase(),
+        password: password.trim()
+      });
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));

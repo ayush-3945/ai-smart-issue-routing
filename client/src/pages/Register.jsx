@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '../utils/api';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('admin');
+  const [role, setRole] = useState('user');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -29,10 +29,12 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        'https://ai-smart-issue-routing-production.up.railway.app/api/auth/register',
-        { name, email, password, role }
-      );
+      const res = await API.post('/auth/register', {
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        password: password.trim(),
+        role
+      });
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
