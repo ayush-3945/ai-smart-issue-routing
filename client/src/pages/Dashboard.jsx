@@ -149,10 +149,10 @@ const Dashboard = () => {
         </div>
 
         {/* Raise Issue Form Card */}
-        <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
+        <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
             <span style={{ fontSize: '20px' }}>🚀</span>
-            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: theme.textPrimary }}>Raise a New Issue</h2>
+            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>Raise a New Issue</h2>
           </div>
           <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>Describe your problem. Google Gemini AI will instantly analyze, prioritize, and route it.</p>
 
