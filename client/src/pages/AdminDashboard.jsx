@@ -387,23 +387,45 @@ const AdminDashboard = () => {
                         </td>
                         <td style={{ padding: '20px' }} onClick={(e) => e.stopPropagation()}>
                           <select value={c.category} onChange={(e) => handleCategoryChange(c._id, e.target.value)}
-                            style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '13px', cursor: 'pointer' }}>
-                            <option value="IT">IT</option>
-                            <option value="HR">HR</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Operations">Operations</option>
-                            <option value="General">General</option>
+                            style={{
+                              padding: '8px 14px',
+                              borderRadius: '12px',
+                              backgroundColor: theme.isDark ? '#1e293b' : '#f8fafc',
+                              border: `1px solid ${theme.isDark ? 'rgba(99, 102, 241, 0.3)' : '#cbd5e1'}`,
+                              color: theme.isDark ? '#ffffff' : '#0f172a',
+                              fontSize: '13px',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              outline: 'none',
+                              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                            }}>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="IT">💻 IT</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="HR">👥 HR</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Finance">💳 Finance</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Operations">🏢 Operations</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="General">🌐 General</option>
                           </select>
                         </td>
                         <td style={{ padding: '20px' }} onClick={(e) => e.stopPropagation()}>
                           <select value={c.assignedTo || 'Unassigned'} onChange={(e) => handleAssigneeChange(c._id, e.target.value)}
-                            style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: '#818cf8', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                            <option value="Vikram Sharma">👤 Vikram Sharma (IT)</option>
-                            <option value="Neha Verma">👤 Neha Verma (HR)</option>
-                            <option value="Rohan Mehta">👤 Rohan Mehta (Finance)</option>
-                            <option value="Pooja Singh">👤 Pooja Singh (Ops)</option>
-                            <option value="Support Desk">👤 Support Desk</option>
-                            <option value="Unassigned">Unassigned</option>
+                            style={{
+                              padding: '8px 14px',
+                              borderRadius: '12px',
+                              backgroundColor: theme.isDark ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.08)',
+                              border: `1px solid ${theme.isDark ? 'rgba(129, 140, 248, 0.4)' : '#a5b4fc'}`,
+                              color: theme.isDark ? '#e0e7ff' : '#4338ca',
+                              fontSize: '13px',
+                              fontWeight: '700',
+                              cursor: 'pointer',
+                              outline: 'none',
+                              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                            }}>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Vikram Sharma">👤 Vikram Sharma (IT)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Neha Verma">👤 Neha Verma (HR)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Rohan Mehta">👤 Rohan Mehta (Finance)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Pooja Singh">👤 Pooja Singh (Ops)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Support Desk">👤 Support Desk</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Unassigned">Unassigned</option>
                           </select>
                         </td>
                         <td style={{ padding: '20px' }}>
@@ -418,11 +440,22 @@ const AdminDashboard = () => {
                         <td style={{ padding: '20px 24px' }} onClick={(e) => e.stopPropagation()}>
                           <select value={c.status} disabled={updatingId === c._id}
                             onChange={(e) => handleStatusChange(c._id, e.target.value)}
-                            style={{ padding: '8px 14px', borderRadius: '10px', backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: (c.status === 'Resolved' || c.status === 'In Progress') ? '#ffffff' : theme.textPrimary, fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>
-                            <option value="Pending">Pending</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Resolved">Resolved</option>
-                            <option value="Closed">Closed</option>
+                            style={{
+                              padding: '8px 14px',
+                              borderRadius: '12px',
+                              backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : (theme.isDark ? '#1e293b' : '#f8fafc'),
+                              border: `1px solid ${c.status === 'Resolved' ? '#059669' : c.status === 'In Progress' ? '#2563eb' : (theme.isDark ? 'rgba(255,255,255,0.1)' : '#cbd5e1')}`,
+                              color: (c.status === 'Resolved' || c.status === 'In Progress') ? '#ffffff' : (theme.isDark ? '#f8fafc' : '#0f172a'),
+                              fontWeight: '700',
+                              fontSize: '13px',
+                              cursor: 'pointer',
+                              outline: 'none',
+                              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                            }}>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Pending">⏳ Pending</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="In Progress">⚡ In Progress</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Resolved">✅ Resolved</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Closed">🔒 Closed</option>
                           </select>
                         </td>
                       </tr>
