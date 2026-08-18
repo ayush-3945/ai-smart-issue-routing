@@ -1,4 +1,11 @@
 {
+  "name": "ai-smart-issue-routing",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server/server.js",
+    "build": "cd client && npm install && npm run build",
+    "server": "cd server && npm start"
+  },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "jest": "^30.4.2",
