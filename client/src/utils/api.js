@@ -39,7 +39,7 @@ api.interceptors.response.use(
         }
 
         const res = await axios.post(
-          'https://ai-smart-issue-routing-production.up.railway.app/api/auth/refresh',
+          `${getBaseURL()}/auth/refresh`,
           { refreshToken }
         );
 
