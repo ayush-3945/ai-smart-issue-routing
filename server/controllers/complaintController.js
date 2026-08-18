@@ -249,6 +249,51 @@ const addCommentToComplaint = async (req, res) => {
   }
 };
 
+// Day 25: AI Duplicate Issue Detection
+const checkDuplicateComplaint = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    if (!title || title.trim().length < 4) {
+      return res.status(200).json({ duplicates: [] });
+    }
+
+    const searchWords = title
+      .trim()
+      .split(/\s+/)
+      .filter((w) => w.length > 3)
+      .slice(0, 4);
+
+    if (searchWords.length === 0) {
+      return res.status(200).json({ duplicates: [] });
+    }
+
+    const regexQuery = searchWords.map((w) => ({
+      $or: [
+        { title: { $regex: w, $options: 'i' } },
+        { description: { $regex: w, $options: 'i' } }
+      ]
+    }));
+
+    // Find active or open complaints matching keywords
+    const potentialDuplicates = await Complaint.find({
+      $and: [
+        { status: { $in: ['Pending', 'In Progress'] } },
+        { $or: regexQuery.flatMap((r) => r.$or) }
+      ]
+    })
+      .select('title category priority status createdAt aiSummary')
+      .limit(3)
+      .lean();
+
+    res.status(200).json({
+      hasDuplicates: potentialDuplicates.length > 0,
+      duplicates: potentialDuplicates
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = { 
   createComplaint, 
   getMyComplaints, 
@@ -256,5 +301,6 @@ module.exports = {
   getComplaintById, 
   updateComplaintStatus,
   updateComplaintCategory,
-  addCommentToComplaint
+  addCommentToComplaint,
+  checkDuplicateComplaint
 };

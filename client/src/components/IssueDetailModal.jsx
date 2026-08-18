@@ -45,7 +45,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
   }, [socket, complaint._id]);
 
   const handleSendComment = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (!newComment.trim() || submitting) return;
 
     setSubmitting(true);
@@ -63,6 +63,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
       setNewComment('');
     } catch (error) {
       console.error('Failed to post comment:', error);
+      alert(error.response?.data?.message || 'Failed to post comment. Please try logging in again.');
     } finally {
       setSubmitting(false);
     }

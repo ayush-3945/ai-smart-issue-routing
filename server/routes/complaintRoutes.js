@@ -7,13 +7,15 @@ const {
   updateComplaintStatus,
   getAllComplaints,
   updateComplaintCategory,
-  addCommentToComplaint
+  addCommentToComplaint,
+  checkDuplicateComplaint
 } = require('../controllers/complaintController');
 const { protect } = require('../middleware/authMiddleware');
 const validateComplaint = require('../middleware/validateComplaint');
 const upload = require('../middleware/upload');
 
 router.post('/', protect, upload.array('files', 5), validateComplaint, createComplaint);
+router.post('/check-duplicate', protect, checkDuplicateComplaint);
 router.get('/my', protect, getMyComplaints);
 router.get('/all', protect, getAllComplaints);
 router.get('/:id', protect, getComplaintById);

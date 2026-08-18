@@ -14,6 +14,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const [duplicates, setDuplicates] = useState([]);
+  const [dismissDuplicateWarning, setDismissDuplicateWarning] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
 
   let user = {};
@@ -38,6 +40,29 @@ const Dashboard = () => {
   useEffect(() => {
     fetchMyComplaints();
   }, []);
+
+  // Debounced AI Duplicate Detection
+  useEffect(() => {
+    if (!title || title.trim().length < 5 || dismissDuplicateWarning) {
+      setDuplicates([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        const res = await api.post('/complaints/check-duplicate', { title });
+        if (res.data?.hasDuplicates) {
+          setDuplicates(res.data.duplicates);
+        } else {
+          setDuplicates([]);
+        }
+      } catch (err) {
+        console.error('Duplicate check error:', err);
+      }
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [title, dismissDuplicateWarning]);
 
   const handleFileChange = (e) => {
     if (e.target.files) {
@@ -138,10 +163,74 @@ const Dashboard = () => {
                 type="text"
                 placeholder="e.g. Salary slip not generated for July month"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                  setDismissDuplicateWarning(false);
+                }}
                 required
                 style={{ width: '100%', padding: '14px 18px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
               />
+
+              {/* AI Duplicate Detection Warning Banner */}
+              {duplicates.length > 0 && !dismissDuplicateWarning && (
+                <div style={{
+                  marginTop: '12px',
+                  padding: '14px 18px',
+                  borderRadius: '14px',
+                  backgroundColor: theme.isDark ? 'rgba(245, 158, 11, 0.12)' : 'rgba(245, 158, 11, 0.08)',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
+                  animation: 'fadeInModal 0.2s ease-out'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '800', color: '#f59e0b' }}>
+                      <span>⚠️ AI Notice: Similar Issue Already Reported!</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setDismissDuplicateWarning(true)}
+                      style={{ background: 'none', border: 'none', color: theme.textMuted, fontSize: '11px', cursor: 'pointer', textDecoration: 'underline' }}
+                    >
+                      Dismiss & Continue
+                    </button>
+                  </div>
+                  <p style={{ margin: '0 0 10px', fontSize: '12px', color: theme.textSecondary }}>
+                    We found existing active tickets matching your problem. Please check if your issue is already being addressed:
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {duplicates.map((dup) => (
+                      <div
+                        key={dup._id}
+                        onClick={() => setSelectedComplaint(dup)}
+                        style={{
+                          padding: '10px 14px',
+                          borderRadius: '10px',
+                          backgroundColor: theme.inputBg,
+                          border: `1px solid ${theme.cardBorder}`,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          transition: 'transform 0.15s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(4px)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(0)'}
+                      >
+                        <div>
+                          <div style={{ fontSize: '13px', fontWeight: '600', color: theme.textPrimary }}>
+                            {dup.title}
+                          </div>
+                          <div style={{ fontSize: '11px', color: theme.textMuted, marginTop: '2px' }}>
+                            📂 {dup.category} • ⚡ {dup.priority} • Status: <strong style={{ color: '#f59e0b' }}>{dup.status}</strong>
+                          </div>
+                        </div>
+                        <span style={{ fontSize: '12px', color: '#818cf8', fontWeight: '700' }}>
+                          View ➔
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div>
