@@ -48,11 +48,27 @@ const createComplaint = async (req, res) => {
     // AI Analysis for Category, Priority, Confidence, Summary & Resolution
     const aiAnalysis = await analyzeComplaint(title, description);
 
+    const category = req.body.category || aiAnalysis.category || 'General';
+    const priority = req.body.priority || aiAnalysis.priority || 'Medium';
+
+    // Smart Department Lead Auto-Assignment
+    const DEPARTMENT_LEADS = {
+      IT: { name: 'Vikram Sharma', role: 'IT Support Lead' },
+      HR: { name: 'Neha Verma', role: 'HR Operations Lead' },
+      Finance: { name: 'Rohan Mehta', role: 'Finance Controller' },
+      Operations: { name: 'Pooja Singh', role: 'Facilities Lead' },
+      General: { name: 'Support Desk', role: 'General Ops' }
+    };
+
+    const leadInfo = DEPARTMENT_LEADS[category] || DEPARTMENT_LEADS.General;
+
     const complaint = new Complaint({
       title,
       description,
-      category: req.body.category || aiAnalysis.category || 'General',
-      priority: req.body.priority || aiAnalysis.priority || 'Medium',
+      category,
+      priority,
+      assignedTo: leadInfo.name,
+      assignedLeadRole: leadInfo.role,
       user: req.user._id,
       image: imageUrl,
       attachments: attachments,
@@ -181,21 +197,66 @@ const updateComplaintStatus = async (req, res) => {
 // Day 22: AI Feedback Loop - Admin Re-classify
 const updateComplaintCategory = async (req, res) => {
   try {
-    const { category, priority } = req.body;
+    const { category, priority, assignedTo } = req.body;
     const complaint = await Complaint.findById(req.params.id);
 
     if (!complaint) {
       return res.status(404).json({ message: 'Complaint not found' });
     }
 
-    if (category) complaint.category = category;
+    if (category) {
+      complaint.category = category;
+      const DEPARTMENT_LEADS = {
+        IT: { name: 'Vikram Sharma', role: 'IT Support Lead' },
+        HR: { name: 'Neha Verma', role: 'HR Operations Lead' },
+        Finance: { name: 'Rohan Mehta', role: 'Finance Controller' },
+        Operations: { name: 'Pooja Singh', role: 'Facilities Lead' },
+        General: { name: 'Support Desk', role: 'General Ops' }
+      };
+      if (!assignedTo) {
+        complaint.assignedTo = DEPARTMENT_LEADS[category]?.name || 'Support Desk';
+        complaint.assignedLeadRole = DEPARTMENT_LEADS[category]?.role || 'General Support';
+      }
+    }
+
     if (priority) complaint.priority = priority;
+    if (assignedTo) complaint.assignedTo = assignedTo;
 
     await complaint.save();
 
     res.status(200).json({
-      message: 'Complaint re-classified successfully by Admin',
+      message: 'Complaint re-classified and assigned successfully',
       complaint,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Re-assign Ticket to Team Member
+const updateComplaintAssignee = async (req, res) => {
+  try {
+    const { assignedTo } = req.body;
+    const complaint = await Complaint.findById(req.params.id);
+
+    if (!complaint) {
+      return res.status(404).json({ message: 'Complaint not found' });
+    }
+
+    complaint.assignedTo = assignedTo || 'Unassigned';
+    await complaint.save();
+
+    const io = req.app.get('socketio') || req.app.get('io');
+    if (io) {
+      io.emit('assigneeUpdated', {
+        complaintId: complaint._id,
+        assignedTo: complaint.assignedTo
+      });
+    }
+
+    res.status(200).json({
+      message: `Ticket reassigned to ${complaint.assignedTo}`,
+      complaint
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -301,6 +362,7 @@ module.exports = {
   getComplaintById, 
   updateComplaintStatus,
   updateComplaintCategory,
+  updateComplaintAssignee,
   addCommentToComplaint,
   checkDuplicateComplaint
 };

@@ -91,13 +91,25 @@ const AdminDashboard = () => {
     try {
       const res = await api.patch(`/complaints/${id}/category`, { category: newCategory });
       setComplaints((prev) =>
-        prev.map((c) => (c._id === id ? { ...c, category: res.data.complaint.category } : c))
+        prev.map((c) => (c._id === id ? { ...c, category: res.data.complaint.category, assignedTo: res.data.complaint.assignedTo } : c))
       );
       const analRes = await api.get('/analytics/dashboard');
       setAnalytics(analRes.data);
-      addToast(`Category re-classified to "${newCategory}"`, 'info');
+      addToast(`Category re-classified to "${newCategory}" & auto-assigned`, 'info');
     } catch (err) {
       addToast(err.response?.data?.message || 'Category update failed', 'error');
+    }
+  };
+
+  const handleAssigneeChange = async (id, newAssignee) => {
+    try {
+      const res = await api.patch(`/complaints/${id}/assignee`, { assignedTo: newAssignee });
+      setComplaints((prev) =>
+        prev.map((c) => (c._id === id ? { ...c, assignedTo: res.data.complaint.assignedTo } : c))
+      );
+      addToast(`Reassigned to ${newAssignee}`, 'success');
+    } catch (err) {
+      addToast(err.response?.data?.message || 'Assignee update failed', 'error');
     }
   };
 
@@ -337,6 +349,7 @@ const AdminDashboard = () => {
                   <tr style={{ backgroundColor: 'rgba(15, 23, 42, 0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                     <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>ISSUE DETAILS</th>
                     <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>AI CATEGORY</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>ASSIGNED LEAD</th>
                     <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>PRIORITY</th>
                     <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>CONFIDENCE</th>
                     <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>LIFECYCLE ACTION</th>
@@ -359,6 +372,11 @@ const AdminDashboard = () => {
                                 💬 {c.comments.length}
                               </span>
                             )}
+                            {c.attachments && c.attachments.length > 0 && (
+                              <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
+                                📎 {c.attachments.length}
+                              </span>
+                            )}
                           </div>
                           <div style={{ fontSize: '13px', color: theme.textSecondary, marginTop: '4px' }}>{c.description}</div>
                           {c.aiSummary && (
@@ -375,6 +393,17 @@ const AdminDashboard = () => {
                             <option value="Finance">Finance</option>
                             <option value="Operations">Operations</option>
                             <option value="General">General</option>
+                          </select>
+                        </td>
+                        <td style={{ padding: '20px' }} onClick={(e) => e.stopPropagation()}>
+                          <select value={c.assignedTo || 'Unassigned'} onChange={(e) => handleAssigneeChange(c._id, e.target.value)}
+                            style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: '#818cf8', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                            <option value="Vikram Sharma">👤 Vikram Sharma (IT)</option>
+                            <option value="Neha Verma">👤 Neha Verma (HR)</option>
+                            <option value="Rohan Mehta">👤 Rohan Mehta (Finance)</option>
+                            <option value="Pooja Singh">👤 Pooja Singh (Ops)</option>
+                            <option value="Support Desk">👤 Support Desk</option>
+                            <option value="Unassigned">Unassigned</option>
                           </select>
                         </td>
                         <td style={{ padding: '20px' }}>

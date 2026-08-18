@@ -30,6 +30,14 @@ const complaintSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  assignedTo: {
+    type: String,
+    default: 'Unassigned'
+  },
+  assignedLeadRole: {
+    type: String,
+    default: 'General Support'
+  },
   image: {
     type: String,
     default: null

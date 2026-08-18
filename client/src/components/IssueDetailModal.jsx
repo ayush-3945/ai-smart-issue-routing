@@ -144,6 +144,19 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
               }}>
                 ● {complaint.status}
               </span>
+              {complaint.assignedTo && complaint.assignedTo !== 'Unassigned' && (
+                <span style={{
+                  padding: '4px 10px',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  fontWeight: '700',
+                  backgroundColor: 'rgba(168, 85, 247, 0.15)',
+                  color: '#c084fc',
+                  border: '1px solid rgba(168, 85, 247, 0.3)'
+                }}>
+                  👤 {complaint.assignedTo} ({complaint.assignedLeadRole || 'Lead'})
+                </span>
+              )}
             </div>
             <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>
               {complaint.title}

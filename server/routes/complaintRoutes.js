@@ -7,6 +7,7 @@ const {
   updateComplaintStatus,
   getAllComplaints,
   updateComplaintCategory,
+  updateComplaintAssignee,
   addCommentToComplaint,
   checkDuplicateComplaint
 } = require('../controllers/complaintController');
@@ -21,6 +22,7 @@ router.get('/all', protect, getAllComplaints);
 router.get('/:id', protect, getComplaintById);
 router.patch('/:id/status', protect, updateComplaintStatus);
 router.patch('/:id/category', protect, updateComplaintCategory);
+router.patch('/:id/assignee', protect, updateComplaintAssignee);
 router.post('/:id/comments', protect, addCommentToComplaint);
 
 module.exports = router;
