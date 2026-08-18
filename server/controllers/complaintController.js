@@ -81,8 +81,12 @@ const createComplaint = async (req, res) => {
     await complaint.save();
 
     // Day 23: Send Async Confirmation Email to User with AI Analysis
-    if (req.user && req.user.email) {
-      sendComplaintCreatedEmail(req.user.email, req.user.name || 'User', complaint);
+    try {
+      if (req.user && req.user.email) {
+        sendComplaintCreatedEmail(req.user.email, req.user.name || 'User', complaint);
+      }
+    } catch (emailErr) {
+      console.warn('Email dispatch failed (non-blocking):', emailErr.message);
     }
 
     res.status(201).json({
@@ -90,7 +94,8 @@ const createComplaint = async (req, res) => {
       complaint,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Complaint creation error:', error);
+    res.status(500).json({ message: error.message || 'Failed to create complaint' });
   }
 };
 
