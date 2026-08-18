@@ -1,12 +1,8 @@
 const multer = require('multer');
 const path = require('path');
 
-// Configure storage in memory or temp
-const storage = multer.diskStorage({
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
-});
+// Memory storage for streamifier buffer upload to Cloudinary
+const storage = multer.memoryStorage();
 
 // File filter for images, pdf and docs
 const fileFilter = (req, file, cb) => {
