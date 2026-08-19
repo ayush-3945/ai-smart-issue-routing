@@ -57,6 +57,14 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     default: null
   },
+  aiSummaryHindi: {
+    type: String,
+    default: null
+  },
+  detectedLanguage: {
+    type: String,
+    default: 'English'
+  },
   suggestedResolution: {
     type: String,
     default: null

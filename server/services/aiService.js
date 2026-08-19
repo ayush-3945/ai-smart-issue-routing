@@ -12,7 +12,9 @@ Return ONLY a valid JSON object with these exact fields:
   "priority": "one of: Low, Medium, High, Critical",
   "confidence": number between 0 and 100,
   "department": "one of: IT Department, HR Department, Finance Department, Operations Department, General Department",
-  "summary": "2-3 line summary of the complaint",
+  "summary": "2-3 line executive summary of the complaint in clear English",
+  "summaryHindi": "2-3 line translation/summary of the complaint in Hindi (Devanagari script)",
+  "detectedLanguage": "English, Hindi, or Hinglish",
   "suggestedResolution": "1-2 line actionable resolution guidance for the support admin team",
   "troubleshootingSteps": [
     "Step 1: specific immediate action to diagnose or fix",

@@ -11,6 +11,8 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
   const [submitting, setSubmitting] = useState(false);
   const messagesEndRef = useRef(null);
 
+  const [lang, setLang] = useState('en');
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -192,23 +194,69 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
             </p>
           </div>
 
-          {/* AI Executive Summary Badge */}
-          {complaint.aiSummary && (
+          {/* AI Executive Summary Badge with Multilingual Translation Toggle */}
+          {(complaint.aiSummary || complaint.aiSummaryHindi) && (
             <div style={{
               marginBottom: '20px',
-              padding: '14px 18px',
-              borderRadius: '14px',
-              background: theme.isDark ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1))' : 'linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(168, 85, 247, 0.06))',
-              border: '1px solid rgba(168, 85, 247, 0.25)'
+              padding: '16px 20px',
+              borderRadius: '16px',
+              background: theme.isDark ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.12))' : 'linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(168, 85, 247, 0.06))',
+              border: '1px solid rgba(168, 85, 247, 0.28)'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px', fontSize: '13px', fontWeight: '700', color: '#c084fc' }}>
-                <span>✨ Gemini AI Executive Brief</span>
-                <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(168, 85, 247, 0.2)', color: '#a855f7' }}>
-                  {complaint.aiConfidence || 95}% Confidence
-                </span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '700', color: '#c084fc' }}>
+                  <span>✨ Gemini AI Executive Brief</span>
+                  <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(168, 85, 247, 0.2)', color: '#a855f7' }}>
+                    {complaint.aiConfidence || 95}% Confidence
+                  </span>
+                  {complaint.detectedLanguage && (
+                    <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(6, 182, 212, 0.15)', color: '#38bdf8' }}>
+                      🌐 {complaint.detectedLanguage}
+                    </span>
+                  )}
+                </div>
+
+                {/* English / Hindi Toggle Buttons */}
+                {complaint.aiSummaryHindi && (
+                  <div style={{ display: 'flex', gap: '4px', backgroundColor: theme.isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.06)', padding: '3px', borderRadius: '8px' }}>
+                    <button
+                      type="button"
+                      onClick={() => setLang('en')}
+                      style={{
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        border: 'none',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        backgroundColor: lang === 'en' ? '#8b5cf6' : 'transparent',
+                        color: lang === 'en' ? '#ffffff' : theme.textMuted
+                      }}
+                    >
+                      EN
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setLang('hi')}
+                      style={{
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        border: 'none',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        backgroundColor: lang === 'hi' ? '#8b5cf6' : 'transparent',
+                        color: lang === 'hi' ? '#ffffff' : theme.textMuted
+                      }}
+                    >
+                      हिन्दी
+                    </button>
+                  </div>
+                )}
               </div>
-              <p style={{ margin: 0, fontSize: '14px', color: theme.textPrimary, lineHeight: 1.5 }}>
-                {complaint.aiSummary}
+
+              <p style={{ margin: 0, fontSize: '14px', color: theme.textPrimary, lineHeight: 1.6 }}>
+                {lang === 'hi' && complaint.aiSummaryHindi ? complaint.aiSummaryHindi : complaint.aiSummary}
               </p>
             </div>
           )}

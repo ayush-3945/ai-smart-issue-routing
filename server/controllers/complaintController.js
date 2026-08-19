@@ -74,6 +74,8 @@ const createComplaint = async (req, res) => {
       attachments: attachments,
       aiConfidence: aiAnalysis.confidence || 0,
       aiSummary: aiAnalysis.summary || null,
+      aiSummaryHindi: aiAnalysis.summaryHindi || null,
+      detectedLanguage: aiAnalysis.detectedLanguage || 'English',
       suggestedResolution: aiAnalysis.suggestedResolution || null,
       troubleshootingSteps: aiAnalysis.troubleshootingSteps || [],
     });
