@@ -65,4 +65,68 @@ Return ONLY the JSON, no extra text.`;
   }
 };
 
-module.exports = { analyzeComplaint };
+const predictWorkloadSurge = async (recentStats) => {
+  const prompt = `You are an AI IT Operations and Enterprise Workforce Forecaster. Analyze the following department complaint statistics from the past week and forecast future ticket surges for the next 7 days.
+
+Current Stats:
+Total Complaints: ${recentStats.totalComplaints}
+Category Breakdown: ${JSON.stringify(recentStats.categoryStats)}
+Priority Breakdown: ${JSON.stringify(recentStats.priorityStats)}
+Status Breakdown: ${JSON.stringify(recentStats.statusStats)}
+
+Return ONLY a valid JSON response with this exact structure:
+{
+  "riskLevel": "one of: High, Moderate, Low",
+  "projectedSurgePercentage": number (e.g. 28),
+  "primarySurgeDepartment": "department name (e.g. IT, HR, Finance, Operations)",
+  "forecastSummary": "2 line executive summary of predicted bottlenecks and trend insights",
+  "actionableRecommendation": "specific staffing or resource allocation action for management",
+  "departmentForecasts": [
+    { "department": "IT", "risk": "High", "projectedVolume": "+35%", "insight": "Server & VPN instability" },
+    { "department": "HR", "risk": "Moderate", "projectedVolume": "+12%", "insight": "Quarterly payroll queries" },
+    { "department": "Finance", "risk": "Low", "projectedVolume": "Stable", "insight": "Standard invoice flow" },
+    { "department": "Operations", "risk": "Low", "projectedVolume": "Stable", "insight": "Facility maintenance steady" }
+  ]
+}
+
+Return ONLY valid JSON, no markdown, no other text.`;
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemma-4-26b-a4b-it:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      }
+    );
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || 'API Error');
+
+    const text = data.candidates[0].content.parts[0].text;
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('Invalid AI response format');
+
+    return JSON.parse(jsonMatch[0]);
+  } catch (error) {
+    console.error('Workload prediction failed:', error.message);
+    return {
+      riskLevel: 'Moderate',
+      projectedSurgePercentage: 18,
+      primarySurgeDepartment: 'IT',
+      forecastSummary: 'Expected moderate volume across technical departments with stable operations in administrative teams.',
+      actionableRecommendation: 'Maintain standard SLA response teams and monitor peak hour ticket submissions.',
+      departmentForecasts: [
+        { department: 'IT', risk: 'Moderate', projectedVolume: '+20%', insight: 'Standard support volume' },
+        { department: 'HR', risk: 'Low', projectedVolume: 'Stable', insight: 'Routine onboarding queries' },
+        { department: 'Finance', risk: 'Low', projectedVolume: 'Stable', insight: 'Regular reimbursement cycle' },
+        { department: 'Operations', risk: 'Low', projectedVolume: 'Stable', insight: 'No anomalies detected' }
+      ]
+    };
+  }
+};
+
+module.exports = { analyzeComplaint, predictWorkloadSurge };

@@ -1,4 +1,5 @@
 const Complaint = require('../models/Complaint');
+const { predictWorkloadSurge } = require('../services/aiService');
 
 const getDashboardAnalytics = async (req, res) => {
   try {
@@ -53,12 +54,21 @@ const getDashboardAnalytics = async (req, res) => {
 
     const totalComplaints = await Complaint.countDocuments();
 
+    // Generate Predictive AI Surge Forecast
+    const predictions = await predictWorkloadSurge({
+      totalComplaints,
+      statusStats,
+      categoryStats,
+      priorityStats
+    });
+
     res.status(200).json({
       totalComplaints,
       statusStats,
       categoryStats,
       priorityStats,
       trendStats,
+      predictions
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
