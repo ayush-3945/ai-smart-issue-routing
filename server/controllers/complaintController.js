@@ -191,10 +191,16 @@ const updateComplaintStatus = async (req, res) => {
       });
     }
 
-    // Day 23: Send Async Status Notification Email to User
-    const user = await User.findById(complaint.user);
-    if (user && user.email) {
-      sendStatusUpdatedEmail(user.email, user.name || 'User', complaint);
+    // Day 23: Send Async Status Notification Email to User (Non-blocking)
+    try {
+      if (complaint.user) {
+        const user = await User.findById(complaint.user);
+        if (user && user.email) {
+          sendStatusUpdatedEmail(user.email, user.name || 'User', complaint);
+        }
+      }
+    } catch (emailErr) {
+      console.warn('Status update email failed (non-blocking):', emailErr.message);
     }
 
     res.json({
