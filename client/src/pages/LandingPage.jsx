@@ -62,10 +62,98 @@ const LandingPage = () => {
         </div>
 
         {/* Trust badges */}
-        <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.7 }}>
-          <span style={{ fontSize: '13px', color: theme.textMuted, fontWeight: '600' }}>🔒 Enterprise-Grade Security</span>
-          <span style={{ fontSize: '13px', color: theme.textMuted, fontWeight: '600' }}>⚡ Real-Time Processing</span>
-          <span style={{ fontSize: '13px', color: theme.textMuted, fontWeight: '600' }}>🧠 95%+ AI Accuracy</span>
+        <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
+          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '700' }}>🔒 Enterprise-Grade Security</span>
+          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '700' }}>⚡ Real-Time WebSockets</span>
+          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '700' }}>🧠 98% AI Diagnostic Precision</span>
+        </div>
+
+        {/* Linear/Reflect Style 3D Holographic App Window Showcase */}
+        <div style={{
+          marginTop: '64px',
+          position: 'relative',
+          borderRadius: '24px',
+          padding: '12px',
+          background: 'linear-gradient(180deg, rgba(139, 92, 246, 0.4) 0%, rgba(6, 182, 212, 0.1) 50%, rgba(0, 0, 0, 0.8) 100%)',
+          boxShadow: '0 30px 100px -20px rgba(139, 92, 246, 0.5), 0 0 50px rgba(6, 182, 212, 0.2)'
+        }}>
+          {/* Black Hole Event Horizon Halo Glow */}
+          <div style={{
+            position: 'absolute',
+            top: '-40px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '80%',
+            height: '140px',
+            background: 'radial-gradient(ellipse at center, rgba(139, 92, 246, 0.6) 0%, rgba(6, 182, 212, 0.3) 40%, transparent 80%)',
+            filter: 'blur(30px)',
+            pointerEvents: 'none',
+            zIndex: 0
+          }}></div>
+
+          <div style={{
+            position: 'relative',
+            borderRadius: '18px',
+            overflow: 'hidden',
+            backgroundColor: '#07090e',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            zIndex: 1
+          }}>
+            {/* Window Top Header Bar */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '12px 20px',
+              backgroundColor: 'rgba(15, 17, 26, 0.9)',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+            }}>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <span style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#ef4444' }}></span>
+                <span style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#f59e0b' }}></span>
+                <span style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
+              </div>
+              <span style={{ fontSize: '12px', fontWeight: '700', color: '#94a3b8', letterSpacing: '0.5px' }}>
+                app.smartissue.ai • Live Command Hub
+              </span>
+              <span style={{ fontSize: '11px', padding: '3px 10px', borderRadius: '12px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981', fontWeight: '800' }}>
+                ● SYSTEM OPERATIONAL
+              </span>
+            </div>
+
+            {/* Mock Dashboard Preview Content */}
+            <div style={{ padding: '24px', textAlign: 'left' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px', marginBottom: '20px' }}>
+                <div style={{ padding: '16px', borderRadius: '14px', backgroundColor: 'rgba(18, 21, 33, 0.8)', border: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                  <span style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '700' }}>TOTAL TICKETS</span>
+                  <div style={{ fontSize: '24px', fontWeight: '900', color: '#ffffff', marginTop: '4px' }}>1,482</div>
+                </div>
+                <div style={{ padding: '16px', borderRadius: '14px', backgroundColor: 'rgba(18, 21, 33, 0.8)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                  <span style={{ fontSize: '11px', color: '#10b981', textTransform: 'uppercase', fontWeight: '700' }}>AI ACCURACY</span>
+                  <div style={{ fontSize: '24px', fontWeight: '900', color: '#10b981', marginTop: '4px' }}>98.4%</div>
+                </div>
+                <div style={{ padding: '16px', borderRadius: '14px', backgroundColor: 'rgba(18, 21, 33, 0.8)', border: '1px solid rgba(6, 182, 212, 0.2)' }}>
+                  <span style={{ fontSize: '11px', color: '#38bdf8', textTransform: 'uppercase', fontWeight: '700' }}>AVG RESOLUTION</span>
+                  <div style={{ fontSize: '24px', fontWeight: '900', color: '#38bdf8', marginTop: '4px' }}>12 Mins</div>
+                </div>
+              </div>
+
+              {/* Sample High-Priority AI Incident Pill */}
+              <div style={{ padding: '14px 18px', borderRadius: '14px', backgroundColor: 'rgba(139, 92, 246, 0.1)', border: '1px solid rgba(139, 92, 246, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                <div>
+                  <div style={{ fontSize: '13px', fontWeight: '800', color: '#f8fafc' }}>
+                    🚨 Payment Webhook Spike Detected • Routing to Vikram Sharma (IT Lead)
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '2px' }}>
+                    Gemini 1.5 Flash generated 3-step action plan in 1.4s
+                  </div>
+                </div>
+                <span style={{ fontSize: '11px', fontWeight: '800', padding: '4px 12px', borderRadius: '20px', backgroundColor: '#8b5cf6', color: '#ffffff' }}>
+                  AUTO-RESOLVING ⚡
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
