@@ -218,7 +218,7 @@ const AdminDashboard = () => {
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
-            <span style={{ color: theme.textSecondary, fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Issues</span>
+            <span style={{ color: theme.textSecondary, fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('totalIssues')}</span>
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={total} color={theme.textPrimary} /></div>
           </div>
 
@@ -226,7 +226,7 @@ const AdminDashboard = () => {
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
-            <span style={{ color: '#d97706', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Pending Review</span>
+            <span style={{ color: '#d97706', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('pendingReview')}</span>
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={pending} color="#d97706" /></div>
           </div>
 
@@ -234,7 +234,7 @@ const AdminDashboard = () => {
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
-            <span style={{ color: '#2563eb', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>In Progress</span>
+            <span style={{ color: '#2563eb', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('inProgress')}</span>
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={inProgress} color="#2563eb" /></div>
           </div>
 
@@ -242,7 +242,7 @@ const AdminDashboard = () => {
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
-            <span style={{ color: '#059669', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Resolved / Closed</span>
+            <span style={{ color: '#059669', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('resolvedClosed')}</span>
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={resolved} color="#059669" /></div>
           </div>
         </div>
@@ -251,7 +251,7 @@ const AdminDashboard = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '36px' }}>
           
           <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>🍩 Category AI Distribution</h3>
+            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>🍩 {t('categoryAiDistribution')}</h3>
             {categoryData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <PieChart>
@@ -270,7 +270,7 @@ const AdminDashboard = () => {
           </div>
 
           <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>📊 Priority Breakdown</h3>
+            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>📊 {t('priorityBreakdown')}</h3>
             {priorityData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <BarChart data={priorityData}>
@@ -290,7 +290,7 @@ const AdminDashboard = () => {
           </div>
 
           <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>📈 7-Day Velocity</h3>
+            <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>📈 {t('sevenDayVelocity')}</h3>
             {trendData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <LineChart data={trendData}>
@@ -324,10 +324,10 @@ const AdminDashboard = () => {
                 <span style={{ fontSize: '24px' }}>🔮</span>
                 <div>
                   <h3 className="gradient-text" style={{ margin: 0, fontSize: '18px', fontWeight: '800' }}>
-                    Gemini AI Workload & Surge Prediction (Next 7 Days)
+                    {t('geminiWorkloadPrediction')}
                   </h3>
                   <p style={{ margin: '2px 0 0', fontSize: '13px', color: theme.textSecondary }}>
-                    Predictive queue intelligence forecasting department bottlenecks and surge velocity.
+                    {t('predictiveQueueIntel')}
                   </p>
                 </div>
               </div>
@@ -342,7 +342,7 @@ const AdminDashboard = () => {
                   color: analytics.predictions.riskLevel === 'High' ? '#ef4444' : '#f59e0b',
                   border: `1px solid ${analytics.predictions.riskLevel === 'High' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(245, 158, 11, 0.3)'}`
                 }}>
-                  ● Surge Risk: {analytics.predictions.riskLevel} ({analytics.predictions.projectedSurgePercentage || 25}%)
+                  ● {t('surgeRisk')}: {analytics.predictions.riskLevel} ({analytics.predictions.projectedSurgePercentage || 25}%)
                 </span>
                 <span style={{
                   padding: '6px 14px',
@@ -353,7 +353,7 @@ const AdminDashboard = () => {
                   color: '#818cf8',
                   border: '1px solid rgba(99, 102, 241, 0.3)'
                 }}>
-                  Primary Spike: {analytics.predictions.primarySurgeDepartment || 'IT'}
+                  {t('primarySpike')}: {analytics.predictions.primarySurgeDepartment || 'IT'}
                 </span>
               </div>
             </div>
@@ -366,10 +366,10 @@ const AdminDashboard = () => {
               marginBottom: '20px'
             }}>
               <p style={{ margin: '0 0 8px', fontSize: '14px', color: theme.textPrimary, lineHeight: 1.6 }}>
-                📊 <strong>Executive Forecast:</strong> {analytics.predictions.forecastSummary}
+                📊 <strong>{t('executiveForecast')}:</strong> {analytics.predictions.forecastSummary}
               </p>
               <p style={{ margin: 0, fontSize: '13px', color: '#10b981', fontWeight: '600' }}>
-                💡 <strong>Staffing Action:</strong> {analytics.predictions.actionableRecommendation}
+                💡 <strong>{t('staffingAction')}:</strong> {analytics.predictions.actionableRecommendation}
               </p>
             </div>
 
@@ -412,18 +412,18 @@ const AdminDashboard = () => {
         <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, padding: '20px 24px', borderRadius: '20px', marginBottom: '28px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ flex: '1 1 340px' }}>
-              <input type="text" placeholder="🔍 Search issues by title, description or author..."
+              <input type="text" placeholder={`🔍 ${t('searchPlaceholder')}`}
                 value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
                 style={{ width: '100%', padding: '14px 20px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
               />
             </div>
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '13px', fontWeight: '600', color: theme.textSecondary }}>Category:</span>
+              <span style={{ fontSize: '13px', fontWeight: '600', color: theme.textSecondary }}>{t('categoryFilter')}:</span>
               {CATEGORIES.map((cat) => (
                 <button key={cat} onClick={() => setSelectedCategory(cat)}
                   style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#6366f1' : theme.cardBorder, backgroundColor: selectedCategory === cat ? '#6366f1' : theme.badgeBg, color: selectedCategory === cat ? '#ffffff' : theme.textSecondary, fontSize: '13px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}
                 >
-                  {cat}
+                  {cat === 'All' ? t('all') : cat}
                 </button>
               ))}
             </div>
@@ -433,7 +433,7 @@ const AdminDashboard = () => {
         {/* Complaints Table */}
         <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', overflow: 'hidden', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
           <div style={{ padding: '20px 24px', borderBottom: `1px solid ${theme.tableRowBorder}` }}>
-            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: theme.textPrimary }}>📋 Active Issues Queue ({filteredComplaints.length})</h2>
+            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: theme.textPrimary }}>📋 {t('activeIssuesQueue')} ({filteredComplaints.length})</h2>
           </div>
 
           {loading ? (
@@ -453,12 +453,12 @@ const AdminDashboard = () => {
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ backgroundColor: 'rgba(15, 23, 42, 0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>ISSUE DETAILS</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>AI CATEGORY</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>ASSIGNED LEAD</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>PRIORITY</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>CONFIDENCE</th>
-                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>LIFECYCLE ACTION</th>
+                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableIssueDetails')}</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableAiCategory')}</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableAssignedLead')}</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tablePriority')}</th>
+                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableConfidence')}</th>
+                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableLifecycleAction')}</th>
                   </tr>
                 </thead>
                 <tbody>
