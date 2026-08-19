@@ -31,26 +31,32 @@ const LandingPage = () => {
         {/* Ambient Glow */}
         <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(99,102,241,0.2) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
-        <div style={{ display: 'inline-block', padding: '6px 16px', borderRadius: '20px', backgroundColor: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', fontSize: '13px', fontWeight: '600', color: '#6366f1', marginBottom: '24px' }}>
-          🤖 Powered by Google Gemini AI
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 20px', borderRadius: '30px', backgroundColor: 'rgba(139, 92, 246, 0.12)', border: '1px solid rgba(139, 92, 246, 0.3)', fontSize: '13px', fontWeight: '700', color: '#c084fc', marginBottom: '28px', boxShadow: '0 0 20px -5px rgba(139, 92, 246, 0.3)' }}>
+          <span>✨</span> Powered by Google Gemini 1.5 Flash
         </div>
 
-        <h1 style={{ fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: '900', lineHeight: 1.1, letterSpacing: '-1.5px', margin: '0 0 20px', color: theme.textPrimary }}>
+        <h1 style={{ fontSize: 'clamp(40px, 6vw, 72px)', fontWeight: '900', lineHeight: 1.05, letterSpacing: '-0.04em', margin: '0 0 24px', color: '#ffffff' }}>
           Resolve Issues <br />
-          <span style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <span style={{ background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 35px rgba(139, 92, 246, 0.4))' }}>
             Before They Escalate
           </span>
         </h1>
 
-        <p style={{ fontSize: '18px', color: theme.textSecondary, lineHeight: 1.7, maxWidth: '620px', margin: '0 auto 40px' }}>
-          AI-powered issue routing that automatically classifies, prioritizes, and assigns complaints to the right team — in seconds, not days.
+        <p style={{ fontSize: '19px', color: '#94a3b8', lineHeight: 1.7, maxWidth: '640px', margin: '0 auto 44px', fontWeight: '400', letterSpacing: '-0.01em' }}>
+          AI-powered autonomous incident routing that automatically classifies, prioritizes, and assigns complaints to the right lead — in seconds, not days.
         </p>
 
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/register" style={{ padding: '16px 36px', borderRadius: '14px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', textDecoration: 'none', fontSize: '16px', fontWeight: '700', boxShadow: '0 12px 32px rgba(99,102,241,0.4)', transition: 'transform 0.2s' }}>
+        <div style={{ display: 'flex', gap: '18px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link to="/register" style={{ padding: '16px 38px', borderRadius: '16px', background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)', color: '#fff', textDecoration: 'none', fontSize: '16px', fontWeight: '800', letterSpacing: '-0.02em', boxShadow: '0 15px 35px -5px rgba(139, 92, 246, 0.5), 0 0 20px rgba(99, 102, 241, 0.3)', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)' }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
             Start Routing Issues ➔
           </Link>
-          <Link to="/login" style={{ padding: '16px 36px', borderRadius: '14px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontSize: '16px', fontWeight: '600', backgroundColor: theme.cardBg }}>
+          <Link to="/login" style={{ padding: '16px 38px', borderRadius: '16px', border: '1px solid rgba(139, 92, 246, 0.3)', color: '#ffffff', textDecoration: 'none', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.02em', backgroundColor: 'rgba(15, 17, 26, 0.8)', backdropFilter: 'blur(12px)', transition: 'all 0.2s ease' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(25, 29, 45, 0.9)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(15, 17, 26, 0.8)'}
+          >
             View Live Demo
           </Link>
         </div>
