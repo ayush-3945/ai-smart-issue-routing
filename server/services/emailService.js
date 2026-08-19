@@ -75,14 +75,15 @@ const sendStatusUpdatedEmail = async (userEmail, userName, complaint) => {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; borderRadius: 12px;">
         <h2 style="color: #10b981;">🔄 Complaint Status Updated</h2>
         <p>Hi <strong>${userName}</strong>,</p>
-        <p>Your complaint status has been updated by our admin team.</p>
+        <p>The status of your complaint has been updated by the administration team.</p>
         
-        <div style="background-color: #f0fdf4; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #dcfce7;">
-          <p><strong>📌 Issue:</strong> ${complaint.title}</p>
-          <p><strong>🚦 New Status:</strong> <span style="color: #15803d; font-weight: bold; font-size: 16px;">${complaint.status}</span></p>
+        <div style="background-color: #f8fafc; padding: 16px; border-radius: 8px; margin: 16px 0;">
+          <p><strong>📌 Title:</strong> ${complaint.title}</p>
+          <p><strong>● New Status:</strong> <span style="color: #10b981; font-weight: bold;">${complaint.status}</span></p>
+          <p><strong>🏷️ Category:</strong> ${complaint.category}</p>
         </div>
 
-        <p style="color: #64748b; font-size: 14px;">You can view the full live tracking on your dashboard.</p>
+        <p style="color: #64748b; font-size: 14px;">You can view the full progress and resolution history on your user dashboard.</p>
         <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
         <p style="font-size: 12px; color: #94a3b8;">AI Smart Issue Routing System</p>
       </div>
@@ -95,13 +96,66 @@ const sendStatusUpdatedEmail = async (userEmail, userName, complaint) => {
       html: htmlContent,
     });
 
-    console.log('📧 Status Email sent:', info.messageId);
-    if (nodemailer.getTestMessageUrl(info)) {
-      console.log('🔗 Preview Email URL:', nodemailer.getTestMessageUrl(info));
-    }
+    console.log('📧 Status Updated Email sent:', info.messageId);
   } catch (error) {
-    console.error('Status Email sending failed:', error.message);
+    console.error('Failed to send status update email:', error.message);
   }
 };
 
-module.exports = { sendComplaintCreatedEmail, sendStatusUpdatedEmail };
+// 3. Discord & Slack Webhook Dispatcher
+const sendWebhookAlert = async (webhookUrl, complaint) => {
+  if (!webhookUrl) return;
+
+  const isDiscord = webhookUrl.includes('discord.com') || webhookUrl.includes('discordapp.com');
+  const isCritical = complaint.priority === 'Critical';
+
+  try {
+    if (isDiscord) {
+      const payload = {
+        username: 'SmartIssue AI Bot',
+        avatar_url: 'https://cdn-icons-png.flaticon.com/512/4712/4712038.png',
+        embeds: [
+          {
+            title: `🚨 ${isCritical ? '[CRITICAL SURGE ALERT]' : '[NEW ISSUE DISPATCHED]'} ${complaint.title}`,
+            description: complaint.aiSummary || complaint.description,
+            color: isCritical ? 15548997 : complaint.priority === 'High' ? 15105570 : 5793266,
+            fields: [
+              { name: '📂 Department', value: complaint.category || 'General', inline: true },
+              { name: '⚡ Priority', value: complaint.priority || 'Medium', inline: true },
+              { name: '👤 Assigned Lead', value: complaint.assignedTo || 'Support Desk', inline: true },
+              { name: '🤖 AI Confidence', value: `${complaint.aiConfidence || 95}%`, inline: true },
+              { name: '● Status', value: complaint.status || 'Pending', inline: true }
+            ],
+            footer: { text: 'SmartIssue AI • Autonomous Incident Routing' },
+            timestamp: new Date().toISOString()
+          }
+        ]
+      };
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      console.log('✅ Discord webhook alert dispatched successfully');
+    } else {
+      // Slack Webhook Format
+      const payload = {
+        text: `🚨 *${isCritical ? '[CRITICAL ALERT]' : '[NEW TICKET]'}* *${complaint.title}*\n*Category:* ${complaint.category} | *Priority:* ${complaint.priority} | *Assigned:* ${complaint.assignedTo}\n*AI Summary:* ${complaint.aiSummary || complaint.description}`
+      };
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      console.log('✅ Slack webhook alert dispatched successfully');
+    }
+  } catch (err) {
+    console.warn('Webhook dispatch failed (non-blocking):', err.message);
+  }
+};
+
+module.exports = {
+  sendComplaintCreatedEmail,
+  sendStatusUpdatedEmail,
+  sendWebhookAlert
+};

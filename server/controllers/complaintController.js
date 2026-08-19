@@ -3,7 +3,7 @@ const User = require('../models/User'); // Import User model for emails
 const cloudinary = require('../config/cloudinary');
 const streamifier = require('streamifier');
 const { analyzeComplaint } = require('../services/aiService');
-const { sendComplaintCreatedEmail, sendStatusUpdatedEmail } = require('../services/emailService'); // Day 23 Email Service
+const { sendComplaintCreatedEmail, sendStatusUpdatedEmail, sendWebhookAlert } = require('../services/emailService'); // Day 23 Email & Webhook Service
 
 // Helper to upload buffer to Cloudinary
 const uploadToCloudinary = (buffer, resourceType = 'auto') => {
@@ -85,8 +85,13 @@ const createComplaint = async (req, res) => {
       if (req.user && req.user.email) {
         sendComplaintCreatedEmail(req.user.email, req.user.name || 'User', complaint);
       }
-    } catch (emailErr) {
-      console.warn('Email dispatch failed (non-blocking):', emailErr.message);
+      // Phase 3: Trigger Discord/Slack Webhook Alert for Support Channels
+      const webhookUrl = process.env.DISCORD_WEBHOOK_URL || process.env.SLACK_WEBHOOK_URL;
+      if (webhookUrl) {
+        sendWebhookAlert(webhookUrl, complaint);
+      }
+    } catch (dispatchErr) {
+      console.warn('Notification dispatch failed (non-blocking):', dispatchErr.message);
     }
 
     res.status(201).json({
