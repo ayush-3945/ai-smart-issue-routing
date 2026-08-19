@@ -22,16 +22,18 @@ const generateRefreshToken = (user) => {
 const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPassword = password.trim();
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: cleanEmail });
     if (existingUser) {
       return res.status(400).json({ message: 'User with this email already exists' });
     }
 
     const user = new User({
-      name,
-      email,
-      password,
+      name: name.trim(),
+      email: cleanEmail,
+      password: cleanPassword,
       role: role || 'user',
     });
 
