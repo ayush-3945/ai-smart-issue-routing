@@ -4,7 +4,9 @@ import AnimatedCounter from '../components/AnimatedCounter';
 import { ToastContainer, useToast } from '../components/Toast';
 import { exportToCSV } from '../utils/exportCsv';
 import ThemeToggle from '../components/ThemeToggle';
+import LanguageToggle from '../components/LanguageToggle';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import IssueDetailModal from '../components/IssueDetailModal';
 import NotificationBell from '../components/NotificationBell';
 import {
@@ -143,6 +145,7 @@ const AdminDashboard = () => {
   const resolved = complaints.filter((c) => c.status === 'Resolved' || c.status === 'Closed').length;
 
   const { theme } = useTheme();
+  const { t } = useLanguage();
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 24px', transition: 'all 0.3s ease' }}>
@@ -155,13 +158,14 @@ const AdminDashboard = () => {
             <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '10px 14px', borderRadius: '12px', fontSize: '20px' }}>⚡</div>
             <div>
               <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px', color: theme.textPrimary }}>
-                SmartIssue <span style={{ background: 'linear-gradient(90deg, #818cf8, #c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>AI Command Center</span>
+                {t('adminCommandCenter')}
               </h1>
-              <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '14px' }}>Autonomous Issue Classification & Real-Time Resolution Ops</p>
+              <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '14px' }}>{t('adminSubtitle')}</p>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <LanguageToggle />
             <ThemeToggle />
             <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
 
@@ -172,7 +176,7 @@ const AdminDashboard = () => {
 
             {/* Export CSV - Icon Only */}
             <button
-              title="Export CSV Report"
+              title={t('exportCsv')}
               onClick={() => {
                 exportToCSV(filteredComplaints);
                 addToast('📥 Exported analytics report to CSV!', 'success');
@@ -186,18 +190,18 @@ const AdminDashboard = () => {
 
             {/* Raise Issue - Icon Only */}
             <button
-              title="Raise New Issue"
+              title={t('userView')}
               onClick={() => window.location.href = '/dashboard'}
               style={{ backgroundColor: '#10b981', border: 'none', color: '#ffffff', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(16,185,129,0.3)', transition: 'transform 0.2s' }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              ➕
+              🚀
             </button>
 
             {/* Logout - Icon Only */}
             <button
-              title="Logout"
+              title={t('signOut')}
               onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
               style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}

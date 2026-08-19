@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { ToastContainer, useToast } from '../components/Toast';
 import ThemeToggle from '../components/ThemeToggle';
+import LanguageToggle from '../components/LanguageToggle';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import IssueDetailModal from '../components/IssueDetailModal';
 import NotificationBell from '../components/NotificationBell';
 
@@ -17,6 +19,7 @@ const Dashboard = () => {
   const [duplicates, setDuplicates] = useState([]);
   const [dismissDuplicateWarning, setDismissDuplicateWarning] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
+  const { t } = useLanguage();
 
   let user = {};
   try {
@@ -108,17 +111,18 @@ const Dashboard = () => {
       <ToastContainer toasts={toasts} removeToast={removeToast} />
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         
-        {/* Top Navbar */}
+        {/* Top Navbar Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '8px 12px', borderRadius: '10px', fontSize: '18px' }}>⚡</div>
             <div>
-              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: theme.textPrimary }}>SmartIssue Portal</h1>
-              <p style={{ margin: '2px 0 0', color: theme.textSecondary, fontSize: '13px' }}>AI-Powered Automated Categorization & Fast Resolution</p>
+              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
+              <p style={{ margin: '2px 0 0', color: theme.textSecondary, fontSize: '13px' }}>{t('appSubtitle')}</p>
             </div>
           </div>
           
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <LanguageToggle />
             <ThemeToggle />
             <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
 
@@ -128,7 +132,7 @@ const Dashboard = () => {
             </div>
 
             <button
-              title="Admin Command Center"
+              title={t('adminView')}
               onClick={() => window.location.href = '/admin'}
               style={{ backgroundColor: '#6366f1', border: 'none', color: '#fff', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(99,102,241,0.3)', transition: 'transform 0.2s' }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
@@ -137,7 +141,7 @@ const Dashboard = () => {
               👑
             </button>
             <button
-              title="Logout"
+              title={t('signOut')}
               onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
               style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
@@ -152,16 +156,16 @@ const Dashboard = () => {
         <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
             <span style={{ fontSize: '20px' }}>🚀</span>
-            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>Raise a New Issue</h2>
+            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>{t('raiseIssueTitle')}</h2>
           </div>
-          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>Describe your problem. Google Gemini AI will instantly analyze, prioritize, and route it.</p>
+          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>{t('raiseIssueSubtitle')}</p>
 
           <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>Issue Title</label>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>{t('issueTitleLabel')}</label>
               <input
                 type="text"
-                placeholder="e.g. Salary slip not generated for July month"
+                placeholder={t('issueTitlePlaceholder')}
                 value={title}
                 onChange={(e) => {
                   setTitle(e.target.value);
@@ -179,53 +183,64 @@ const Dashboard = () => {
                   borderRadius: '14px',
                   backgroundColor: theme.isDark ? 'rgba(245, 158, 11, 0.12)' : 'rgba(245, 158, 11, 0.08)',
                   border: '1px solid rgba(245, 158, 11, 0.3)',
-                  animation: 'fadeInModal 0.2s ease-out'
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '800', color: '#f59e0b' }}>
-                      <span>⚠️ AI Notice: Similar Issue Already Reported!</span>
-                    </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '13px', fontWeight: '700', color: '#f59e0b', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      {t('duplicateAlertTitle')}
+                    </span>
                     <button
                       type="button"
                       onClick={() => setDismissDuplicateWarning(true)}
-                      style={{ background: 'none', border: 'none', color: theme.textMuted, fontSize: '11px', cursor: 'pointer', textDecoration: 'underline' }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: theme.textMuted,
+                        fontSize: '11px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        textDecoration: 'underline'
+                      }}
                     >
-                      Dismiss & Continue
+                      {t('dismissContinue')}
                     </button>
                   </div>
-                  <p style={{ margin: '0 0 10px', fontSize: '12px', color: theme.textSecondary }}>
-                    We found existing active tickets matching your problem. Please check if your issue is already being addressed:
+                  <p style={{ margin: 0, fontSize: '12px', color: theme.textSecondary, lineHeight: 1.4 }}>
+                    {t('duplicateAlertDesc')}
                   </p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     {duplicates.map((dup) => (
-                      <div
-                        key={dup._id}
-                        onClick={() => setSelectedComplaint(dup)}
-                        style={{
-                          padding: '10px 14px',
-                          borderRadius: '10px',
-                          backgroundColor: theme.inputBg,
-                          border: `1px solid ${theme.cardBorder}`,
-                          cursor: 'pointer',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          transition: 'transform 0.15s'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(4px)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(0)'}
-                      >
+                      <div key={dup._id} style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.8)' : '#ffffff',
+                        padding: '10px 14px',
+                        borderRadius: '10px',
+                        border: `1px solid ${theme.cardBorder}`
+                      }}>
                         <div>
-                          <div style={{ fontSize: '13px', fontWeight: '600', color: theme.textPrimary }}>
-                            {dup.title}
-                          </div>
+                          <div style={{ fontSize: '13px', fontWeight: '700', color: theme.textPrimary }}>{dup.title}</div>
                           <div style={{ fontSize: '11px', color: theme.textMuted, marginTop: '2px' }}>
-                            📂 {dup.category} • ⚡ {dup.priority} • Status: <strong style={{ color: '#f59e0b' }}>{dup.status}</strong>
+                            📁 {dup.category} • ⚡ {dup.priority} • Status: <span style={{ color: '#f59e0b', fontWeight: '600' }}>{dup.status}</span>
                           </div>
                         </div>
-                        <span style={{ fontSize: '12px', color: '#818cf8', fontWeight: '700' }}>
-                          View ➔
-                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedComplaint(dup)}
+                          style={{
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            color: '#8b5cf6',
+                            fontSize: '12px',
+                            fontWeight: '700',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {t('viewMatch')}
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -234,9 +249,9 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>Detailed Problem Description</label>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>{t('problemDescriptionLabel')}</label>
               <textarea
-                placeholder="Explain what happened, steps to reproduce, or any relevant details..."
+                placeholder={t('problemDescriptionPlaceholder')}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
@@ -245,40 +260,57 @@ const Dashboard = () => {
               />
             </div>
 
+            {/* Multi-File Upload Component */}
             <div>
               <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>
-                📎 Attach Documents / Screenshots (Optional, up to 5 files - Images, PDF, Docs)
+                📎 {t('attachmentsLabel')}
               </label>
               <input
                 type="file"
                 multiple
-                accept="image/*,.pdf,.doc,.docx"
+                accept="image/*,.pdf,.doc,.docx,.txt"
                 onChange={handleFileChange}
-                style={{ color: theme.textSecondary, fontSize: '13px' }}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '12px',
+                  backgroundColor: theme.inputBg,
+                  border: `1px dashed ${theme.cardBorder}`,
+                  color: theme.textSecondary,
+                  fontSize: '13px',
+                  boxSizing: 'border-box',
+                  cursor: 'pointer'
+                }}
               />
-              {selectedFiles.length > 0 && (
-                <div style={{ marginTop: '8px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {selectedFiles.map((f, i) => (
-                    <span key={i} style={{ fontSize: '12px', padding: '4px 10px', borderRadius: '8px', backgroundColor: 'rgba(99,102,241,0.15)', color: '#818cf8', border: '1px solid rgba(99,102,241,0.3)' }}>
-                      📄 {f.name}
-                    </span>
-                  ))}
-                </div>
-              )}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              style={{ padding: '16px', borderRadius: '14px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#ffffff', border: 'none', fontSize: '15px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1, boxShadow: '0 8px 24px rgba(99,102,241,0.4)', transition: 'transform 0.2s' }}
+              style={{
+                width: '100%',
+                padding: '14px',
+                borderRadius: '14px',
+                border: 'none',
+                backgroundColor: loading ? '#64748b' : '#8b5cf6',
+                color: '#ffffff',
+                fontSize: '15px',
+                fontWeight: '700',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                boxShadow: loading ? 'none' : '0 10px 25px -5px rgba(139, 92, 246, 0.4)',
+                transition: 'all 0.2s ease'
+              }}
             >
-              {loading ? '🤖 Gemini AI Analyzing Issue...' : 'Submit Issue to AI ➔'}
+              {loading ? t('submittingButton') : t('submitButton')}
             </button>
           </form>
         </div>
 
-        {/* Submitted Issues List */}
-        <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: theme.textPrimary }}>📜 My Submitted Issues ({complaints.length})</h2>
+        {/* My Submitted Issues Header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+          <span style={{ fontSize: '20px' }}>📜</span>
+          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>{t('mySubmittedIssues')} ({complaints.length})</h2>
+        </div>
         
         {fetching ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
