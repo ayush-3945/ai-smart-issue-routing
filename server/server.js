@@ -45,11 +45,11 @@ const globalLimiter = rateLimit({
 });
 app.use('/api', globalLimiter);
 
-// 6. Strict Auth Rate Limiter
+// 6. Auth Rate Limiter (Relaxed for active development & testing)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 15,
-  message: { message: 'Too many login attempts. Please try again after 15 minutes.' }
+  max: 100,
+  message: { message: 'Too many login/registration attempts. Please try again after 15 minutes.' }
 });
 
 // Routes
