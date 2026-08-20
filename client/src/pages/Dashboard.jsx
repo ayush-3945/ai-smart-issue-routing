@@ -98,7 +98,8 @@ const Dashboard = () => {
       addToast(`🤖 "${res.data.complaint?.title || title}" — AI analyzed & submitted!`, 'success', 5000);
       fetchMyComplaints();
     } catch (err) {
-      addToast(err.response?.data?.message || 'Failed to create complaint', 'error');
+      const serverMsg = err.response?.data?.errors?.join(', ') || err.response?.data?.message || err.message || 'Failed to create complaint';
+      addToast(`❌ ${serverMsg}`, 'error', 6000);
     } finally {
       setLoading(false);
     }
