@@ -15,10 +15,13 @@
 ## 🖥️ Platform Showcase
 
 <div align="center">
-  <p><strong>Admin Command Center & AI Analytics Hub</strong></p>
+  <p><strong>1. Admin Command Center & Real-Time Predictive AI Analytics Hub</strong></p>
   <img src="./docs/screenshots/admin-dashboard.png" alt="Dispatch OS Admin Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
   <br /><br />
-  <p><strong>Interactive Landing Page with Incident Dispatch Pipeline</strong></p>
+  <p><strong>2. User Incident Portal with Real-Time AI Autonomous Triage</strong></p>
+  <img src="./docs/screenshots/user-dashboard.png" alt="Dispatch OS User Incident Portal" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
+  <br /><br />
+  <p><strong>3. Enterprise Landing Page & Live Incident Dispatch Pipeline</strong></p>
   <img src="./docs/screenshots/landing-page.png" alt="Dispatch OS Landing Page" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
 </div>
 
