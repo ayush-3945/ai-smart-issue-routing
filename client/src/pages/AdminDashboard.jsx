@@ -33,6 +33,8 @@ const PRIORITY_BADGES = {
 };
 
 const CATEGORIES = ['All', 'IT', 'HR', 'Finance', 'Operations', 'General'];
+import CodeHelpSidebar from '../components/CodeHelpSidebar';
+import CommandPalette from '../components/CommandPalette';
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
@@ -42,6 +44,8 @@ const AdminDashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [updatingId, setUpdatingId] = useState(null);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [isCommandOpen, setIsCommandOpen] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
 
   let user = {};
@@ -148,69 +152,81 @@ const AdminDashboard = () => {
   const { t } = useLanguage();
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 24px', transition: 'all 0.3s ease' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      <div style={{ maxWidth: '1350px', margin: '0 auto' }}>
+      
+      {/* CodeHelp Style Vertical Sidebar */}
+      <CodeHelpSidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        currentUser={user}
+        onOpenSearch={() => setIsCommandOpen(true)}
+      />
 
-        {/* Top Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '10px 14px', borderRadius: '12px', fontSize: '20px' }}>⚡</div>
+      {/* Global Quick Search Command Palette (Ctrl + K) */}
+      <CommandPalette
+        isOpen={isCommandOpen}
+        onClose={setIsCommandOpen}
+        complaints={complaints}
+        onSelectComplaint={(c) => setSelectedComplaint(c)}
+      />
+
+      {/* Main Content Area */}
+      <div style={{ flex: 1, padding: '32px 36px', overflowY: 'auto', maxHeight: '100vh' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+
+          {/* Top Header with Breadcrumb & Quick Search */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '20px' }}>
             <div>
-              <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px', color: theme.textPrimary }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: theme.textMuted, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>
+                <span>Home</span>
+                <span>/</span>
+                <span style={{ color: '#8b5cf6' }}>Command Center</span>
+              </div>
+              <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>
                 {t('adminCommandCenter')}
               </h1>
-              <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '14px' }}>{t('adminSubtitle')}</p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <LanguageToggle />
-            <ThemeToggle />
-            <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
-
-            {/* Admin Avatar - Icon Only */}
-            <div title={`${user.name || 'Admin'} (Admin)`} style={{ width: '36px', height: '36px', borderRadius: '12px', background: 'linear-gradient(135deg, #f59e0b, #ef4444)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: '800', color: '#fff', cursor: 'default' }}>
-              {user.name ? user.name.charAt(0).toUpperCase() : 'A'}
             </div>
 
-            {/* Export CSV - Icon Only */}
-            <button
-              title={t('exportCsv')}
-              onClick={() => {
-                exportToCSV(filteredComplaints);
-                addToast('📥 Exported analytics report to CSV!', 'success');
-              }}
-              style={{ backgroundColor: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-              📥
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {/* Quick Search Pill */}
+              <button
+                onClick={() => setIsCommandOpen(true)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 16px',
+                  borderRadius: '12px',
+                  backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.8)' : '#f1f5f9',
+                  border: `1px solid ${theme.cardBorder}`,
+                  color: theme.textSecondary,
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  fontWeight: '600'
+                }}
+              >
+                <span>🔍 Quick Jump</span>
+                <span style={{ fontSize: '10px', fontWeight: '800', padding: '2px 6px', borderRadius: '4px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0' }}>Ctrl K</span>
+              </button>
 
-            {/* Raise Issue - Icon Only */}
-            <button
-              title={t('userView')}
-              onClick={() => window.location.href = '/dashboard'}
-              style={{ backgroundColor: '#10b981', border: 'none', color: '#ffffff', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(16,185,129,0.3)', transition: 'transform 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-              🚀
-            </button>
+              <LanguageToggle />
+              <ThemeToggle />
+              <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
 
-            {/* Logout - Icon Only */}
-            <button
-              title={t('signOut')}
-              onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
-              style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-              🚪
-            </button>
+              {/* Export CSV */}
+              <button
+                title={t('exportCsv')}
+                onClick={() => {
+                  exportToCSV(filteredComplaints);
+                  addToast('📥 Exported analytics report to CSV!', 'success');
+                }}
+                style={{ backgroundColor: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#a78bfa', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+              >
+                📥
+              </button>
+            </div>
           </div>
-        </div>
 
         {/* Animated Metric Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
