@@ -45,7 +45,8 @@ const Register = () => {
         navigate('/dashboard');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed.');
+      const serverMsg = err.response?.data?.errors?.join(', ') || err.response?.data?.message || err.message || 'Registration failed.';
+      setError(serverMsg);
     } finally {
       setLoading(false);
     }
