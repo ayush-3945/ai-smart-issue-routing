@@ -35,14 +35,14 @@ const LandingPage = () => {
           <span>⚡</span> Autonomous Incident Intelligence & Triage Engine
         </div>
 
-        <h1 style={{ fontSize: 'clamp(40px, 6vw, 72px)', fontWeight: '900', lineHeight: 1.05, letterSpacing: '-0.04em', margin: '0 0 24px', color: '#ffffff' }}>
+        <h1 style={{ fontSize: 'clamp(40px, 6vw, 72px)', fontWeight: '900', lineHeight: 1.05, letterSpacing: '-0.04em', margin: '0 0 24px', color: theme.textPrimary }}>
           Resolve Issues <br />
-          <span style={{ background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 35px rgba(139, 92, 246, 0.4))' }}>
+          <span style={{ background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: theme.isDark ? 'drop-shadow(0 0 35px rgba(139, 92, 246, 0.4))' : 'none' }}>
             Before They Escalate
           </span>
         </h1>
 
-        <p style={{ fontSize: '19px', color: '#94a3b8', lineHeight: 1.7, maxWidth: '640px', margin: '0 auto 44px', fontWeight: '400', letterSpacing: '-0.01em' }}>
+        <p style={{ fontSize: '19px', color: theme.textSecondary, lineHeight: 1.7, maxWidth: '640px', margin: '0 auto 44px', fontWeight: '400', letterSpacing: '-0.01em' }}>
           AI-powered autonomous incident routing that automatically classifies, prioritizes, and assigns complaints to the right lead — in seconds, not days.
         </p>
 
@@ -53,9 +53,9 @@ const LandingPage = () => {
           >
             Start Routing Issues ➔
           </Link>
-          <Link to="/login" style={{ padding: '16px 38px', borderRadius: '16px', border: '1px solid rgba(139, 92, 246, 0.3)', color: '#ffffff', textDecoration: 'none', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.02em', backgroundColor: 'rgba(15, 17, 26, 0.8)', backdropFilter: 'blur(12px)', transition: 'all 0.2s ease' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(25, 29, 45, 0.9)'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(15, 17, 26, 0.8)'}
+          <Link to="/login" style={{ padding: '16px 38px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.02em', backgroundColor: theme.isDark ? 'rgba(15, 17, 26, 0.8)' : '#ffffff', backdropFilter: 'blur(12px)', transition: 'all 0.2s ease', boxShadow: theme.isDark ? 'none' : '0 4px 12px rgba(0,0,0,0.06)' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(25, 29, 45, 0.9)' : '#f8fafc'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(15, 17, 26, 0.8)' : '#ffffff'}
           >
             View Live Demo
           </Link>
@@ -63,9 +63,9 @@ const LandingPage = () => {
 
         {/* Trust badges */}
         <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
-          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '700' }}>🔒 Enterprise-Grade Security</span>
-          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '700' }}>⚡ Real-Time WebSockets</span>
-          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '700' }}>🧠 98% AI Diagnostic Precision</span>
+          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>🔒 Enterprise-Grade Security</span>
+          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>⚡ Real-Time WebSockets</span>
+          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>🧠 98% AI Diagnostic Precision</span>
         </div>
 
         {/* Linear/Reflect Style 3D Holographic App Window Showcase */}
@@ -145,7 +145,7 @@ const LandingPage = () => {
                     🚨 Payment Webhook Spike Detected • Routing to Vikram Sharma (IT Lead)
                   </div>
                   <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '2px' }}>
-                    Gemini 1.5 Flash generated 3-step action plan in 1.4s
+                    Autonomous AI Engine generated 3-step action plan in 1.4s
                   </div>
                 </div>
                 <span style={{ fontSize: '11px', fontWeight: '800', padding: '4px 12px', borderRadius: '20px', backgroundColor: '#8b5cf6', color: '#ffffff' }}>
