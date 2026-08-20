@@ -10,7 +10,11 @@ export function SocketProvider({ children }) {
     const token = localStorage.getItem('accessToken');
     if (!token) return;
 
-    const newSocket = io(import.meta.env.VITE_API_BASE || 'http://localhost:5000', {
+    const socketUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:5000'
+      : (import.meta.env.VITE_API_BASE || 'https://ai-smart-issue-routing-production.up.railway.app');
+
+    const newSocket = io(socketUrl, {
       auth: { token },
     });
 
