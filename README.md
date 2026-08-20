@@ -1,12 +1,14 @@
-# ⚡ SmartIssue AI — Autonomous Issue Classification & Real-Time Resolution Ops
+# ⚡ Dispatch OS — Autonomous Incident Triage & Resolution Platform
 
-[![Deploy with Vercel](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
-[![Deployed on Railway](https://img.shields.io/badge/Backend-Railway-0B0D0E?style=for-the-badge&logo=railway)](https://railway.app/)
-[![Powered by Gemini AI](https://img.shields.io/badge/AI-Google%20Gemini%201.5-8E75FF?style=for-the-badge&logo=googlegemini)](https://ai.google.dev/)
+[![Live App](https://img.shields.io/badge/Live%20App-ai--smart--issue--routing--jbb8.vercel.app-0ea5e9?style=for-the-badge&logo=vercel)](https://ai-smart-issue-routing-jbb8.vercel.app)
+[![Backend API](https://img.shields.io/badge/API-Railway%20Live-0B0D0E?style=for-the-badge&logo=railway)](https://ai-smart-issue-routing-production.up.railway.app)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-> **SmartIssue AI** is an enterprise-grade, full-stack autonomous issue routing platform powered by **Google Gemini AI**. It eliminates manual triage by automatically analyzing incoming user complaints, classifying them into departments (IT, HR, Finance, Operations, General), assigning priority ratings, calculating confidence scores, and providing executive AI summaries in real-time.
+> 🌐 **Live Web Application:** [https://ai-smart-issue-routing-jbb8.vercel.app](https://ai-smart-issue-routing-jbb8.vercel.app)  
+> ⚡ **Production Backend API:** [https://ai-smart-issue-routing-production.up.railway.app](https://ai-smart-issue-routing-production.up.railway.app)
+
+**Dispatch OS** is an enterprise-grade autonomous incident triage and operations platform. It eliminates manual support triage by instantly analyzing incoming issues, classifying them into departments (`IT`, `HR`, `Finance`, `Operations`), calculating priority and confidence ratings (98%+), and forecasting 7-day workload surges in real-time.
 
 ---
 
