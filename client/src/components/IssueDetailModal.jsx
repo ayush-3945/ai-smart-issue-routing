@@ -205,9 +205,9 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '700', color: '#c084fc' }}>
-                  <span>✨ Gemini AI Executive Brief</span>
+                  <span>🧠 AI Diagnostic Brief</span>
                   <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(168, 85, 247, 0.2)', color: '#a855f7' }}>
-                    {complaint.aiConfidence || 95}% Confidence
+                    {complaint.aiConfidence || 95}% Precision
                   </span>
                   {complaint.detectedLanguage && (
                     <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(6, 182, 212, 0.15)', color: '#38bdf8' }}>
@@ -272,7 +272,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '800', color: '#10b981' }}>
-                  <span>🤖 Gemini Instant Troubleshooting Plan</span>
+                  <span>⚡ Automated Resolution Protocol</span>
                 </div>
                 <button
                   type="button"

@@ -1,66 +1,40 @@
 const Complaint = require('../models/Complaint');
 const { predictWorkloadSurge } = require('../services/aiService');
 
+// In-memory cache for AI predictions (avoids blocking dashboard load)
+let cachedPredictions = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache
+
 const getDashboardAnalytics = async (req, res) => {
   try {
-    // 1. Overall Status Count
-    const statusStats = await Complaint.aggregate([
-      {
-        $group: {
-          _id: '$status',
-          count: { $sum: 1 },
-        },
-      },
+    // All MongoDB aggregations run in PARALLEL for max speed
+    const [statusStats, categoryStats, priorityStats, trendStats, totalComplaints] = await Promise.all([
+      Complaint.aggregate([{ $group: { _id: '$status', count: { $sum: 1 } } }]),
+      Complaint.aggregate([{ $group: { _id: '$category', count: { $sum: 1 } } }]),
+      Complaint.aggregate([{ $group: { _id: '$priority', count: { $sum: 1 } } }]),
+      Complaint.aggregate([
+        { $match: { createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } } },
+        { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
+        { $sort: { _id: 1 } }
+      ]),
+      Complaint.countDocuments()
     ]);
 
-    // 2. Category-wise Distribution
-    const categoryStats = await Complaint.aggregate([
-      {
-        $group: {
-          _id: '$category',
-          count: { $sum: 1 },
-        },
-      },
-    ]);
+    // Use cached predictions — send response INSTANTLY
+    let predictions = cachedPredictions;
 
-    // 3. Priority-wise Distribution
-    const priorityStats = await Complaint.aggregate([
-      {
-        $group: {
-          _id: '$priority',
-          count: { $sum: 1 },
-        },
-      },
-    ]);
-
-    // 4. Daily Trends (Last 7 Days)
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-    const trendStats = await Complaint.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: sevenDaysAgo },
-        },
-      },
-      {
-        $group: {
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ]);
-
-    const totalComplaints = await Complaint.countDocuments();
-
-    // Generate Predictive AI Surge Forecast
-    const predictions = await predictWorkloadSurge({
-      totalComplaints,
-      statusStats,
-      categoryStats,
-      priorityStats
-    });
+    // Refresh AI predictions in background if cache expired or null
+    const now = Date.now();
+    if (!cachedPredictions || (now - cacheTimestamp) > CACHE_TTL) {
+      // Fire and forget — don't block the HTTP response
+      predictWorkloadSurge({ totalComplaints, statusStats, categoryStats, priorityStats })
+        .then((result) => {
+          cachedPredictions = result;
+          cacheTimestamp = Date.now();
+        })
+        .catch((err) => console.warn('AI prediction background refresh failed:', err.message));
+    }
 
     res.status(200).json({
       totalComplaints,
@@ -68,7 +42,7 @@ const getDashboardAnalytics = async (req, res) => {
       categoryStats,
       priorityStats,
       trendStats,
-      predictions
+      predictions: predictions || null
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

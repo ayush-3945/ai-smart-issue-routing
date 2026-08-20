@@ -31,8 +31,8 @@ const LandingPage = () => {
         {/* Ambient Glow */}
         <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(99,102,241,0.2) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 20px', borderRadius: '30px', backgroundColor: 'rgba(139, 92, 246, 0.12)', border: '1px solid rgba(139, 92, 246, 0.3)', fontSize: '13px', fontWeight: '700', color: '#c084fc', marginBottom: '28px', boxShadow: '0 0 20px -5px rgba(139, 92, 246, 0.3)' }}>
-          <span>✨</span> Powered by Google Gemini 1.5 Flash
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 20px', borderRadius: '30px', backgroundColor: 'rgba(99, 102, 241, 0.12)', border: '1px solid rgba(99, 102, 241, 0.3)', fontSize: '13px', fontWeight: '700', color: '#818cf8', marginBottom: '28px', boxShadow: '0 0 20px -5px rgba(99, 102, 241, 0.3)' }}>
+          <span>⚡</span> Autonomous Incident Intelligence & Triage Engine
         </div>
 
         <h1 style={{ fontSize: 'clamp(40px, 6vw, 72px)', fontWeight: '900', lineHeight: 1.05, letterSpacing: '-0.04em', margin: '0 0 24px', color: '#ffffff' }}>
