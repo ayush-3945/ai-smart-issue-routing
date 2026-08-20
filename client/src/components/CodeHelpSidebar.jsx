@@ -134,6 +134,14 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                     window.location.href = item.path;
                   } else {
                     setActiveTab(item.id);
+                    // Smooth scroll to target section if on admin page
+                    if (item.id === 'dashboard') {
+                      document.getElementById('section-overview')?.scrollIntoView({ behavior: 'smooth' });
+                    } else if (item.id === 'issues') {
+                      document.getElementById('section-queue')?.scrollIntoView({ behavior: 'smooth' });
+                    } else if (item.id === 'predictions') {
+                      (document.getElementById('section-ai-forecast') || document.getElementById('section-forecasting'))?.scrollIntoView({ behavior: 'smooth' });
+                    }
                   }
                 }}
                 style={{
@@ -143,18 +151,19 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                   width: '100%',
                   padding: '12px 14px',
                   borderRadius: '12px',
-                  border: 'none',
+                  border: isActive ? '1px solid rgba(14, 165, 233, 0.3)' : '1px solid transparent',
                   backgroundColor: isActive
                     ? theme.isDark
-                      ? 'rgba(139, 92, 246, 0.18)'
-                      : '#ede9fe'
+                      ? 'rgba(14, 165, 233, 0.12)'
+                      : '#e0f2fe'
                     : 'transparent',
-                  color: isActive ? (theme.isDark ? '#c084fc' : '#7c3aed') : theme.textSecondary,
+                  color: isActive ? (theme.isDark ? '#38bdf8' : '#0284c7') : theme.textSecondary,
                   fontSize: '14px',
                   fontWeight: isActive ? '800' : '600',
                   cursor: 'pointer',
                   justifyContent: collapsed ? 'center' : 'flex-start',
-                  transition: 'all 0.15s ease'
+                  transition: 'all 0.15s ease',
+                  boxShadow: isActive ? '0 0 15px -3px rgba(14, 165, 233, 0.2)' : 'none'
                 }}
               >
                 <span style={{ fontSize: '18px' }}>{item.icon}</span>

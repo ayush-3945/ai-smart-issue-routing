@@ -24,7 +24,7 @@ import {
   Line,
 } from 'recharts';
 
-const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+const COLORS = ['#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
 const PRIORITY_BADGES = {
   Critical: { bg: '#fef2f2', text: '#b91c1c', border: '#fecaca', dot: '#ef4444' },
   High: { bg: '#fffbeb', text: '#b45309', border: '#fde68a', dot: '#f59e0b' },
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
       setComplaints((prev) =>
         prev.map((c) => (c._id === id ? { ...c, assignedTo: res.data.complaint.assignedTo } : c))
       );
-      addToast(`Reassigned to ${newAssignee}`, 'success');
+      addToast(`Assigned lead updated to "${newAssignee}"`, 'info');
     } catch (err) {
       addToast(err.response?.data?.message || 'Assignee update failed', 'error');
     }
@@ -181,7 +181,7 @@ const AdminDashboard = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: theme.textMuted, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>
                 <span>Home</span>
                 <span>/</span>
-                <span style={{ color: '#8b5cf6' }}>Command Center</span>
+                <span style={{ color: '#0ea5e9' }}>Command Center</span>
               </div>
               <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>
                 {t('adminCommandCenter')}
@@ -221,15 +221,15 @@ const AdminDashboard = () => {
                   exportToCSV(filteredComplaints);
                   addToast('📥 Exported analytics report to CSV!', 'success');
                 }}
-                style={{ backgroundColor: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#a78bfa', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+                style={{ backgroundColor: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.3)', color: '#38bdf8', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
               >
                 📥
               </button>
             </div>
           </div>
 
-        {/* Animated Metric Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
+        {/* Animated Metric Cards (Overview Section) */}
+        <div id="section-overview" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
           <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', transition: 'transform 0.2s', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
@@ -238,7 +238,7 @@ const AdminDashboard = () => {
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={total} color={theme.textPrimary} /></div>
           </div>
 
-          <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: '1px solid rgba(245, 158, 11, 0.3)', borderRadius: '20px', padding: '24px', transition: 'transform 0.2s', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
+          <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', transition: 'transform 0.2s', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
@@ -246,7 +246,7 @@ const AdminDashboard = () => {
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={pending} color="#d97706" /></div>
           </div>
 
-          <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '20px', padding: '24px', transition: 'transform 0.2s', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
+          <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', transition: 'transform 0.2s', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
@@ -254,7 +254,7 @@ const AdminDashboard = () => {
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={inProgress} color="#2563eb" /></div>
           </div>
 
-          <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '20px', padding: '24px', transition: 'transform 0.2s', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
+          <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', transition: 'transform 0.2s', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
           >
@@ -264,7 +264,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Charts Section */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '36px' }}>
+        <div id="section-analytics" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '36px' }}>
           
           <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
             <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>🍩 {t('categoryAiDistribution')}</h3>
@@ -293,9 +293,9 @@ const AdminDashboard = () => {
                   <XAxis dataKey="name" stroke={theme.textMuted} />
                   <YAxis allowDecimals={false} stroke={theme.textMuted} />
                   <Tooltip contentStyle={{ backgroundColor: theme.isDark ? '#1e293b' : '#ffffff', border: `1px solid ${theme.cardBorder}`, borderRadius: '8px', color: theme.textPrimary }} />
-                  <Bar dataKey="count" fill="#6366f1" radius={[8, 8, 0, 0]}>
+                  <Bar dataKey="count" fill="#0ea5e9" radius={[8, 8, 0, 0]}>
                     {priorityData.map((entry, index) => (
-                      <Cell key={`bar-${index}`} fill={PRIORITY_BADGES[entry.name]?.dot || '#6366f1'} />
+                      <Cell key={`bar-${index}`} fill={PRIORITY_BADGES[entry.name]?.dot || '#0ea5e9'} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
                   <XAxis dataKey="date" stroke={theme.textMuted} />
                   <YAxis allowDecimals={false} stroke={theme.textMuted} />
                   <Tooltip contentStyle={{ backgroundColor: theme.isDark ? '#1e293b' : '#ffffff', border: `1px solid ${theme.cardBorder}`, borderRadius: '8px', color: theme.textPrimary }} />
-                  <Line type="monotone" dataKey="complaints" stroke="#a855f7" strokeWidth={3} dot={{ r: 6, fill: '#a855f7' }} />
+                  <Line type="monotone" dataKey="complaints" stroke="#0ea5e9" strokeWidth={3} dot={{ r: 6, fill: '#38bdf8' }} />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
@@ -324,7 +324,7 @@ const AdminDashboard = () => {
 
         {/* AI Predictive Workload & Surge Forecast Card */}
         {analytics?.predictions && (
-          <div className={theme.isDark ? 'glass-panel' : ''} style={{
+          <div id="section-ai-forecast" className={theme.isDark ? 'glass-panel' : ''} style={{
             backgroundColor: theme.cardBg,
             borderRadius: '24px',
             padding: '28px 32px',
@@ -424,8 +424,8 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* Search & Filter */}
-        <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, padding: '20px 24px', borderRadius: '20px', marginBottom: '28px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+        {/* Search & Filter (Active Queue Section) */}
+        <div id="section-queue" style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, padding: '20px 24px', borderRadius: '20px', marginBottom: '28px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ flex: '1 1 340px' }}>
               <input type="text" placeholder={`🔍 ${t('searchPlaceholder')}`}
@@ -437,7 +437,7 @@ const AdminDashboard = () => {
               <span style={{ fontSize: '13px', fontWeight: '600', color: theme.textSecondary }}>{t('categoryFilter')}:</span>
               {CATEGORIES.map((cat) => (
                 <button key={cat} onClick={() => setSelectedCategory(cat)}
-                  style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#6366f1' : theme.cardBorder, backgroundColor: selectedCategory === cat ? '#6366f1' : theme.badgeBg, color: selectedCategory === cat ? '#ffffff' : theme.textSecondary, fontSize: '13px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}
+                  style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#0ea5e9' : theme.cardBorder, backgroundColor: selectedCategory === cat ? 'linear-gradient(135deg, #0284c7, #2563eb)' : theme.badgeBg, color: selectedCategory === cat ? '#ffffff' : theme.textSecondary, fontSize: '13px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s', background: selectedCategory === cat ? 'linear-gradient(135deg, #0284c7, #2563eb)' : 'transparent', boxShadow: selectedCategory === cat ? '0 0 15px rgba(14,165,233,0.3)' : 'none' }}
                 >
                   {cat === 'All' ? t('all') : cat}
                 </button>
