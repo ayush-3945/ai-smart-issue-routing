@@ -119,9 +119,9 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                 borderRadius: '8px',
                 fontSize: '12px',
                 fontWeight: '700',
-                backgroundColor: 'rgba(99, 102, 241, 0.15)',
-                color: '#818cf8',
-                border: '1px solid rgba(99, 102, 241, 0.3)'
+                backgroundColor: 'rgba(14, 165, 233, 0.15)',
+                color: '#38bdf8',
+                border: '1px solid rgba(14, 165, 233, 0.3)'
               }}>
                 📂 {complaint.category || 'General'}
               </span>
@@ -152,9 +152,9 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                   borderRadius: '8px',
                   fontSize: '12px',
                   fontWeight: '700',
-                  backgroundColor: 'rgba(168, 85, 247, 0.15)',
-                  color: '#c084fc',
-                  border: '1px solid rgba(168, 85, 247, 0.3)'
+                  backgroundColor: 'rgba(14, 165, 233, 0.15)',
+                  color: '#38bdf8',
+                  border: '1px solid rgba(14, 165, 233, 0.3)'
                 }}>
                   👤 {complaint.assignedTo} ({complaint.assignedLeadRole || 'Lead'})
                 </span>
@@ -200,13 +200,13 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
               marginBottom: '20px',
               padding: '16px 20px',
               borderRadius: '16px',
-              background: theme.isDark ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.12))' : 'linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(168, 85, 247, 0.06))',
-              border: '1px solid rgba(168, 85, 247, 0.28)'
+              background: theme.isDark ? 'linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(37, 99, 235, 0.12))' : 'linear-gradient(135deg, rgba(14, 165, 233, 0.06), rgba(37, 99, 235, 0.06))',
+              border: '1px solid rgba(14, 165, 233, 0.28)'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '700', color: '#c084fc' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '700', color: '#38bdf8' }}>
                   <span>🧠 AI Diagnostic Brief</span>
-                  <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(168, 85, 247, 0.2)', color: '#a855f7' }}>
+                  <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.2)', color: '#38bdf8' }}>
                     {complaint.aiConfidence || 95}% Precision
                   </span>
                   {complaint.detectedLanguage && (
@@ -229,7 +229,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                         fontSize: '11px',
                         fontWeight: '700',
                         cursor: 'pointer',
-                        backgroundColor: lang === 'en' ? '#8b5cf6' : 'transparent',
+                        backgroundColor: lang === 'en' ? '#0ea5e9' : 'transparent',
                         color: lang === 'en' ? '#ffffff' : theme.textMuted
                       }}
                     >
@@ -245,7 +245,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                         fontSize: '11px',
                         fontWeight: '700',
                         cursor: 'pointer',
-                        backgroundColor: lang === 'hi' ? '#8b5cf6' : 'transparent',
+                        backgroundColor: lang === 'hi' ? '#0ea5e9' : 'transparent',
                         color: lang === 'hi' ? '#ffffff' : theme.textMuted
                       }}
                     >
@@ -330,7 +330,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                       href={att.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: '#818cf8', textDecoration: 'none', fontSize: '13px', fontWeight: '600' }}
+                      style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: '#38bdf8', textDecoration: 'none', fontSize: '13px', fontWeight: '600' }}
                     >
                       📄 {att.fileName || `Document #${i + 1}`} ➔
                     </a>
@@ -356,47 +356,70 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
           <div>
             <h4 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: '800', color: theme.textPrimary, display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span>💬 Live Resolution Thread</span>
-              <span style={{ fontSize: '12px', padding: '2px 8px', borderRadius: '10px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
+              <span style={{ fontSize: '12px', padding: '2px 8px', borderRadius: '10px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}>
                 {comments.length}
               </span>
             </h4>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', minHeight: '120px', maxHeight: '260px', overflowY: 'auto', paddingRight: '6px' }}>
+            {/* Chat Box */}
+            <div style={{
+              backgroundColor: theme.inputBg,
+              border: `1px solid ${theme.cardBorder}`,
+              borderRadius: '16px',
+              padding: '16px',
+              minHeight: '160px',
+              maxHeight: '260px',
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
               {comments.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '30px', color: theme.textMuted, fontSize: '14px' }}>
-                  No messages yet. Start the conversation below to troubleshoot and resolve this issue.
+                <div style={{ textAlign: 'center', color: theme.textMuted, fontSize: '13px', margin: 'auto' }}>
+                  No messages yet. Start the conversation below.
                 </div>
               ) : (
                 comments.map((cm, idx) => {
-                  const isAdmin = cm.senderRole === 'admin';
+                  const isMe = cm.sender === currentUser?.name || cm.sender === currentUser?.email || cm.sender === 'Admin';
                   return (
-                    <div
-                      key={cm._id || idx}
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: isAdmin ? 'flex-end' : 'flex-start'
-                      }}
-                    >
+                    <div key={idx} style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: isMe ? 'flex-end' : 'flex-start'
+                    }}>
                       <div style={{
-                        maxWidth: '80%',
-                        padding: '12px 16px',
-                        borderRadius: '16px',
-                        backgroundColor: isAdmin ? (theme.isDark ? '#4f46e5' : '#6366f1') : theme.inputBg,
-                        color: isAdmin ? '#ffffff' : theme.textPrimary,
-                        border: `1px solid ${isAdmin ? 'transparent' : theme.cardBorder}`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        marginBottom: '4px',
+                        fontSize: '11px',
+                        color: theme.textMuted
+                      }}>
+                        <span style={{ fontWeight: '700', color: isMe ? '#38bdf8' : theme.textPrimary }}>{cm.sender}</span>
+                        {cm.role && (
+                          <span style={{
+                            padding: '1px 6px',
+                            borderRadius: '4px',
+                            backgroundColor: theme.cardBorder,
+                            fontSize: '9px'
+                          }}>
+                            {cm.role}
+                          </span>
+                        )}
+                      </div>
+                      <div style={{
+                        maxWidth: '75%',
+                        padding: '10px 14px',
+                        borderRadius: '14px',
+                        borderBottomRightRadius: isMe ? '2px' : '14px',
+                        borderBottomLeftRadius: isMe ? '14px' : '2px',
+                        backgroundColor: isMe ? '#0284c7' : (theme.isDark ? '#1e293b' : '#f1f5f9'),
+                        color: isMe ? '#ffffff' : theme.textPrimary,
+                        fontSize: '13px',
+                        lineHeight: 1.5,
                         boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
                       }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', fontSize: '11px', opacity: 0.9 }}>
-                          <span style={{ fontWeight: '700' }}>{cm.senderName || 'Member'}</span>
-                          <span>•</span>
-                          <span style={{ textTransform: 'capitalize', fontWeight: '600' }}>
-                            {isAdmin ? '👑 Support Admin' : '👤 User'}
-                          </span>
-                        </div>
-                        <div style={{ fontSize: '14px', lineHeight: 1.5, wordBreak: 'break-word' }}>
-                          {cm.message}
-                        </div>
+                        {cm.message}
                       </div>
                       <span style={{ fontSize: '10px', color: theme.textMuted, marginTop: '4px', padding: '0 4px' }}>
                         {new Date(cm.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -440,17 +463,17 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
             style={{
               padding: '12px 24px',
               borderRadius: '12px',
-              backgroundColor: '#6366f1',
+              background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
               color: '#ffffff',
               border: 'none',
-              fontWeight: '700',
+              fontWeight: '800',
               fontSize: '14px',
               cursor: (!newComment.trim() || submitting) ? 'not-allowed' : 'pointer',
               opacity: (!newComment.trim() || submitting) ? 0.6 : 1,
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              boxShadow: '0 4px 12px rgba(99, 102, 241, 0.35)'
+              boxShadow: '0 4px 15px rgba(14, 165, 233, 0.4)'
             }}
           >
             {submitting ? 'Sending...' : 'Send 💬'}
