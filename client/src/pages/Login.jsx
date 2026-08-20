@@ -133,7 +133,22 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            style={{ width: '100%', padding: '15px', borderRadius: '14px', border: 'none', background: loading ? 'rgba(14,165,233,0.5)' : 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#ffffff', fontSize: '15px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: loading ? 'none' : '0 12px 24px -6px rgba(14, 165, 233, 0.4)', transition: 'all 0.3s', letterSpacing: '0.3px', position: 'relative', overflow: 'hidden' }}
+            style={{
+              width: '100%',
+              padding: '16px',
+              borderRadius: '16px',
+              border: 'none',
+              background: loading ? 'rgba(14,165,233,0.5)' : 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
+              color: '#ffffff',
+              fontSize: '16px',
+              fontWeight: '800',
+              letterSpacing: '-0.02em',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              boxShadow: loading ? 'none' : '0 15px 35px -5px rgba(14, 165, 233, 0.5), 0 0 20px rgba(37, 99, 235, 0.3)',
+              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
             onMouseEnter={(e) => { if (!loading) e.currentTarget.style.transform = 'translateY(-1px)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
           >

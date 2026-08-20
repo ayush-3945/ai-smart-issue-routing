@@ -212,15 +212,17 @@ const Register = () => {
             disabled={loading}
             style={{
               width: '100%',
-              padding: '14px',
-              borderRadius: '12px',
+              padding: '16px',
+              borderRadius: '16px',
               border: 'none',
-              background: 'linear-gradient(135deg, #0284c7, #2563eb)',
+              background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
               color: '#ffffff',
-              fontSize: '15px',
+              fontSize: '16px',
               fontWeight: '800',
+              letterSpacing: '-0.02em',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 10px 20px -5px rgba(14, 165, 233, 0.4)'
+              boxShadow: '0 15px 35px -5px rgba(14, 165, 233, 0.5), 0 0 20px rgba(37, 99, 235, 0.3)',
+              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
             {loading ? 'Creating...' : 'Create Account ➔'}
