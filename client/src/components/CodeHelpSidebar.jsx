@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -45,7 +45,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div
               style={{
-                background: 'linear-gradient(135deg, #8b5cf6, #06b6d4)',
+                background: 'linear-gradient(135deg, #0ea5e9, #2563eb)',
                 width: '38px',
                 height: '38px',
                 borderRadius: '12px',
@@ -53,17 +53,18 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '18px',
-                boxShadow: '0 0 20px -3px rgba(139, 92, 246, 0.5)'
+                boxShadow: '0 0 20px -3px rgba(14, 165, 233, 0.5)',
+                color: '#ffffff'
               }}
             >
               ⚡
             </div>
             {!collapsed && (
               <div>
-                <div style={{ fontSize: '17px', fontWeight: '900', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
-                  SmartIssue <span className="gradient-text">ONE</span>
+                <div style={{ fontSize: '18px', fontWeight: '900', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
+                  Dispatch <span className="gradient-text">OS</span>
                 </div>
-                <div style={{ fontSize: '11px', color: theme.textMuted, fontWeight: '600' }}>AI Autonomous Ops</div>
+                <div style={{ fontSize: '11px', color: theme.textMuted, fontWeight: '700', letterSpacing: '0.2px' }}>Autonomous Incident Engine</div>
               </div>
             )}
           </div>

@@ -13,7 +13,7 @@ const LandingPage = () => {
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 48px', borderBottom: `1px solid ${theme.cardBorder}`, position: 'sticky', top: 0, backgroundColor: theme.navBg, backdropFilter: 'blur(16px)', zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '8px 12px', borderRadius: '12px', fontSize: '18px', color: '#fff', boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)' }}>⚡</div>
-          <span style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '-0.5px', color: theme.textPrimary }}>SmartIssue</span>
+          <span style={{ fontSize: '22px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>Dispatch</span>
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <ThemeToggle />
@@ -114,7 +114,7 @@ const LandingPage = () => {
                 <span style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
               </div>
               <span style={{ fontSize: '12px', fontWeight: '700', color: '#94a3b8', letterSpacing: '0.5px' }}>
-                app.smartissue.ai • Live Command Hub
+                app.dispatch.io • Live Command Hub
               </span>
               <span style={{ fontSize: '11px', padding: '3px 10px', borderRadius: '12px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981', fontWeight: '800' }}>
                 ● SYSTEM OPERATIONAL

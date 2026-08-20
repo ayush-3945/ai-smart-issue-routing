@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export const translations = {
   en: {
-    appTitle: 'SmartIssue AI',
-    appSubtitle: 'Autonomous Complaint Routing System',
+    appTitle: 'Dispatch OS',
+    appSubtitle: 'Autonomous Incident Triage & Operations System',
     adminCommandCenter: 'Admin Command Center',
     adminSubtitle: 'Autonomous AI Ingestion & SLA Operations Hub',
     userDashboard: 'User Dashboard',
@@ -76,8 +76,8 @@ export const translations = {
     statusClosed: 'Closed'
   },
   hi: {
-    appTitle: 'स्मार्ट-इश्यू AI',
-    appSubtitle: 'स्वचालित शिकायत प्रबंधन एवं रूटिंग प्रणाली',
+    appTitle: 'डिस्पैच (Dispatch) OS',
+    appSubtitle: 'स्वायत्त घटना निवारण एवं संचालन प्रणाली',
     adminCommandCenter: 'प्रशासक नियंत्रण केंद्र',
     adminSubtitle: 'AI स्वचालित विश्लेषण एवं संचालन केंद्र',
     userDashboard: 'उपयोगकर्ता डैशबोर्ड',
