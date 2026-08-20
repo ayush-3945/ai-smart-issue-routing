@@ -4,20 +4,20 @@ const ThemeContext = createContext();
 
 export const themes = {
   dark: {
-    bg: '#08090d',
-    cardBg: 'rgba(15, 17, 26, 0.78)',
-    cardBorder: 'rgba(139, 92, 246, 0.18)',
+    bg: '#07090e',
+    cardBg: 'rgba(13, 17, 26, 0.82)',
+    cardBorder: 'rgba(255, 255, 255, 0.08)',
     textPrimary: '#f8fafc',
     textSecondary: '#94a3b8',
     textMuted: '#64748b',
-    navBg: 'rgba(8, 9, 13, 0.88)',
-    inputBg: 'rgba(18, 21, 33, 0.75)',
-    tableHeaderBg: 'rgba(14, 16, 26, 0.65)',
-    tableRowBorder: 'rgba(139, 92, 246, 0.08)',
-    badgeBg: 'rgba(139, 92, 246, 0.12)',
-    accentPrimary: '#8b5cf6',
+    navBg: 'rgba(7, 9, 14, 0.88)',
+    inputBg: 'rgba(18, 23, 36, 0.85)',
+    tableHeaderBg: 'rgba(11, 14, 22, 0.9)',
+    tableRowBorder: 'rgba(255, 255, 255, 0.05)',
+    badgeBg: 'rgba(14, 165, 233, 0.1)',
+    accentPrimary: '#0ea5e9',
     accentCyan: '#06b6d4',
-    accentGlow: '0 0 25px -5px rgba(139, 92, 246, 0.35)',
+    accentGlow: '0 0 25px -5px rgba(14, 165, 233, 0.25)',
     isDark: true,
   },
   light: {
@@ -31,10 +31,10 @@ export const themes = {
     inputBg: '#ffffff',
     tableHeaderBg: '#f1f5f9',
     tableRowBorder: '#e2e8f0',
-    badgeBg: '#ede9fe',
-    accentPrimary: '#7c3aed',
+    badgeBg: '#e0f2fe',
+    accentPrimary: '#0284c7',
     accentCyan: '#0891b2',
-    accentGlow: '0 4px 14px 0 rgba(124, 58, 237, 0.15)',
+    accentGlow: '0 4px 14px 0 rgba(2, 132, 199, 0.15)',
     isDark: false,
   },
 };
@@ -63,10 +63,4 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
+export const useTheme = () => useContext(ThemeContext);
