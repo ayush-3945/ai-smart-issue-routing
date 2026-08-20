@@ -52,23 +52,23 @@ const Login = () => {
     <div style={{ minHeight: '100vh', backgroundColor: '#090d16', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Inter', system-ui, sans-serif", padding: '20px', position: 'relative', overflow: 'hidden' }}>
       
       {/* Animated Ambient Orbs */}
-      <div style={{ position: 'absolute', top: '15%', left: '20%', width: '400px', height: '400px', backgroundColor: '#6366f1', filter: 'blur(160px)', opacity: 0.2, borderRadius: '50%', animation: 'float1 8s ease-in-out infinite' }}></div>
-      <div style={{ position: 'absolute', bottom: '15%', right: '20%', width: '350px', height: '350px', backgroundColor: '#a855f7', filter: 'blur(140px)', opacity: 0.15, borderRadius: '50%', animation: 'float2 10s ease-in-out infinite' }}></div>
-      <div style={{ position: 'absolute', top: '60%', left: '60%', width: '250px', height: '250px', backgroundColor: '#ec4899', filter: 'blur(120px)', opacity: 0.1, borderRadius: '50%', animation: 'float1 12s ease-in-out infinite reverse' }}></div>
+      <div style={{ position: 'absolute', top: '15%', left: '20%', width: '400px', height: '400px', backgroundColor: '#0ea5e9', filter: 'blur(160px)', opacity: 0.15, borderRadius: '50%', animation: 'float1 8s ease-in-out infinite' }}></div>
+      <div style={{ position: 'absolute', bottom: '15%', right: '20%', width: '350px', height: '350px', backgroundColor: '#2563eb', filter: 'blur(140px)', opacity: 0.12, borderRadius: '50%', animation: 'float2 10s ease-in-out infinite' }}></div>
+      <div style={{ position: 'absolute', top: '60%', left: '60%', width: '250px', height: '250px', backgroundColor: '#06b6d4', filter: 'blur(120px)', opacity: 0.08, borderRadius: '50%', animation: 'float1 12s ease-in-out infinite reverse' }}></div>
 
       {/* Glass Card */}
-      <div style={{ width: '100%', maxWidth: '440px', backgroundColor: 'rgba(17, 24, 39, 0.7)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '28px', padding: '44px 40px', boxShadow: '0 32px 64px -16px rgba(0, 0, 0, 0.7)', zIndex: 1, animation: 'fadeUp 0.6s ease-out' }}>
+      <div style={{ width: '100%', maxWidth: '440px', backgroundColor: 'rgba(11, 14, 22, 0.85)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '28px', padding: '44px 40px', boxShadow: '0 32px 64px -16px rgba(0, 0, 0, 0.7)', zIndex: 1, animation: 'fadeUp 0.6s ease-out' }}>
         
         {/* Logo + Header */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'linear-gradient(135deg, #6366f1, #a855f7)', borderRadius: '18px', fontSize: '28px', marginBottom: '20px', boxShadow: '0 12px 28px -5px rgba(99, 102, 241, 0.5)', animation: 'float3 3s ease-in-out infinite' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', borderRadius: '18px', fontSize: '28px', marginBottom: '20px', boxShadow: '0 12px 28px -5px rgba(14, 165, 233, 0.5)', animation: 'float3 3s ease-in-out infinite', color: '#fff' }}>
             ⚡
           </div>
           <h1 style={{ color: '#ffffff', fontSize: '28px', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-0.7px' }}>
             Welcome Back
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0, lineHeight: 1.5 }}>
-            Sign in to your AI Smart Issue Routing account
+            Sign in to your Dispatch OS operations hub
           </p>
         </div>
 
@@ -94,7 +94,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
                 style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
-                onFocus={(e) => { e.target.style.borderColor = 'rgba(99,102,241,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.1)'; }}
+                onFocus={(e) => { e.target.style.borderColor = 'rgba(14,165,233,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(14,165,233,0.15)'; }}
                 onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
               />
             </div>
@@ -102,9 +102,11 @@ const Login = () => {
 
           {/* Password */}
           <div style={{ marginBottom: '28px' }}>
-            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px', letterSpacing: '0.3px' }}>
-              Password
-            </label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <label style={{ color: '#cbd5e1', fontSize: '13px', fontWeight: '600', letterSpacing: '0.3px' }}>
+                Password
+              </label>
+            </div>
             <div style={{ position: 'relative' }}>
               <span style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', fontSize: '16px', opacity: 0.4 }}>🔒</span>
               <input
@@ -113,8 +115,8 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                style={{ width: '100%', padding: '14px 50px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
-                onFocus={(e) => { e.target.style.borderColor = 'rgba(99,102,241,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.1)'; }}
+                style={{ width: '100%', padding: '14px 48px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
+                onFocus={(e) => { e.target.style.borderColor = 'rgba(14,165,233,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(14,165,233,0.15)'; }}
                 onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
               />
               <button
@@ -131,7 +133,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            style={{ width: '100%', padding: '15px', borderRadius: '14px', border: 'none', background: loading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#ffffff', fontSize: '15px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: loading ? 'none' : '0 12px 24px -6px rgba(99, 102, 241, 0.4)', transition: 'all 0.3s', letterSpacing: '0.3px', position: 'relative', overflow: 'hidden' }}
+            style={{ width: '100%', padding: '15px', borderRadius: '14px', border: 'none', background: loading ? 'rgba(14,165,233,0.5)' : 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#ffffff', fontSize: '15px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: loading ? 'none' : '0 12px 24px -6px rgba(14, 165, 233, 0.4)', transition: 'all 0.3s', letterSpacing: '0.3px', position: 'relative', overflow: 'hidden' }}
             onMouseEnter={(e) => { if (!loading) e.currentTarget.style.transform = 'translateY(-1px)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
           >
@@ -155,9 +157,9 @@ const Login = () => {
         <div style={{ textAlign: 'center' }}>
           <p style={{ color: '#64748b', fontSize: '14px', margin: 0 }}>
             Don't have an account?{' '}
-            <Link to="/register" style={{ color: '#818cf8', fontWeight: '700', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#a78bfa'}
-              onMouseLeave={(e) => e.currentTarget.style.color = '#818cf8'}
+            <Link to="/register" style={{ color: '#38bdf8', fontWeight: '700', textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#0ea5e9'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#38bdf8'}
             >
               Create Account
             </Link>

@@ -70,18 +70,18 @@ const Register = () => {
         left: '25%',
         width: '350px',
         height: '350px',
-        backgroundColor: '#6366f1',
+        backgroundColor: '#0ea5e9',
         filter: 'blur(140px)',
-        opacity: 0.25,
+        opacity: 0.15,
         borderRadius: '50%'
       }}></div>
 
       <div style={{
         width: '100%',
         maxWidth: '440px',
-        backgroundColor: 'rgba(17, 24, 39, 0.75)',
+        backgroundColor: 'rgba(11, 14, 22, 0.85)',
         backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
         borderRadius: '24px',
         padding: '40px',
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
@@ -92,7 +92,7 @@ const Register = () => {
             Create Account
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0 }}>
-            Join AI Smart Issue Routing Platform
+            Join Dispatch OS Autonomous Operations Hub
           </p>
         </div>
 
@@ -215,12 +215,12 @@ const Register = () => {
               padding: '14px',
               borderRadius: '12px',
               border: 'none',
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              background: 'linear-gradient(135deg, #0284c7, #2563eb)',
               color: '#ffffff',
               fontSize: '15px',
-              fontWeight: '700',
+              fontWeight: '800',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 10px 20px -5px rgba(99, 102, 241, 0.4)'
+              boxShadow: '0 10px 20px -5px rgba(14, 165, 233, 0.4)'
             }}
           >
             {loading ? 'Creating...' : 'Create Account ➔'}
@@ -230,7 +230,7 @@ const Register = () => {
         <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <p style={{ color: '#64748b', fontSize: '13px', margin: 0 }}>
             Already have an account?{' '}
-            <Link to="/login" style={{ color: '#818cf8', fontWeight: '600', textDecoration: 'none' }}>
+            <Link to="/login" style={{ color: '#38bdf8', fontWeight: '700', textDecoration: 'none' }}>
               Sign In
             </Link>
           </p>

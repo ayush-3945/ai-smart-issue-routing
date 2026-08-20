@@ -115,7 +115,7 @@ const Dashboard = () => {
         {/* Top Navbar Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)', padding: '8px 12px', borderRadius: '10px', fontSize: '18px' }}>⚡</div>
+            <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '8px 12px', borderRadius: '10px', fontSize: '18px', color: '#fff', boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)' }}>⚡</div>
             <div>
               <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
               <p style={{ margin: '2px 0 0', color: theme.textSecondary, fontSize: '13px' }}>{t('appSubtitle')}</p>
@@ -234,7 +234,7 @@ const Dashboard = () => {
                           style={{
                             backgroundColor: 'transparent',
                             border: 'none',
-                            color: '#8b5cf6',
+                            color: '#0ea5e9',
                             fontSize: '12px',
                             fontWeight: '700',
                             cursor: 'pointer'
@@ -290,15 +290,16 @@ const Dashboard = () => {
               disabled={loading}
               style={{
                 width: '100%',
-                padding: '14px',
+                padding: '16px',
                 borderRadius: '14px',
                 border: 'none',
-                backgroundColor: loading ? '#64748b' : '#8b5cf6',
+                background: loading ? '#64748b' : 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
                 color: '#ffffff',
                 fontSize: '15px',
-                fontWeight: '700',
+                fontWeight: '800',
+                letterSpacing: '-0.01em',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                boxShadow: loading ? 'none' : '0 10px 25px -5px rgba(139, 92, 246, 0.4)',
+                boxShadow: loading ? 'none' : '0 10px 25px -5px rgba(14, 165, 233, 0.4), 0 0 15px rgba(37, 99, 235, 0.2)',
                 transition: 'all 0.2s ease'
               }}
             >
@@ -329,14 +330,14 @@ const Dashboard = () => {
             {complaints.map((c) => (
               <div key={c._id} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '16px', padding: '20px', transition: 'border-color 0.2s, transform 0.2s', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
                 onClick={() => setSelectedComplaint(c)}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(99,102,241,0.5)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(14,165,233,0.4)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = theme.cardBorder; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                   <h3 style={{ margin: 0, fontSize: '16px', color: theme.textPrimary, fontWeight: '600' }}>
                     {c.title}
                     {c.comments && c.comments.length > 0 && (
-                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
+                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}>
                         💬 {c.comments.length}
                       </span>
                     )}
@@ -354,14 +355,14 @@ const Dashboard = () => {
                 <p style={{ margin: '0 0 14px', color: theme.textSecondary, fontSize: '13px', lineHeight: '1.5' }}>{c.description}</p>
                 
                 <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '13px', color: theme.textSecondary, borderTop: `1px solid ${theme.cardBorder}`, paddingTop: '12px' }}>
-                  <span>🏷️ Category: <strong style={{ color: '#818cf8' }}>{c.category}</strong></span>
+                  <span>🏷️ Category: <strong style={{ color: '#38bdf8' }}>{c.category}</strong></span>
                   <span>⚡ Priority: <strong style={{ color: c.priority === 'Critical' ? '#f87171' : '#60a5fa' }}>{c.priority}</strong></span>
                   <span>🎯 Confidence: <strong style={{ color: '#34d399' }}>{c.aiConfidence}%</strong></span>
-                  <span style={{ marginLeft: 'auto', color: '#818cf8', fontWeight: '600', fontSize: '12px' }}>Click to view details & chat ➔</span>
+                  <span style={{ marginLeft: 'auto', color: '#38bdf8', fontWeight: '600', fontSize: '12px' }}>Click to view details & chat ➔</span>
                 </div>
                 
                 {c.aiSummary && (
-                  <div style={{ marginTop: '12px', fontSize: '12px', color: theme.isDark ? '#c084fc' : '#7c3aed', backgroundColor: theme.isDark ? 'rgba(168,85,247,0.1)' : 'rgba(124,58,237,0.08)', border: '1px solid rgba(168,85,247,0.2)', padding: '8px 14px', borderRadius: '10px' }}>
+                  <div style={{ marginTop: '12px', fontSize: '12px', color: theme.isDark ? '#38bdf8' : '#0284c7', backgroundColor: theme.isDark ? 'rgba(14,165,233,0.08)' : 'rgba(2,132,199,0.08)', border: '1px solid rgba(14,165,233,0.2)', padding: '8px 14px', borderRadius: '10px' }}>
                     ✨ <strong>AI Summary:</strong> {c.aiSummary}
                   </div>
                 )}
