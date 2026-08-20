@@ -12,6 +12,18 @@
 
 ---
 
+## 🖥️ Platform Showcase
+
+<div align="center">
+  <p><strong>Admin Command Center & AI Analytics Hub</strong></p>
+  <img src="./docs/screenshots/admin-dashboard.png" alt="Dispatch OS Admin Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
+  <br /><br />
+  <p><strong>Interactive Landing Page with Incident Dispatch Pipeline</strong></p>
+  <img src="./docs/screenshots/landing-page.png" alt="Dispatch OS Landing Page" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
+</div>
+
+---
+
 ## 🌟 Key Features
 
 ### 🤖 1. Gemini AI Autonomous Routing
