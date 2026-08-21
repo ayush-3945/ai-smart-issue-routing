@@ -24,7 +24,10 @@
       if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js')
-            .then((reg) => console.log('⚡ Dispatch OS PWA Service Worker Registered:', reg.scope))
+            .then((reg) => {
+              console.log('⚡ Dispatch OS PWA Service Worker Registered:', reg.scope);
+              reg.update();
+            })
             .catch((err) => console.log('Service Worker registration failed:', err));
         });
       }
