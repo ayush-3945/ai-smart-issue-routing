@@ -114,43 +114,45 @@ const Dashboard = () => {
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         
         {/* Top Navbar Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '8px 12px', borderRadius: '10px', fontSize: '18px', color: '#fff', boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)' }}>⚡</div>
-            <div>
-              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
-              <p style={{ margin: '2px 0 0', color: theme.textSecondary, fontSize: '13px' }}>{t('appSubtitle')}</p>
+        <div className="dashboard-header" style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
+          <div className="dashboard-top-row">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>⚡</div>
+              <div>
+                <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
+                <p style={{ margin: '1px 0 0', color: theme.textSecondary, fontSize: '12px' }}>{t('appSubtitle')}</p>
+              </div>
+            </div>
+
+            {/* Mobile User Avatar & Sign Out */}
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '34px', height: '34px', borderRadius: '10px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>
+                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+              </div>
+              <button
+                title={t('signOut')}
+                onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
+                style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '34px', height: '34px', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+              >
+                🚪
+              </button>
             </div>
           </div>
           
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          {/* Controls Toolbar */}
+          <div className="dashboard-controls">
             <InstallPwaButton />
             <LanguageToggle />
             <ThemeToggle />
             <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
 
-            {/* User Avatar */}
-            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '12px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)' }}>
-              {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-            </div>
-
             <button
               title={t('adminView')}
               onClick={() => window.location.href = '/admin'}
-              style={{ background: 'linear-gradient(135deg, #0284c7, #2563eb)', border: 'none', color: '#fff', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(14,165,233,0.35)', transition: 'transform 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              style={{ background: 'linear-gradient(135deg, #0284c7, #2563eb)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(14,165,233,0.35)', transition: 'transform 0.2s' }}
             >
-              👑
-            </button>
-            <button
-              title={t('signOut')}
-              onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
-              style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-              🚪
+              <span>👑</span>
+              <span>Admin</span>
             </button>
           </div>
         </div>

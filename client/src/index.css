@@ -97,3 +97,48 @@ h1, h2, h3, h4, .font-heading {
     display: none !important;
   }
 }
+
+/* Dashboard Responsive Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+}
+
+.dashboard-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 14px !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 14px !important;
+  }
+  .dashboard-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .dashboard-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px !important;
+  }
+  .dashboard-controls button,
+  .dashboard-controls div {
+    flex-shrink: 0;
+  }
+}
