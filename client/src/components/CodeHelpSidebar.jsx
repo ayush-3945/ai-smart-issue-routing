@@ -136,12 +136,14 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                   } else {
                     setActiveTab(item.id);
                     // Smooth scroll to target section if on admin page
-                    if (item.id === 'dashboard') {
-                      document.getElementById('section-overview')?.scrollIntoView({ behavior: 'smooth' });
-                    } else if (item.id === 'issues') {
-                      document.getElementById('section-queue')?.scrollIntoView({ behavior: 'smooth' });
-                    } else if (item.id === 'predictions') {
-                      (document.getElementById('section-ai-forecast') || document.getElementById('section-forecasting'))?.scrollIntoView({ behavior: 'smooth' });
+                    const targetId = item.id === 'dashboard'
+                      ? 'section-overview'
+                      : item.id === 'issues'
+                      ? 'section-queue'
+                      : 'section-ai-forecast';
+                    const el = document.getElementById(targetId);
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                   }
                 }}
