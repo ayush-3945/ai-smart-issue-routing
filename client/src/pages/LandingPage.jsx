@@ -11,19 +11,19 @@ const LandingPage = () => {
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", overflow: 'hidden', transition: 'all 0.3s ease' }}>
 
       {/* Navbar */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 48px', borderBottom: `1px solid ${theme.cardBorder}`, position: 'sticky', top: 0, backgroundColor: theme.navBg, backdropFilter: 'blur(16px)', zIndex: 100 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '8px 12px', borderRadius: '12px', fontSize: '18px', color: '#fff', boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)' }}>⚡</div>
-          <span style={{ fontSize: '22px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>Dispatch</span>
+      <nav className="landing-nav" style={{ borderBottom: `1px solid ${theme.cardBorder}`, backgroundColor: theme.navBg }}>
+        <div className="landing-nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>⚡</div>
+          <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>Dispatch</span>
         </div>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <InstallPwaButton />
           <ThemeToggle />
-          <Link to="/login" style={{ padding: '10px 24px', borderRadius: '12px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontSize: '14px', fontWeight: '600', backgroundColor: theme.badgeBg }}>
+          <Link to="/login" className="nav-btn-compact" style={{ borderRadius: '10px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', backgroundColor: theme.badgeBg }}>
             Sign In
           </Link>
-          <Link to="/register" style={{ padding: '10px 24px', borderRadius: '12px', background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontSize: '14px', fontWeight: '700', boxShadow: '0 8px 20px rgba(14,165,233,0.35)' }}>
-            Get Started Free ➔
+          <Link to="/register" className="nav-btn-compact" style={{ background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(14,165,233,0.35)' }}>
+            Get Started <span className="nav-btn-text-hide">Free</span> ➔
           </Link>
         </div>
       </nav>
