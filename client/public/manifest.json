@@ -10,16 +10,38 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/pwa-icon.svg",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/favicon.svg",
-      "sizes": "48x48 72x72 96x96 128x128 256x256",
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa-icon.svg",
+      "sizes": "192x192 512x512",
       "type": "image/svg+xml",
       "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-admin.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Admin Command Center"
+    },
+    {
+      "src": "/screenshot-landing.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dispatch OS Landing Page"
     }
   ],
   "categories": ["productivity", "utilities", "business"],
@@ -29,14 +51,14 @@
       "short_name": "New Issue",
       "description": "Submit a new incident for autonomous AI triage",
       "url": "/dashboard",
-      "icons": [{ "src": "/pwa-icon.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Admin Command Center",
       "short_name": "Admin",
       "description": "View real-time incident queue and predictive forecasting",
       "url": "/admin",
-      "icons": [{ "src": "/pwa-icon.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
     }
   ]
 }
