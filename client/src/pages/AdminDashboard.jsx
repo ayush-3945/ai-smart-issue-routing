@@ -9,6 +9,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import IssueDetailModal from '../components/IssueDetailModal';
 import NotificationBell from '../components/NotificationBell';
+import InstallPwaButton from '../components/InstallPwaButton';
 import {
   PieChart,
   Pie,
@@ -210,6 +211,7 @@ const AdminDashboard = () => {
                 <span style={{ fontSize: '10px', fontWeight: '800', padding: '2px 6px', borderRadius: '4px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0' }}>Ctrl K</span>
               </button>
 
+              <InstallPwaButton />
               <LanguageToggle />
               <ThemeToggle />
               <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />

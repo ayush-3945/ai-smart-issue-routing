@@ -1,16 +1,42 @@
 {
-  "short_name": "SmartIssue",
-  "name": "AI Smart Issue Routing & Management",
+  "name": "Dispatch OS - Autonomous Incident Triage",
+  "short_name": "Dispatch OS",
+  "description": "Autonomous AI Incident Triage, Real-Time Operations & Predictive Surge Forecasting",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#07090e",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/pwa-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "48x48 72x72 96x96 128x128 256x256",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
-  "start_url": "/",
-  "background_color": "#f8fafc",
-  "theme_color": "#2563eb",
-  "display": "standalone",
-  "orientation": "portrait"
+  "categories": ["productivity", "utilities", "business"],
+  "shortcuts": [
+    {
+      "name": "Raise Issue",
+      "short_name": "New Issue",
+      "description": "Submit a new incident for autonomous AI triage",
+      "url": "/dashboard",
+      "icons": [{ "src": "/pwa-icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Admin Command Center",
+      "short_name": "Admin",
+      "description": "View real-time incident queue and predictive forecasting",
+      "url": "/admin",
+      "icons": [{ "src": "/pwa-icon.svg", "sizes": "192x192" }]
+    }
+  ]
 }

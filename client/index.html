@@ -5,9 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0ea5e9" />
-    <meta name="description" content="Dispatch - Autonomous Incident Triage & Operations OS" />
+    <meta name="description" content="Dispatch OS - Autonomous Incident Triage & Operations Platform" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Dispatch OS" />
+    <link rel="apple-touch-icon" href="/pwa-icon.svg" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Dispatch | Autonomous Incident Triage & Operations OS</title>
+    <title>Dispatch OS | Autonomous Incident Triage & Operations Platform</title>
   </head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,5 +20,14 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((reg) => console.log('⚡ Dispatch OS PWA Service Worker Registered:', reg.scope))
+            .catch((err) => console.log('Service Worker registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

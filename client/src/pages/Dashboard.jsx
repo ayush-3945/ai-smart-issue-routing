@@ -7,6 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import IssueDetailModal from '../components/IssueDetailModal';
 import NotificationBell from '../components/NotificationBell';
+import InstallPwaButton from '../components/InstallPwaButton';
 
 const Dashboard = () => {
   const [complaints, setComplaints] = useState([]);
@@ -123,6 +124,7 @@ const Dashboard = () => {
           </div>
           
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <InstallPwaButton />
             <LanguageToggle />
             <ThemeToggle />
             <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />

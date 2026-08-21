@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
+import InstallPwaButton from '../components/InstallPwaButton';
 import { useTheme } from '../context/ThemeContext';
 
 const LandingPage = () => {
@@ -16,6 +17,7 @@ const LandingPage = () => {
           <span style={{ fontSize: '22px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>Dispatch</span>
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <InstallPwaButton />
           <ThemeToggle />
           <Link to="/login" style={{ padding: '10px 24px', borderRadius: '12px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontSize: '14px', fontWeight: '600', backgroundColor: theme.badgeBg }}>
             Sign In
