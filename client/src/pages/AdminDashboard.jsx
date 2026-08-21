@@ -173,42 +173,66 @@ const AdminDashboard = () => {
       />
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, padding: '32px 36px', overflowY: 'auto', maxHeight: '100vh' }}>
+      <div className="admin-main-content" style={{ flex: 1, padding: '32px 36px', overflowY: 'auto', maxHeight: '100vh', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
 
           {/* Top Header with Breadcrumb & Quick Search */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '20px' }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: theme.textMuted, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>
-                <span>Home</span>
-                <span>/</span>
-                <span style={{ color: '#0ea5e9' }}>Command Center</span>
+          <div className="dashboard-header" style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
+            <div className="dashboard-top-row">
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: theme.textMuted, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '2px' }}>
+                  <span>Home</span>
+                  <span>/</span>
+                  <span style={{ color: '#0ea5e9' }}>Command Center</span>
+                </div>
+                <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>
+                  {t('adminCommandCenter')}
+                </h1>
               </div>
-              <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>
-                {t('adminCommandCenter')}
-              </h1>
+
+              {/* User Dashboard Switch on Mobile */}
+              <button
+                onClick={() => window.location.href = '/dashboard'}
+                title="Go to User Dashboard"
+                style={{
+                  padding: '7px 12px',
+                  borderRadius: '10px',
+                  backgroundColor: 'rgba(14,165,233,0.1)',
+                  border: '1px solid rgba(14,165,233,0.25)',
+                  color: '#38bdf8',
+                  fontSize: '12px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <span>🚀</span>
+                <span>User Portal</span>
+              </button>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="dashboard-controls">
               {/* Quick Search Pill */}
               <button
                 onClick={() => setIsCommandOpen(true)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  borderRadius: '12px',
+                  gap: '6px',
+                  padding: '7px 12px',
+                  borderRadius: '10px',
                   backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.8)' : '#f1f5f9',
                   border: `1px solid ${theme.cardBorder}`,
                   color: theme.textSecondary,
-                  fontSize: '13px',
+                  fontSize: '12px',
                   cursor: 'pointer',
                   fontWeight: '600'
                 }}
               >
                 <span>🔍 Quick Jump</span>
-                <span style={{ fontSize: '10px', fontWeight: '800', padding: '2px 6px', borderRadius: '4px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0' }}>Ctrl K</span>
+                <span style={{ fontSize: '9px', fontWeight: '800', padding: '1px 5px', borderRadius: '4px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0' }}>Ctrl K</span>
               </button>
 
               <InstallPwaButton />
@@ -223,7 +247,7 @@ const AdminDashboard = () => {
                   exportToCSV(filteredComplaints);
                   addToast('📥 Exported analytics report to CSV!', 'success');
                 }}
-                style={{ backgroundColor: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.3)', color: '#38bdf8', width: '38px', height: '38px', borderRadius: '12px', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+                style={{ backgroundColor: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.3)', color: '#38bdf8', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
               >
                 📥
               </button>
@@ -467,8 +491,8 @@ const AdminDashboard = () => {
           ) : filteredComplaints.length === 0 ? (
             <div style={{ padding: '50px', textAlign: 'center', color: '#64748b' }}>No matching complaints found.</div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
+              <table style={{ width: '100%', minWidth: '800px', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ backgroundColor: 'rgba(15, 23, 42, 0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                     <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableIssueDetails')}</th>

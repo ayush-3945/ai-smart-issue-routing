@@ -142,3 +142,17 @@ h1, h2, h3, h4, .font-heading {
     flex-shrink: 0;
   }
 }
+
+/* Sidebar Responsive Visibility */
+.sidebar-desktop {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .sidebar-desktop {
+    display: none !important;
+  }
+  .admin-main-content {
+    padding: 16px 12px !important;
+  }
+}

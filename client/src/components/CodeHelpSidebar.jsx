@@ -16,6 +16,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
 
   return (
     <div
+      className="sidebar-desktop"
       style={{
         width: collapsed ? '80px' : '260px',
         minHeight: '100vh',
