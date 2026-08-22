@@ -66,6 +66,61 @@ const LandingPage = () => {
           <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>⚡ Real-Time Socket.io Radar</span>
         </div>
 
+        {/* Indian Mines Photo Gallery Section */}
+        <div style={{ marginTop: '56px', width: '100%', maxWidth: '1000px', margin: '56px auto 0' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: '800', color: theme.textPrimary, marginBottom: '24px', textAlign: 'center' }}>
+            Active Surveillance Zones
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+            
+            {/* Image Card 1 */}
+            <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.2)'; }}
+                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+            >
+              <img src="/mines/jharia.jpg" alt="Jharia Open-Cast Mine" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.2)', padding: '4px 10px', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
+                  📍 OPEN-CAST
+                </span>
+                <h3 style={{ margin: '8px 0 0', color: '#fff', fontSize: '16px', fontWeight: '700' }}>Jharia Colliery</h3>
+              </div>
+            </div>
+
+            {/* Image Card 2 */}
+            <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(16, 185, 129, 0.2)'; }}
+                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+            >
+              <img src="/mines/underground.jpg" alt="Underground Coal Seam" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.2)', padding: '4px 10px', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
+                  📍 UNDERGROUND
+                </span>
+                <h3 style={{ margin: '8px 0 0', color: '#fff', fontSize: '16px', fontWeight: '700' }}>Raniganj Deep Seam</h3>
+              </div>
+            </div>
+
+            {/* Image Card 3 */}
+            <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(56, 189, 248, 0.2)'; }}
+                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+            >
+              <img src="/mines/processing.jpg" alt="Coal Processing Plant" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.2)', padding: '4px 10px', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
+                  📍 INFRASTRUCTURE
+                </span>
+                <h3 style={{ margin: '8px 0 0', color: '#fff', fontSize: '16px', fontWeight: '700' }}>Korba West Washery</h3>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         {/* Linear/Reflect Style 3D Holographic App Window Showcase */}
         <div style={{
           marginTop: '64px',

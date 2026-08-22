@@ -890,7 +890,7 @@ const AdminDashboard = () => {
                   </div>
                   <div>
                     <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>
-                      {t('contractorIntelTitle')}
+                      {t('DIGITAL FORM-XIII Statutory Compliance & Scorecard')}
                     </h2>
                     <p style={{ margin: '2px 0 0', fontSize: '12px', color: theme.textSecondary }}>
                       {t('contractorIntelSubtitle')}
@@ -1126,7 +1126,7 @@ const AdminDashboard = () => {
                   </div>
                   <div>
                     <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>
-                      {t('fleetSectionTitle')}
+                      {t('Machine Reference Number (MRN) & Fleet Preventive Maintenance')}
                     </h2>
                     <p style={{ margin: '2px 0 0', fontSize: '12px', color: theme.textSecondary }}>
                       {t('fleetSectionSubtitle')}
