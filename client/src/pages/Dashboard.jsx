@@ -10,6 +10,22 @@ import IssueDetailModal from '../components/IssueDetailModal';
 import NotificationBell from '../components/NotificationBell';
 import InstallPwaButton from '../components/InstallPwaButton';
 
+// Convert file to Base64 object for offline localStorage storage
+const fileToBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve({ name: file.name, type: file.type, data: reader.result });
+    reader.onerror = (err) => reject(err);
+  });
+
+// Convert Base64 data URL back to a File object for FormData upload
+const base64ToFile = async (base64Data, filename, mimeType) => {
+  const res = await fetch(base64Data);
+  const blob = await res.blob();
+  return new File([blob], filename, { type: mimeType || 'image/jpeg' });
+};
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
@@ -28,6 +44,18 @@ const Dashboard = () => {
   const [showCustomLocation, setShowCustomLocation] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
   const { t } = useLanguage();
+
+  // Offline-First Sync State
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [offlineQueue, setOfflineQueue] = useState(() => {
+    try {
+      const saved = localStorage.getItem('coalguard_offline_queue');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+  const [isSyncing, setIsSyncing] = useState(false);
 
   let user = {};
   try {
@@ -48,8 +76,92 @@ const Dashboard = () => {
     }
   };
 
+  // Background Sync Engine
+  const syncOfflineQueue = async () => {
+    if (!navigator.onLine) return;
+    let currentQueue = [];
+    try {
+      const saved = localStorage.getItem('coalguard_offline_queue');
+      currentQueue = saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      currentQueue = [];
+    }
+
+    if (!currentQueue.length) return;
+
+    setIsSyncing(true);
+    let syncedCount = 0;
+    const remainingQueue = [...currentQueue];
+
+    for (let i = 0; i < currentQueue.length; i++) {
+      const item = currentQueue[i];
+      try {
+        const formData = new FormData();
+        formData.append('title', item.title);
+        formData.append('description', item.description);
+        formData.append('mineSite', item.mineSite);
+
+        if (item.location) {
+          formData.append('location', JSON.stringify(item.location));
+        }
+
+        if (item.files && item.files.length > 0) {
+          for (const f of item.files) {
+            try {
+              const fileObj = await base64ToFile(f.data, f.name, f.type);
+              formData.append('files', fileObj);
+            } catch (err) {
+              console.warn('Failed to rebuild file from base64:', err);
+            }
+          }
+        }
+
+        await api.post('/complaints', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+
+        syncedCount++;
+        remainingQueue.shift();
+        localStorage.setItem('coalguard_offline_queue', JSON.stringify(remainingQueue));
+        setOfflineQueue([...remainingQueue]);
+      } catch (err) {
+        console.error('Failed to sync offline item:', err);
+        break; // Stop syncing if connection drops again or server error
+      }
+    }
+
+    setIsSyncing(false);
+    if (syncedCount > 0) {
+      addToast(`⚡ Auto-synced ${syncedCount} offline incident reports to DGMS Command!`, 'success', 5000);
+      fetchMyComplaints();
+    }
+  };
+
   useEffect(() => {
     fetchMyComplaints();
+
+    const handleOnline = () => {
+      setIsOnline(true);
+      addToast('🟢 Surface connectivity restored! Syncing queued reports...', 'info', 4000);
+      syncOfflineQueue();
+    };
+
+    const handleOffline = () => {
+      setIsOnline(false);
+      addToast('🔴 Underground Offline Mode Active — Reports will be saved locally.', 'warning', 5000);
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    if (navigator.onLine && offlineQueue.length > 0) {
+      syncOfflineQueue();
+    }
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
   // Debounced AI Duplicate Detection
@@ -153,6 +265,48 @@ const Dashboard = () => {
     e.preventDefault();
     setLoading(true);
 
+    // If Offline: Save to Local Queue
+    if (!navigator.onLine) {
+      try {
+        let serializedFiles = [];
+        if (selectedFiles.length > 0) {
+          serializedFiles = await Promise.all(
+            selectedFiles.map((file) => fileToBase64(file))
+          );
+        }
+
+        const offlineItem = {
+          id: 'offline_' + Date.now(),
+          title: title.trim(),
+          description: description.trim(),
+          mineSite: mineSite.trim() || 'Jharia Colliery - Pit 4 (Underground)',
+          location: location || (customLocationText.trim() ? { address: customLocationText.trim() } : null),
+          savedAt: new Date().toISOString(),
+          files: serializedFiles
+        };
+
+        const updatedQueue = [...offlineQueue, offlineItem];
+        localStorage.setItem('coalguard_offline_queue', JSON.stringify(updatedQueue));
+        setOfflineQueue(updatedQueue);
+
+        setTitle('');
+        setDescription('');
+        setMineSite('');
+        setSelectedFiles([]);
+        setLocation(null);
+        setCustomLocationText('');
+        setShowCustomLocation(false);
+
+        addToast(`💾 "${offlineItem.title}" saved to Offline Queue! Will auto-dispatch upon surface reconnect.`, 'warning', 6000);
+      } catch (err) {
+        console.error('Offline save error:', err);
+        addToast('Failed to save offline report locally', 'error', 4000);
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append('title', title);
@@ -254,7 +408,7 @@ const Dashboard = () => {
           borderRadius: '12px',
           backgroundColor: 'rgba(16, 185, 129, 0.08)',
           border: '1px solid rgba(16, 185, 129, 0.25)',
-          marginBottom: '20px',
+          marginBottom: '16px',
           fontSize: '12px',
           fontWeight: '700',
           color: '#10b981',
@@ -266,6 +420,79 @@ const Dashboard = () => {
           </div>
           <span style={{ fontSize: '11px', color: theme.textMuted }}>DGMS REG-124 ACTIVE</span>
         </div>
+
+        {/* Sticky Underground Offline Mode Active Banner */}
+        {!isOnline && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '12px 18px',
+            borderRadius: '14px',
+            backgroundColor: 'rgba(239, 68, 68, 0.14)',
+            border: '1px solid rgba(239, 68, 68, 0.4)',
+            marginBottom: '16px',
+            color: '#f87171',
+            fontSize: '13px',
+            fontWeight: '700',
+            boxShadow: '0 0 20px rgba(239, 68, 68, 0.15)',
+            flexWrap: 'wrap',
+            gap: '10px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444', display: 'inline-block', boxShadow: '0 0 8px #ef4444' }}></span>
+              <span>🔴 <strong>{t('offlineModeActive')}</strong></span>
+            </div>
+            {offlineQueue.length > 0 && (
+              <span style={{ padding: '4px 10px', borderRadius: '8px', backgroundColor: 'rgba(239, 68, 68, 0.25)', color: '#fff', fontSize: '11px', fontWeight: '800' }}>
+                📁 {offlineQueue.length} {t('offlineQueuedBadge')}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Pending Sync Alert Banner (When Online and Queue > 0) */}
+        {isOnline && offlineQueue.length > 0 && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '12px 18px',
+            borderRadius: '14px',
+            backgroundColor: 'rgba(245, 158, 11, 0.14)',
+            border: '1px solid rgba(245, 158, 11, 0.4)',
+            marginBottom: '16px',
+            color: '#fbbf24',
+            fontSize: '13px',
+            fontWeight: '700',
+            flexWrap: 'wrap',
+            gap: '10px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span>⚡</span>
+              <span>{isSyncing ? t('syncingReports') : `🟢 ${offlineQueue.length} offline report(s) ready to auto-sync to DGMS Command.`}</span>
+            </div>
+            {!isSyncing && (
+              <button
+                type="button"
+                onClick={syncOfflineQueue}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  backgroundColor: '#f59e0b',
+                  color: '#000',
+                  fontWeight: '800',
+                  fontSize: '12px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 0 10px rgba(245, 158, 11, 0.4)'
+                }}
+              >
+                {t('syncNowButton')}
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Back to Home Link */}
         <div style={{ marginBottom: '20px' }}>
@@ -602,15 +829,18 @@ const Dashboard = () => {
                 width: '100%',
                 padding: '16px',
                 borderRadius: '14px',
-                backgroundColor: '#ea580c',
-                background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+                background: !isOnline
+                  ? 'linear-gradient(135deg, #ea580c 0%, #dc2626 100%)'
+                  : 'linear-gradient(135deg, #f59e0b, #ea580c)',
                 color: '#fff',
-                fontSize: '16px',
+                fontSize: '15px',
                 fontWeight: '800',
                 border: 'none',
                 cursor: loading ? 'not-allowed' : 'pointer',
                 opacity: loading ? 0.7 : 1,
-                boxShadow: '0 8px 20px -6px rgba(245, 158, 11, 0.6)',
+                boxShadow: !isOnline
+                  ? '0 8px 20px -6px rgba(239, 68, 68, 0.6)'
+                  : '0 8px 20px -6px rgba(245, 158, 11, 0.6)',
                 transition: 'all 0.3s ease',
                 display: 'flex',
                 justifyContent: 'center',
@@ -624,7 +854,7 @@ const Dashboard = () => {
                 if (!loading) e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              {loading ? t('submittingButton') : t('submitButton')}
+              {loading ? t('submittingButton') : (!isOnline ? t('offlineSubmitButton') : t('submitButton'))}
             </button>
           </form>
         </div>

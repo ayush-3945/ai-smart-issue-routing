@@ -90,7 +90,12 @@ export const translations = {
     incidentLocation: 'Geo-Tagged Pit Location',
     openInGoogleMaps: 'Open Satellite Map in Google Maps ↗',
     locationLabel: 'Location / Pit',
-    backToHome: 'Back to Home'
+    backToHome: 'Back to Home',
+    offlineModeActive: 'UNDERGROUND OFFLINE MODE ACTIVE — Reports stored locally and auto-dispatched upon surface reconnect.',
+    offlineQueuedBadge: 'Queued for Sync',
+    offlineSubmitButton: '💾 Queue Offline Report (Underground Mode) ➔',
+    syncNowButton: 'Sync Now ➔',
+    syncingReports: 'Syncing queued reports to DGMS Command...'
   },
   hi: {
     appTitle: 'कोल-गार्ड (CoalGuard) OS',
@@ -181,7 +186,12 @@ export const translations = {
     incidentLocation: 'भू-टैग्ड खदान स्थान',
     openInGoogleMaps: 'गूगल सैटेलाइट मैप पर देखें ↗',
     locationLabel: 'स्थान / पीट',
-    backToHome: 'होम पेज पर जाएं'
+    backToHome: 'होम पेज पर जाएं',
+    offlineModeActive: 'भूमिगत ऑफलाइन मोड सक्रिय — रिपोर्ट स्थानीय रूप से सुरक्षित हैं और सतह नेटवर्क मिलने पर स्वतः सिंक होंगी।',
+    offlineQueuedBadge: 'सिंक के लिए कतार में',
+    offlineSubmitButton: '💾 ऑफलाइन रिपोर्ट कतार में जोड़ें (भूमिगत मोड) ➔',
+    syncNowButton: 'अभी सिंक करें ➔',
+    syncingReports: 'कतारबद्ध रिपोर्ट को डीजीएमएस कमांड में सिंक किया जा रहा है...'
   }
 };
 
