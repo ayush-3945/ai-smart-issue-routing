@@ -18,7 +18,13 @@ const Login = () => {
       if (raw && raw !== 'undefined') savedUser = JSON.parse(raw);
     } catch (e) {}
     if (token) {
-      navigate(savedUser.role === 'admin' ? '/admin' : '/dashboard');
+      if (savedUser.role === 'admin') {
+        navigate('/admin');
+      } else if (savedUser.role === 'contractor') {
+        navigate('/contractor');
+      } else {
+        navigate('/dashboard');
+      }
     }
   }, [navigate]);
 
@@ -38,6 +44,8 @@ const Login = () => {
 
       if (res.data.user?.role === 'admin') {
         navigate('/admin');
+      } else if (res.data.user?.role === 'contractor') {
+        navigate('/contractor');
       } else {
         navigate('/dashboard');
       }
