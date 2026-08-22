@@ -49,15 +49,15 @@ const Login = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#090d16', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Inter', system-ui, sans-serif", padding: '20px', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#07090e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Inter', system-ui, sans-serif", padding: '20px', position: 'relative', overflow: 'hidden' }}>
       
       {/* Animated Ambient Orbs */}
-      <div style={{ position: 'absolute', top: '15%', left: '20%', width: '400px', height: '400px', backgroundColor: '#0ea5e9', filter: 'blur(160px)', opacity: 0.15, borderRadius: '50%', animation: 'float1 8s ease-in-out infinite' }}></div>
-      <div style={{ position: 'absolute', bottom: '15%', right: '20%', width: '350px', height: '350px', backgroundColor: '#2563eb', filter: 'blur(140px)', opacity: 0.12, borderRadius: '50%', animation: 'float2 10s ease-in-out infinite' }}></div>
-      <div style={{ position: 'absolute', top: '60%', left: '60%', width: '250px', height: '250px', backgroundColor: '#06b6d4', filter: 'blur(120px)', opacity: 0.08, borderRadius: '50%', animation: 'float1 12s ease-in-out infinite reverse' }}></div>
+      <div style={{ position: 'absolute', top: '15%', left: '20%', width: '400px', height: '400px', backgroundColor: '#f59e0b', filter: 'blur(160px)', opacity: 0.14, borderRadius: '50%', animation: 'float1 8s ease-in-out infinite' }}></div>
+      <div style={{ position: 'absolute', bottom: '15%', right: '20%', width: '350px', height: '350px', backgroundColor: '#ea580c', filter: 'blur(140px)', opacity: 0.12, borderRadius: '50%', animation: 'float2 10s ease-in-out infinite' }}></div>
+      <div style={{ position: 'absolute', top: '60%', left: '60%', width: '250px', height: '250px', backgroundColor: '#d97706', filter: 'blur(120px)', opacity: 0.08, borderRadius: '50%', animation: 'float1 12s ease-in-out infinite reverse' }}></div>
 
       {/* Glass Card */}
-      <div style={{ width: '100%', maxWidth: '440px', backgroundColor: 'rgba(11, 14, 22, 0.85)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '28px', padding: '44px 40px', boxShadow: '0 32px 64px -16px rgba(0, 0, 0, 0.7)', zIndex: 1, animation: 'fadeUp 0.6s ease-out' }}>
+      <div style={{ width: '100%', maxWidth: '440px', backgroundColor: 'rgba(11, 15, 25, 0.92)', backdropFilter: 'blur(24px)', border: '1px solid rgba(245, 158, 11, 0.25)', borderRadius: '28px', padding: '44px 40px', boxShadow: '0 32px 64px -16px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(245, 158, 11, 0.15)', zIndex: 1, animation: 'fadeUp 0.6s ease-out' }}>
         
         {/* Back to Home Link */}
         <div style={{ marginBottom: '16px' }}>
@@ -73,7 +73,7 @@ const Login = () => {
               fontWeight: '600',
               transition: 'color 0.2s ease'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
             onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
           >
             <span>←</span> Back to Home
@@ -82,14 +82,14 @@ const Login = () => {
 
         {/* Logo + Header */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', borderRadius: '18px', fontSize: '28px', marginBottom: '20px', boxShadow: '0 12px 28px -5px rgba(14, 165, 233, 0.5)', animation: 'float3 3s ease-in-out infinite', color: '#fff' }}>
-            ⚡
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', borderRadius: '18px', fontSize: '28px', marginBottom: '20px', boxShadow: '0 12px 28px -5px rgba(245, 158, 11, 0.5)', animation: 'float3 3s ease-in-out infinite', color: '#fff' }}>
+            ⛏️
           </div>
           <h1 style={{ color: '#ffffff', fontSize: '28px', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-0.7px' }}>
-            Welcome Back
+            CoalGuard OS
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0, lineHeight: 1.5 }}>
-            Sign in to your Dispatch OS operations hub
+            Sign in to Mine Operations & Compliance Command
           </p>
         </div>
 
@@ -104,7 +104,7 @@ const Login = () => {
           {/* Email */}
           <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px', letterSpacing: '0.3px' }}>
-              Email Address
+              Field Officer / Admin Email
             </label>
             <div style={{ position: 'relative' }}>
               <span style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', fontSize: '16px', opacity: 0.4 }}>✉️</span>
@@ -113,10 +113,10 @@ const Login = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@company.com"
-                style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
-                onFocus={(e) => { e.target.style.borderColor = 'rgba(14,165,233,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(14,165,233,0.15)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
+                placeholder="officer@mine.gov.in"
+                style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
+                onFocus={(e) => { e.target.style.borderColor = 'rgba(245, 158, 11, 0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.2)'; }}
+                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.boxShadow = 'none'; }}
               />
             </div>
           </div>
@@ -136,9 +136,9 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                style={{ width: '100%', padding: '14px 48px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.5)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
-                onFocus={(e) => { e.target.style.borderColor = 'rgba(14,165,233,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(14,165,233,0.15)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
+                style={{ width: '100%', padding: '14px 48px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
+                onFocus={(e) => { e.target.style.borderColor = 'rgba(245, 158, 11, 0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.2)'; }}
+                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.boxShadow = 'none'; }}
               />
               <button
                 type="button"
@@ -159,13 +159,13 @@ const Login = () => {
               padding: '16px',
               borderRadius: '16px',
               border: 'none',
-              background: loading ? 'rgba(14,165,233,0.5)' : 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
+              background: loading ? 'rgba(245, 158, 11, 0.5)' : 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
               color: '#ffffff',
               fontSize: '16px',
               fontWeight: '800',
               letterSpacing: '-0.02em',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: loading ? 'none' : '0 15px 35px -5px rgba(14, 165, 233, 0.5), 0 0 20px rgba(37, 99, 235, 0.3)',
+              boxShadow: loading ? 'none' : '0 15px 35px -5px rgba(245, 158, 11, 0.5), 0 0 20px rgba(234, 88, 12, 0.3)',
               transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
               position: 'relative',
               overflow: 'hidden'
@@ -178,7 +178,7 @@ const Login = () => {
                 <span style={{ width: '18px', height: '18px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.8s linear infinite' }}></span>
                 Authenticating...
               </span>
-            ) : 'Sign In ➔'}
+            ) : 'Access CoalGuard Hub ➔'}
           </button>
         </form>
 
@@ -192,12 +192,12 @@ const Login = () => {
         {/* Create Account Link */}
         <div style={{ textAlign: 'center' }}>
           <p style={{ color: '#64748b', fontSize: '14px', margin: 0 }}>
-            Don't have an account?{' '}
-            <Link to="/register" style={{ color: '#38bdf8', fontWeight: '700', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#0ea5e9'}
-              onMouseLeave={(e) => e.currentTarget.style.color = '#38bdf8'}
+            Need Field Credentials?{' '}
+            <Link to="/register" style={{ color: '#f59e0b', fontWeight: '700', textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#f59e0b'}
             >
-              Create Account
+              Register Field Officer
             </Link>
           </p>
         </div>

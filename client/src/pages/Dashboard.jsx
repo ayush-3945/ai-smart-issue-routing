@@ -208,7 +208,7 @@ const Dashboard = () => {
             title={t('backToHome')}
             style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
           >
-            <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>⚡</div>
+            <div style={{ background: 'linear-gradient(135deg, #f59e0b, #ea580c)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)' }}>⛏️</div>
             <div>
               <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
               <p style={{ margin: '1px 0 0', color: theme.textSecondary, fontSize: '12px' }}>{t('appSubtitle')}</p>
@@ -225,15 +225,15 @@ const Dashboard = () => {
             <button
               title={t('adminView')}
               onClick={() => window.location.href = '/admin'}
-              style={{ background: 'linear-gradient(135deg, #0284c7, #2563eb)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(14,165,233,0.35)', transition: 'transform 0.2s' }}
+              style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
             >
               <span>👑</span>
-              <span>Admin</span>
+              <span>Command Center</span>
             </button>
 
             {/* User Avatar & Sign Out */}
-            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)', marginLeft: '4px' }}>
-              {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)', marginLeft: '4px' }}>
+              {user.name ? user.name.charAt(0).toUpperCase() : '⛏️'}
             </div>
             <button
               title={t('signOut')}
@@ -281,7 +281,7 @@ const Dashboard = () => {
               cursor: 'pointer',
               transition: 'color 0.2s ease'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
             onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
           >
             <span>←</span> {t('backToHome')}
@@ -289,7 +289,7 @@ const Dashboard = () => {
         </div>
 
         {/* Report Mine Violation / Safety Observation Form Card */}
-        <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
+        <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.isDark ? 'rgba(245, 158, 11, 0.25)' : theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? '0 20px 40px -15px rgba(245, 158, 11, 0.1)' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
             <span style={{ fontSize: '22px' }}>⛏️</span>
             <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>{t('raiseIssueTitle')}</h2>
@@ -321,9 +321,9 @@ const Dashboard = () => {
                       fontSize: '11px',
                       fontWeight: '700',
                       cursor: 'pointer',
-                      border: mineSite === site ? '1px solid #0ea5e9' : `1px solid ${theme.cardBorder}`,
-                      backgroundColor: mineSite === site ? 'rgba(14, 165, 233, 0.18)' : theme.badgeBg,
-                      color: mineSite === site ? '#38bdf8' : theme.textSecondary,
+                      border: mineSite === site ? '1px solid #f59e0b' : `1px solid ${theme.cardBorder}`,
+                      backgroundColor: mineSite === site ? 'rgba(245, 158, 11, 0.2)' : theme.badgeBg,
+                      color: mineSite === site ? '#fbbf24' : theme.textSecondary,
                       transition: 'all 0.2s ease'
                     }}
                   >
@@ -461,37 +461,6 @@ const Dashboard = () => {
               />
             </div>
 
-            {/* Mine Site Selection */}
-            <div>
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>🏭 Select Mine Site</label>
-              <select
-                value={mineSite}
-                onChange={(e) => setMineSite(e.target.value)}
-                required
-                style={{
-                  width: '100%',
-                  padding: '14px 18px',
-                  borderRadius: '12px',
-                  backgroundColor: theme.inputBg,
-                  border: `1px solid ${theme.cardBorder}`,
-                  color: theme.textPrimary,
-                  fontSize: '14px',
-                  outline: 'none',
-                  cursor: 'pointer',
-                  appearance: 'none'
-                }}
-              >
-                <option value="" disabled>Select the affected Mine Site or Zone...</option>
-                <option value="Dhanbad Colliery - Pit 1">Dhanbad Colliery - Pit 1</option>
-                <option value="Dhanbad Colliery - Pit 2">Dhanbad Colliery - Pit 2</option>
-                <option value="Bokaro Zone A">Bokaro Zone A</option>
-                <option value="Bokaro Zone B">Bokaro Zone B</option>
-                <option value="Jharia Open Cast">Jharia Open Cast</option>
-                <option value="Raniganj Shaft 4">Raniganj Shaft 4</option>
-                <option value="Other">Other (Specify in Description)</option>
-              </select>
-            </div>
-
             {/* Multi-File Upload Component */}
             <div>
               <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>
@@ -521,7 +490,7 @@ const Dashboard = () => {
               padding: '16px 18px',
               borderRadius: '14px',
               backgroundColor: theme.inputBg,
-              border: `1px solid ${location ? 'rgba(14, 165, 233, 0.4)' : theme.cardBorder}`,
+              border: `1px solid ${location ? 'rgba(245, 158, 11, 0.45)' : theme.cardBorder}`,
               transition: 'all 0.3s ease'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
@@ -537,9 +506,9 @@ const Dashboard = () => {
                     onClick={handleDetectLocation}
                     disabled={isLocating}
                     style={{
-                      background: isLocating ? 'rgba(14, 165, 233, 0.2)' : 'linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(37, 99, 235, 0.15))',
-                      border: '1px solid rgba(14, 165, 233, 0.4)',
-                      color: '#38bdf8',
+                      background: isLocating ? 'rgba(245, 158, 11, 0.2)' : 'linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(234, 88, 12, 0.18))',
+                      border: '1px solid rgba(245, 158, 11, 0.45)',
+                      color: '#fbbf24',
                       padding: '6px 14px',
                       borderRadius: '10px',
                       fontSize: '12px',
@@ -548,7 +517,8 @@ const Dashboard = () => {
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '6px',
-                      transition: 'all 0.2s ease'
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 0 10px rgba(245, 158, 11, 0.15)'
                     }}
                   >
                     <span>{isLocating ? '⏳' : '📡'}</span>
@@ -562,8 +532,8 @@ const Dashboard = () => {
                   marginTop: '12px',
                   padding: '12px 14px',
                   borderRadius: '10px',
-                  backgroundColor: theme.isDark ? 'rgba(14, 165, 233, 0.08)' : 'rgba(14, 165, 233, 0.05)',
-                  border: '1px solid rgba(14, 165, 233, 0.25)',
+                  backgroundColor: theme.isDark ? 'rgba(245, 158, 11, 0.08)' : 'rgba(245, 158, 11, 0.05)',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -579,7 +549,7 @@ const Dashboard = () => {
                         {location.address}
                       </div>
                       {location.latitude && location.longitude && (
-                        <div style={{ fontSize: '11px', color: '#38bdf8', marginTop: '4px', fontWeight: '600' }}>
+                        <div style={{ fontSize: '11px', color: '#fbbf24', marginTop: '4px', fontWeight: '600' }}>
                           🌐 Coords: {location.latitude.toFixed(5)}° N, {location.longitude.toFixed(5)}° E
                         </div>
                       )}
@@ -606,7 +576,7 @@ const Dashboard = () => {
                 <div style={{ marginTop: '10px' }}>
                   <input
                     type="text"
-                    placeholder={`e.g. Building 3, 2nd Floor, Server Room A / Desk #42`}
+                    placeholder={`e.g. Underground Shaft B, Seam 4, Haul Road #2`}
                     value={customLocationText}
                     onChange={(e) => setCustomLocationText(e.target.value)}
                     style={{
@@ -633,13 +603,13 @@ const Dashboard = () => {
                 padding: '16px',
                 borderRadius: '14px',
                 border: 'none',
-                background: loading ? '#64748b' : 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
+                background: loading ? '#64748b' : 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
                 color: '#ffffff',
                 fontSize: '15px',
                 fontWeight: '800',
                 letterSpacing: '-0.01em',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                boxShadow: loading ? 'none' : '0 10px 25px -5px rgba(14, 165, 233, 0.4), 0 0 15px rgba(37, 99, 235, 0.2)',
+                boxShadow: loading ? 'none' : '0 10px 25px -5px rgba(245, 158, 11, 0.5), 0 0 15px rgba(234, 88, 12, 0.3)',
                 transition: 'all 0.2s ease'
               }}
             >
@@ -670,14 +640,14 @@ const Dashboard = () => {
             {complaints.map((c) => (
               <div key={c._id} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '16px', padding: '20px', transition: 'border-color 0.2s, transform 0.2s', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}
                 onClick={() => setSelectedComplaint(c)}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(14,165,233,0.4)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.45)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = theme.cardBorder; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                   <h3 style={{ margin: 0, fontSize: '16px', color: theme.textPrimary, fontWeight: '600' }}>
                     {c.title}
                     {c.comments && c.comments.length > 0 && (
-                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}>
+                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24' }}>
                         💬 {c.comments.length}
                       </span>
                     )}
@@ -687,8 +657,8 @@ const Dashboard = () => {
                       </span>
                     )}
                     {c.location && (c.location.address || c.location.city || c.location.latitude) && (
-                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}>
-                        📍 {c.location.city || 'Location'}
+                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24' }}>
+                        📍 {c.location.city || 'Pit Loc'}
                       </span>
                     )}
                   </h3>
@@ -703,7 +673,7 @@ const Dashboard = () => {
                   {c.mineSite && (
                     <span>🏭 Mine: <strong style={{ color: '#f59e0b' }}>{c.mineSite}</strong></span>
                   )}
-                  <span>🏷️ Category: <strong style={{ color: '#38bdf8' }}>{c.category}</strong></span>
+                  <span>🏷️ Category: <strong style={{ color: '#fbbf24' }}>{c.category}</strong></span>
                   <span>⚡ Severity: <strong style={{ color: c.priority === 'Critical' ? '#f87171' : c.priority === 'High' ? '#fb923c' : '#60a5fa' }}>{c.priority}</strong></span>
                   <span>🎯 AI Confidence: <strong style={{ color: '#34d399' }}>{c.aiConfidence}%</strong></span>
                   {c.assignedTo && (
@@ -712,11 +682,11 @@ const Dashboard = () => {
                   {c.location?.address && (
                     <span style={{ color: theme.textMuted }}>📍 <strong>{c.location.address.length > 30 ? `${c.location.address.slice(0, 30)}...` : c.location.address}</strong></span>
                   )}
-                  <span style={{ marginLeft: 'auto', color: '#38bdf8', fontWeight: '600', fontSize: '12px' }}>Inspection Details & SOP ➔</span>
+                  <span style={{ marginLeft: 'auto', color: '#fbbf24', fontWeight: '600', fontSize: '12px' }}>Inspection Details & SOP ➔</span>
                 </div>
                 
                 {c.aiSummary && (
-                  <div style={{ marginTop: '12px', fontSize: '12px', color: theme.isDark ? '#38bdf8' : '#0284c7', backgroundColor: theme.isDark ? 'rgba(14,165,233,0.08)' : 'rgba(2,132,199,0.08)', border: '1px solid rgba(14,165,233,0.2)', padding: '8px 14px', borderRadius: '10px' }}>
+                  <div style={{ marginTop: '12px', fontSize: '12px', color: theme.isDark ? '#fbbf24' : '#d97706', backgroundColor: theme.isDark ? 'rgba(245, 158, 11, 0.08)' : 'rgba(245, 158, 11, 0.06)', border: '1px solid rgba(245, 158, 11, 0.25)', padding: '8px 14px', borderRadius: '10px' }}>
                     ✨ <strong>AI Summary:</strong> {c.aiSummary}
                   </div>
                 )}

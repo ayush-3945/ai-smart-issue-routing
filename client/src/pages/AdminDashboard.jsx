@@ -187,13 +187,13 @@ const AdminDashboard = () => {
                     onClick={() => navigate('/')}
                     title={t('backToHome')}
                     style={{ cursor: 'pointer', transition: 'color 0.2s' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
                     onMouseLeave={(e) => e.currentTarget.style.color = theme.textMuted}
                   >
                     ← Home
                   </span>
                   <span>/</span>
-                  <span style={{ color: '#0ea5e9' }}>Command Center</span>
+                  <span style={{ color: '#f59e0b' }}>Command Center</span>
                 </div>
                 <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>
                   {t('adminCommandCenter')}
@@ -207,9 +207,9 @@ const AdminDashboard = () => {
                 style={{
                   padding: '7px 12px',
                   borderRadius: '10px',
-                  backgroundColor: 'rgba(14,165,233,0.1)',
-                  border: '1px solid rgba(14,165,233,0.25)',
-                  color: '#38bdf8',
+                  backgroundColor: 'rgba(245, 158, 11, 0.12)',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
+                  color: '#fbbf24',
                   fontSize: '12px',
                   fontWeight: '700',
                   cursor: 'pointer',
@@ -218,8 +218,8 @@ const AdminDashboard = () => {
                   gap: '4px'
                 }}
               >
-                <span>🚀</span>
-                <span>User Portal</span>
+                <span>⛏️</span>
+                <span>Field Portal</span>
               </button>
             </div>
 
@@ -257,7 +257,7 @@ const AdminDashboard = () => {
                   exportToCSV(filteredComplaints);
                   addToast('📥 Exported analytics report to CSV!', 'success');
                 }}
-                style={{ backgroundColor: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.3)', color: '#38bdf8', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+                style={{ backgroundColor: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', color: '#fbbf24', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s', boxShadow: '0 0 10px rgba(245, 158, 11, 0.15)' }}
               >
                 📥
               </button>
@@ -329,9 +329,9 @@ const AdminDashboard = () => {
                   <XAxis dataKey="name" stroke={theme.textMuted} />
                   <YAxis allowDecimals={false} stroke={theme.textMuted} />
                   <Tooltip contentStyle={{ backgroundColor: theme.isDark ? '#1e293b' : '#ffffff', border: `1px solid ${theme.cardBorder}`, borderRadius: '8px', color: theme.textPrimary }} />
-                  <Bar dataKey="count" fill="#0ea5e9" radius={[8, 8, 0, 0]}>
+                  <Bar dataKey="count" fill="#f59e0b" radius={[8, 8, 0, 0]}>
                     {priorityData.map((entry, index) => (
-                      <Cell key={`bar-${index}`} fill={PRIORITY_BADGES[entry.name]?.dot || '#0ea5e9'} />
+                      <Cell key={`bar-${index}`} fill={PRIORITY_BADGES[entry.name]?.dot || '#f59e0b'} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -349,7 +349,7 @@ const AdminDashboard = () => {
                   <XAxis dataKey="date" stroke={theme.textMuted} />
                   <YAxis allowDecimals={false} stroke={theme.textMuted} />
                   <Tooltip contentStyle={{ backgroundColor: theme.isDark ? '#1e293b' : '#ffffff', border: `1px solid ${theme.cardBorder}`, borderRadius: '8px', color: theme.textPrimary }} />
-                  <Line type="monotone" dataKey="complaints" stroke="#0ea5e9" strokeWidth={3} dot={{ r: 6, fill: '#38bdf8' }} />
+                  <Line type="monotone" dataKey="complaints" stroke="#f59e0b" strokeWidth={3} dot={{ r: 6, fill: '#fbbf24' }} />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
@@ -363,14 +363,14 @@ const AdminDashboard = () => {
           const pred = analytics?.predictions || {
             riskLevel: 'Moderate',
             projectedSurgePercentage: 24,
-            primarySurgeDepartment: 'IT',
-            forecastSummary: 'Expected moderate ticket volume across technical departments with stable operations in administrative teams.',
-            actionableRecommendation: 'Maintain standard SLA response teams and monitor peak hour ticket submissions.',
+            primarySurgeDepartment: 'Safety (DGMS)',
+            forecastSummary: 'Expected moderate hazard volume across Safety & Ventilation with stable HEMM mechanical operations.',
+            actionableRecommendation: 'Maintain standard DGMS inspection rounds and monitor peak shift gas readings.',
             departmentForecasts: [
-              { department: 'IT', risk: 'High', projectedVolume: '+32%', insight: 'Server & network infrastructure queries' },
-              { department: 'HR', risk: 'Moderate', projectedVolume: '+14%', insight: 'Quarterly benefits & onboarding' },
-              { department: 'Finance', risk: 'Low', projectedVolume: 'Stable', insight: 'Standard invoice processing' },
-              { department: 'Operations', risk: 'Low', projectedVolume: 'Stable', insight: 'Facility maintenance steady' }
+              { department: 'Safety (DGMS)', risk: 'High', projectedVolume: '+32%', insight: 'Methane and strata control monitoring' },
+              { department: 'Equipment (HEMM)', risk: 'Moderate', projectedVolume: '+14%', insight: 'Heavy machinery hydraulic inspections' },
+              { department: 'Environment', risk: 'Low', projectedVolume: 'Stable', insight: 'Dust suppression & water discharge normal' },
+              { department: 'Labour', risk: 'Low', projectedVolume: 'Stable', insight: 'PPE and shift muster compliance steady' }
             ]
           };
           return (
@@ -379,11 +379,11 @@ const AdminDashboard = () => {
               borderRadius: '24px',
               padding: '28px 32px',
               marginBottom: '36px',
-              border: `1px solid ${theme.isDark ? 'rgba(14, 165, 233, 0.3)' : '#e2e8f0'}`,
+              border: `1px solid ${theme.isDark ? 'rgba(245, 158, 11, 0.35)' : '#fed7aa'}`,
               background: theme.isDark 
-                ? 'linear-gradient(135deg, rgba(15, 17, 26, 0.9) 0%, rgba(14, 165, 233, 0.08) 100%)' 
-                : 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)',
-              boxShadow: '0 20px 40px -15px rgba(14, 165, 233, 0.15)'
+                ? 'linear-gradient(135deg, rgba(15, 17, 26, 0.95) 0%, rgba(245, 158, 11, 0.08) 100%)' 
+                : 'linear-gradient(135deg, #ffffff 0%, #fffbeb 100%)',
+              boxShadow: '0 20px 40px -15px rgba(245, 158, 11, 0.15)'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', marginBottom: '18px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -415,11 +415,11 @@ const AdminDashboard = () => {
                     borderRadius: '20px',
                     fontSize: '12px',
                     fontWeight: '700',
-                    backgroundColor: 'rgba(14, 165, 233, 0.15)',
-                    color: '#38bdf8',
-                    border: '1px solid rgba(14, 165, 233, 0.3)'
+                    backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                    color: '#fbbf24',
+                    border: '1px solid rgba(245, 158, 11, 0.35)'
                   }}>
-                    {t('primarySpike')}: {pred.primarySurgeDepartment || 'IT'}
+                    {t('primarySpike')}: {pred.primarySurgeDepartment || 'Safety (DGMS)'}
                   </span>
                 </div>
               </div>
@@ -488,7 +488,7 @@ const AdminDashboard = () => {
               <span style={{ fontSize: '13px', fontWeight: '600', color: theme.textSecondary }}>{t('categoryFilter')}:</span>
               {CATEGORIES.map((cat) => (
                 <button key={cat} onClick={() => setSelectedCategory(cat)}
-                  style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#0ea5e9' : theme.cardBorder, backgroundColor: selectedCategory === cat ? 'linear-gradient(135deg, #0284c7, #2563eb)' : theme.badgeBg, color: selectedCategory === cat ? '#ffffff' : theme.textSecondary, fontSize: '13px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s', background: selectedCategory === cat ? 'linear-gradient(135deg, #0284c7, #2563eb)' : 'transparent', boxShadow: selectedCategory === cat ? '0 0 15px rgba(14,165,233,0.3)' : 'none' }}
+                  style={{ padding: '8px 16px', borderRadius: '24px', border: '1px solid', borderColor: selectedCategory === cat ? '#f59e0b' : theme.cardBorder, color: selectedCategory === cat ? '#ffffff' : theme.textSecondary, fontSize: '13px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s', background: selectedCategory === cat ? 'linear-gradient(135deg, #f59e0b, #ea580c)' : 'transparent', boxShadow: selectedCategory === cat ? '0 0 15px rgba(245, 158, 11, 0.35)' : 'none' }}
                 >
                   {cat === 'All' ? t('all') : cat}
                 </button>

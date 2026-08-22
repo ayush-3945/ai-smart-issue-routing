@@ -46,7 +46,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div
               style={{
-                background: 'linear-gradient(135deg, #0ea5e9, #2563eb)',
+                background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
                 width: '38px',
                 height: '38px',
                 borderRadius: '12px',
@@ -54,18 +54,18 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '18px',
-                boxShadow: '0 0 20px -3px rgba(14, 165, 233, 0.5)',
+                boxShadow: '0 0 20px -3px rgba(245, 158, 11, 0.5)',
                 color: '#ffffff'
               }}
             >
-              ⚡
+              ⛏️
             </div>
             {!collapsed && (
               <div>
                 <div style={{ fontSize: '18px', fontWeight: '900', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
-                  Dispatch <span className="gradient-text">OS</span>
+                  CoalGuard <span className="gradient-text">OS</span>
                 </div>
-                <div style={{ fontSize: '11px', color: theme.textMuted, fontWeight: '700', letterSpacing: '0.2px' }}>Autonomous Incident Engine</div>
+                <div style={{ fontSize: '11px', color: theme.textMuted, fontWeight: '700', letterSpacing: '0.2px' }}>DGMS Telemetry Command</div>
               </div>
             )}
           </div>
@@ -106,7 +106,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span>🔍</span>
-              <span>Quick Search...</span>
+              <span>Search Violations...</span>
             </div>
             <span
               style={{
@@ -154,19 +154,19 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                   width: '100%',
                   padding: '12px 14px',
                   borderRadius: '12px',
-                  border: isActive ? '1px solid rgba(14, 165, 233, 0.3)' : '1px solid transparent',
+                  border: isActive ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent',
                   backgroundColor: isActive
                     ? theme.isDark
-                      ? 'rgba(14, 165, 233, 0.12)'
-                      : '#e0f2fe'
+                      ? 'rgba(245, 158, 11, 0.15)'
+                      : '#fffbeb'
                     : 'transparent',
-                  color: isActive ? (theme.isDark ? '#38bdf8' : '#0284c7') : theme.textSecondary,
+                  color: isActive ? (theme.isDark ? '#fbbf24' : '#d97706') : theme.textSecondary,
                   fontSize: '14px',
                   fontWeight: isActive ? '800' : '600',
                   cursor: 'pointer',
                   justifyContent: collapsed ? 'center' : 'flex-start',
                   transition: 'all 0.15s ease',
-                  boxShadow: isActive ? '0 0 15px -3px rgba(14, 165, 233, 0.2)' : 'none'
+                  boxShadow: isActive ? '0 0 15px -3px rgba(245, 158, 11, 0.25)' : 'none'
                 }}
               >
                 <span style={{ fontSize: '18px' }}>{item.icon}</span>
@@ -177,7 +177,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
         </div>
       </div>
 
-      {/* Bottom User Profile Card (Love Babbar CodeHelp Style) */}
+      {/* Bottom User Profile Card */}
       <div
         style={{
           padding: '12px',
@@ -201,7 +201,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
             width: '38px',
             height: '38px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #8b5cf6, #06b6d4)',
+            background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
             color: '#fff',
             display: 'flex',
             alignItems: 'center',

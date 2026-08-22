@@ -55,7 +55,7 @@ const Register = () => {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundColor: '#090d16',
+      backgroundColor: '#07090e',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -70,21 +70,21 @@ const Register = () => {
         left: '25%',
         width: '350px',
         height: '350px',
-        backgroundColor: '#0ea5e9',
+        backgroundColor: '#f59e0b',
         filter: 'blur(140px)',
-        opacity: 0.15,
+        opacity: 0.14,
         borderRadius: '50%'
       }}></div>
 
       <div style={{
         width: '100%',
         maxWidth: '440px',
-        backgroundColor: 'rgba(11, 14, 22, 0.85)',
+        backgroundColor: 'rgba(11, 15, 25, 0.92)',
         backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        border: '1px solid rgba(245, 158, 11, 0.25)',
         borderRadius: '24px',
         padding: '40px',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.15)',
         zIndex: 1
       }}>
         {/* Back to Home Link */}
@@ -101,7 +101,7 @@ const Register = () => {
               fontWeight: '600',
               transition: 'color 0.2s ease'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
             onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
           >
             <span>←</span> Back to Home
@@ -109,11 +109,14 @@ const Register = () => {
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <h1 style={{ color: '#ffffff', fontSize: '26px', fontWeight: '800', margin: '0 0 8px' }}>
-            Create Account
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '50px', height: '50px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', borderRadius: '14px', fontSize: '24px', marginBottom: '14px', boxShadow: '0 8px 20px -3px rgba(245, 158, 11, 0.45)', color: '#fff' }}>
+            ⛏️
+          </div>
+          <h1 style={{ color: '#ffffff', fontSize: '24px', fontWeight: '800', margin: '0 0 6px' }}>
+            Register Field Officer
           </h1>
-          <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0 }}>
-            Join Dispatch OS Autonomous Operations Hub
+          <p style={{ color: '#94a3b8', fontSize: '13px', margin: 0 }}>
+            Join CoalGuard OS Smart Mining Compliance Hub
           </p>
         </div>
 
@@ -141,7 +144,7 @@ const Register = () => {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Ayush Pandey"
+              placeholder="Inspector Rajesh Verma"
               style={{
                 width: '100%',
                 padding: '12px 16px',
@@ -165,7 +168,7 @@ const Register = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@mycompany.com"
+              placeholder="officer@mine.gov.in"
               style={{
                 width: '100%',
                 padding: '12px 16px',
@@ -220,11 +223,12 @@ const Register = () => {
                 color: '#ffffff',
                 fontSize: '14px',
                 outline: 'none',
-                boxSizing: 'border-box'
+                boxSizing: 'border-box',
+                cursor: 'pointer'
               }}
             >
-              <option value="admin">Admin (Manage & AI Routing)</option>
-              <option value="user">User (Raise Complaints)</option>
+              <option value="admin">Mine Official / Safety Controller (Admin)</option>
+              <option value="user">Field Inspector / Shift Worker (User)</option>
             </select>
           </div>
 
@@ -236,24 +240,24 @@ const Register = () => {
               padding: '16px',
               borderRadius: '16px',
               border: 'none',
-              background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
+              background: loading ? 'rgba(245, 158, 11, 0.5)' : 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
               color: '#ffffff',
               fontSize: '16px',
               fontWeight: '800',
               letterSpacing: '-0.02em',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 15px 35px -5px rgba(14, 165, 233, 0.5), 0 0 20px rgba(37, 99, 235, 0.3)',
+              boxShadow: '0 15px 35px -5px rgba(245, 158, 11, 0.5), 0 0 20px rgba(234, 88, 12, 0.3)',
               transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-            {loading ? 'Creating...' : 'Create Account ➔'}
+            {loading ? 'Registering...' : 'Register Field Credentials ➔'}
           </button>
         </form>
 
         <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <p style={{ color: '#64748b', fontSize: '13px', margin: 0 }}>
-            Already have an account?{' '}
-            <Link to="/login" style={{ color: '#38bdf8', fontWeight: '700', textDecoration: 'none' }}>
+            Already have credentials?{' '}
+            <Link to="/login" style={{ color: '#f59e0b', fontWeight: '700', textDecoration: 'none' }}>
               Sign In
             </Link>
           </p>
