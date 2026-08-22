@@ -14,6 +14,8 @@ export const exportToCSV = (complaints, filename = 'SmartIssue_Analytics_Report.
     'Status',
     'AI Confidence (%)',
     'AI Summary',
+    'Location Address',
+    'Coordinates (Lat, Long)',
     'Submitted By (Name)',
     'Submitted By (Email)',
     'Created At'
@@ -29,6 +31,8 @@ export const exportToCSV = (complaints, filename = 'SmartIssue_Analytics_Report.
     `"${c.status || ''}"`,
     `"${c.aiConfidence || 0}"`,
     `"${(c.aiSummary || '').replace(/"/g, '""')}"`,
+    `"${(c.location?.address || 'N/A').replace(/"/g, '""')}"`,
+    `"${c.location?.latitude && c.location?.longitude ? `${c.location.latitude}, ${c.location.longitude}` : 'N/A'}"`,
     `"${(c.user?.name || 'Anonymous').replace(/"/g, '""')}"`,
     `"${(c.user?.email || 'N/A').replace(/"/g, '""')}"`,
     `"${c.createdAt ? new Date(c.createdAt).toLocaleString() : ''}"`

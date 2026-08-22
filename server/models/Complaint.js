@@ -49,6 +49,15 @@ const complaintSchema = new mongoose.Schema({
       fileName: { type: String, default: 'Attachment' }
     }
   ],
+  location: {
+    latitude: { type: Number, default: null },
+    longitude: { type: Number, default: null },
+    address: { type: String, default: null },
+    city: { type: String, default: null },
+    state: { type: String, default: null },
+    country: { type: String, default: null },
+    pincode: { type: String, default: null }
+  },
   aiConfidence: {
     type: Number,
     default: 0

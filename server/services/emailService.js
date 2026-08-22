@@ -41,6 +41,7 @@ const sendComplaintCreatedEmail = async (userEmail, userName, complaint) => {
           <p><strong>📌 Title:</strong> ${complaint.title}</p>
           <p><strong>🏷️ Category (AI):</strong> ${complaint.category}</p>
           <p><strong>⚡ Priority:</strong> <span style="color: ${complaint.priority === 'Critical' ? '#dc2626' : '#2563eb'}; font-weight: bold;">${complaint.priority}</span></p>
+          ${complaint.location?.address ? `<p><strong>📍 Location:</strong> ${complaint.location.address}</p>` : ''}
           <p><strong>🤖 AI Summary:</strong> ${complaint.aiSummary || 'Under review'}</p>
         </div>
 

@@ -540,8 +540,22 @@ const AdminDashboard = () => {
                                 📎 {c.attachments.length}
                               </span>
                             )}
+                            {c.location && (c.location.address || c.location.city || c.location.latitude) && (
+                              <span
+                                title={c.location.address || `${c.location.latitude}, ${c.location.longitude}`}
+                                style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}
+                              >
+                                📍 {c.location.city || 'Location'}
+                              </span>
+                            )}
                           </div>
                           <div style={{ fontSize: '13px', color: theme.textSecondary, marginTop: '4px' }}>{c.description}</div>
+                          {c.location?.address && (
+                            <div style={{ fontSize: '11px', color: theme.textMuted, marginTop: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <span>📍</span>
+                              <span>{c.location.address.length > 45 ? `${c.location.address.slice(0, 45)}...` : c.location.address}</span>
+                            </div>
+                          )}
                           {c.aiSummary && (
                             <div style={{ marginTop: '8px', fontSize: '12px', color: theme.isDark ? '#c084fc' : '#7c3aed', backgroundColor: theme.isDark ? 'rgba(168, 85, 247, 0.1)' : 'rgba(124, 58, 237, 0.08)', padding: '6px 12px', borderRadius: '8px', display: 'inline-block' }}>
                               ✨ <strong>AI Summary:</strong> {c.aiSummary}

@@ -316,6 +316,70 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
             </div>
           )}
 
+          {/* Incident Location Section */}
+          {complaint.location && (complaint.location.address || complaint.location.latitude || complaint.location.city) && (
+            <div style={{
+              marginBottom: '24px',
+              padding: '16px 20px',
+              borderRadius: '16px',
+              backgroundColor: theme.isDark ? 'rgba(14, 165, 233, 0.06)' : 'rgba(14, 165, 233, 0.04)',
+              border: '1px solid rgba(14, 165, 233, 0.25)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '800', color: '#38bdf8' }}>
+                  <span>📍 Incident Location</span>
+                  {complaint.location.city && (
+                    <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.2)', color: '#38bdf8' }}>
+                      {complaint.location.city}
+                    </span>
+                  )}
+                </div>
+
+                {(complaint.location.latitude && complaint.location.longitude) || complaint.location.address ? (
+                  <a
+                    href={
+                      complaint.location.latitude && complaint.location.longitude
+                        ? `https://www.google.com/maps?q=${complaint.location.latitude},${complaint.location.longitude}`
+                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(complaint.location.address)}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      backgroundColor: 'rgba(14, 165, 233, 0.15)',
+                      border: '1px solid rgba(14, 165, 233, 0.3)',
+                      color: '#38bdf8',
+                      fontSize: '11px',
+                      fontWeight: '700',
+                      textDecoration: 'none',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    🗺️ Open in Google Maps ↗
+                  </a>
+                ) : null}
+              </div>
+
+              {complaint.location.address && (
+                <p style={{ margin: 0, fontSize: '14px', color: theme.textPrimary, lineHeight: 1.5 }}>
+                  {complaint.location.address}
+                </p>
+              )}
+
+              {complaint.location.latitude && complaint.location.longitude && (
+                <div style={{ marginTop: '6px', fontSize: '12px', color: theme.textMuted, display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  <span>Lat: <strong style={{ color: theme.textSecondary }}>{complaint.location.latitude}</strong></span>
+                  <span>Long: <strong style={{ color: theme.textSecondary }}>{complaint.location.longitude}</strong></span>
+                  {complaint.location.pincode && <span>Postal Code: <strong style={{ color: theme.textSecondary }}>{complaint.location.pincode}</strong></span>}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Attachments Section */}
           {attachments.length > 0 && (
             <div style={{ marginBottom: '24px' }}>

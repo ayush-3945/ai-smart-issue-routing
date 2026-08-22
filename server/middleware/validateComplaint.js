@@ -17,7 +17,14 @@ const complaintValidationSchema = Joi.object({
   priority: Joi.string()
     .valid('Low', 'Medium', 'High', 'Critical')
     .default('Medium'),
-});
+  location: Joi.alternatives().try(
+    Joi.string().allow('', null),
+    Joi.object().unknown(true)
+  ).optional(),
+  latitude: Joi.number().allow(null, '').optional(),
+  longitude: Joi.number().allow(null, '').optional(),
+  address: Joi.string().allow(null, '').optional(),
+}).unknown(true);
 
 const validateComplaint = (req, res, next) => {
   const { error } = complaintValidationSchema.validate(req.body, {

@@ -19,6 +19,10 @@ const Dashboard = () => {
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [duplicates, setDuplicates] = useState([]);
   const [dismissDuplicateWarning, setDismissDuplicateWarning] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [isLocating, setIsLocating] = useState(false);
+  const [customLocationText, setCustomLocationText] = useState('');
+  const [showCustomLocation, setShowCustomLocation] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
   const { t } = useLanguage();
 
@@ -74,6 +78,74 @@ const Dashboard = () => {
     }
   };
 
+  const handleDetectLocation = () => {
+    if (!navigator.geolocation) {
+      addToast('Geolocation is not supported by your browser', 'error', 4000);
+      setShowCustomLocation(true);
+      return;
+    }
+
+    setIsLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          // Reverse geocoding via OpenStreetMap Nominatim
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          );
+          const data = await response.json();
+          
+          const address = data.display_name || `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+          const city = data.address?.city || data.address?.town || data.address?.village || data.address?.suburb || data.address?.county || '';
+          const state = data.address?.state || '';
+          const country = data.address?.country || '';
+          const pincode = data.address?.postcode || '';
+
+          const locObj = {
+            latitude,
+            longitude,
+            address,
+            city,
+            state,
+            country,
+            pincode
+          };
+
+          setLocation(locObj);
+          addToast(`📍 Location detected: ${city ? `${city}, ` : ''}${state || country || 'GPS Lock'}`, 'success', 4000);
+        } catch (err) {
+          console.warn('Reverse geocode fallback to coords:', err);
+          const locObj = {
+            latitude,
+            longitude,
+            address: `GPS: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`,
+            city: '',
+            state: '',
+            country: '',
+            pincode: ''
+          };
+          setLocation(locObj);
+          addToast('📍 GPS coordinates captured!', 'success', 3000);
+        } finally {
+          setIsLocating(false);
+        }
+      },
+      (error) => {
+        setIsLocating(false);
+        console.warn('Geolocation error:', error.message);
+        addToast(`Could not access GPS (${error.message}). You can enter location manually.`, 'info', 5000);
+        setShowCustomLocation(true);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
+
+  const handleClearLocation = () => {
+    setLocation(null);
+    setCustomLocationText('');
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -89,6 +161,14 @@ const Dashboard = () => {
         });
       }
 
+      if (location) {
+        formData.append('location', JSON.stringify(location));
+      } else if (customLocationText.trim()) {
+        formData.append('location', JSON.stringify({
+          address: customLocationText.trim()
+        }));
+      }
+
       const res = await api.post('/complaints', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
@@ -96,6 +176,9 @@ const Dashboard = () => {
       setTitle('');
       setDescription('');
       setSelectedFiles([]);
+      setLocation(null);
+      setCustomLocationText('');
+      setShowCustomLocation(false);
       addToast(`🤖 "${res.data.complaint?.title || title}" — AI analyzed & submitted!`, 'success', 5000);
       fetchMyComplaints();
     } catch (err) {
@@ -289,6 +372,115 @@ const Dashboard = () => {
               />
             </div>
 
+            {/* Live Location Detection Component */}
+            <div style={{
+              padding: '16px 18px',
+              borderRadius: '14px',
+              backgroundColor: theme.inputBg,
+              border: `1px solid ${location ? 'rgba(14, 165, 233, 0.4)' : theme.cardBorder}`,
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: theme.textSecondary, display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
+                  <span>📍</span>
+                  <span>{t('incidentLocation')}</span>
+                  <span style={{ fontSize: '11px', color: theme.textMuted, fontWeight: 'normal' }}>({t('customAddress')})</span>
+                </label>
+
+                {!location && (
+                  <button
+                    type="button"
+                    onClick={handleDetectLocation}
+                    disabled={isLocating}
+                    style={{
+                      background: isLocating ? 'rgba(14, 165, 233, 0.2)' : 'linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(37, 99, 235, 0.15))',
+                      border: '1px solid rgba(14, 165, 233, 0.4)',
+                      color: '#38bdf8',
+                      padding: '6px 14px',
+                      borderRadius: '10px',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      cursor: isLocating ? 'wait' : 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    <span>{isLocating ? '⏳' : '📡'}</span>
+                    <span>{isLocating ? t('detectingLocation') : t('detectLocation')}</span>
+                  </button>
+                )}
+              </div>
+
+              {location ? (
+                <div style={{
+                  marginTop: '12px',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  backgroundColor: theme.isDark ? 'rgba(14, 165, 233, 0.08)' : 'rgba(14, 165, 233, 0.05)',
+                  border: '1px solid rgba(14, 165, 233, 0.25)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', overflow: 'hidden' }}>
+                    <span style={{ fontSize: '16px' }}>🎯</span>
+                    <div>
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: theme.textPrimary }}>
+                        {location.city ? `${location.city}, ` : ''}{location.state || location.country || 'Live GPS Position'}
+                      </div>
+                      <div style={{ fontSize: '12px', color: theme.textSecondary, marginTop: '2px', wordBreak: 'break-word' }}>
+                        {location.address}
+                      </div>
+                      {location.latitude && location.longitude && (
+                        <div style={{ fontSize: '11px', color: '#38bdf8', marginTop: '4px', fontWeight: '600' }}>
+                          🌐 Coords: {location.latitude.toFixed(5)}° N, {location.longitude.toFixed(5)}° E
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleClearLocation}
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      border: '1px solid rgba(239, 68, 68, 0.2)',
+                      color: '#ef4444',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontSize: '11px',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {t('removeLocation')} ✕
+                  </button>
+                </div>
+              ) : (
+                <div style={{ marginTop: '10px' }}>
+                  <input
+                    type="text"
+                    placeholder={`e.g. Building 3, 2nd Floor, Server Room A / Desk #42`}
+                    value={customLocationText}
+                    onChange={(e) => setCustomLocationText(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '10px 14px',
+                      borderRadius: '10px',
+                      backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.4)' : '#ffffff',
+                      border: `1px solid ${theme.cardBorder}`,
+                      color: theme.textPrimary,
+                      fontSize: '13px',
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
             <button
               type="submit"
               disabled={loading}
@@ -350,6 +542,11 @@ const Dashboard = () => {
                         📎 {c.attachments.length} files
                       </span>
                     )}
+                    {c.location && (c.location.address || c.location.city || c.location.latitude) && (
+                      <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}>
+                        📍 {c.location.city || 'Location'}
+                      </span>
+                    )}
                   </h3>
                   <span style={{ fontSize: '12px', fontWeight: '700', padding: '4px 12px', borderRadius: '20px', backgroundColor: c.status === 'Resolved' ? '#10b981' : c.status === 'In Progress' ? '#3b82f6' : '#f59e0b', color: '#fff' }}>
                     {c.status}
@@ -362,6 +559,9 @@ const Dashboard = () => {
                   <span>🏷️ Category: <strong style={{ color: '#38bdf8' }}>{c.category}</strong></span>
                   <span>⚡ Priority: <strong style={{ color: c.priority === 'Critical' ? '#f87171' : '#60a5fa' }}>{c.priority}</strong></span>
                   <span>🎯 Confidence: <strong style={{ color: '#34d399' }}>{c.aiConfidence}%</strong></span>
+                  {c.location?.address && (
+                    <span style={{ color: theme.textMuted }}>📍 <strong>{c.location.address.length > 35 ? `${c.location.address.slice(0, 35)}...` : c.location.address}</strong></span>
+                  )}
                   <span style={{ marginLeft: 'auto', color: '#38bdf8', fontWeight: '600', fontSize: '12px' }}>Click to view details & chat ➔</span>
                 </div>
                 

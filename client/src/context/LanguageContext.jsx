@@ -73,7 +73,15 @@ export const translations = {
     statusPending: 'Pending',
     statusInProgress: 'In Progress',
     statusResolved: 'Resolved',
-    statusClosed: 'Closed'
+    statusClosed: 'Closed',
+    detectLocation: 'Auto-Detect Live Location',
+    detectingLocation: 'Fetching GPS coordinates & address...',
+    locationDetected: 'Live Location Attached',
+    removeLocation: 'Remove',
+    customAddress: 'Or specify custom building / desk location',
+    incidentLocation: 'Incident Location',
+    openInGoogleMaps: 'View on Google Maps',
+    locationLabel: 'Location'
   },
   hi: {
     appTitle: 'डिस्पैच (Dispatch) OS',
@@ -147,7 +155,15 @@ export const translations = {
     statusPending: 'लंबित (Pending)',
     statusInProgress: 'प्रगति पर (In Progress)',
     statusResolved: 'हल हो गया (Resolved)',
-    statusClosed: 'बंद (Closed)'
+    statusClosed: 'बंद (Closed)',
+    detectLocation: 'लाइव स्थान (Live Location) का पता लगाएं',
+    detectingLocation: 'जीपीएस स्थान व पता प्राप्त किया जा रहा है...',
+    locationDetected: 'लाइव स्थान संलग्न किया गया',
+    removeLocation: 'हटाएं',
+    customAddress: 'या विशिष्ट कमरा / भवन / डेस्क स्थान लिखें',
+    incidentLocation: 'घटना स्थल',
+    openInGoogleMaps: 'गूगल मैप्स पर देखें',
+    locationLabel: 'स्थान'
   }
 };
 

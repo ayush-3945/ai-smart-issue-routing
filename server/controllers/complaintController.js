@@ -62,6 +62,48 @@ const createComplaint = async (req, res) => {
 
     const leadInfo = DEPARTMENT_LEADS[category] || DEPARTMENT_LEADS.General;
 
+    // Parse Live Location Data if provided
+    let locationData = {
+      latitude: null,
+      longitude: null,
+      address: null,
+      city: null,
+      state: null,
+      country: null,
+      pincode: null,
+    };
+
+    if (req.body.location) {
+      try {
+        const parsedLoc = typeof req.body.location === 'string' ? JSON.parse(req.body.location) : req.body.location;
+        if (parsedLoc && typeof parsedLoc === 'object') {
+          locationData = {
+            latitude: parsedLoc.latitude !== undefined && parsedLoc.latitude !== null ? parseFloat(parsedLoc.latitude) : null,
+            longitude: parsedLoc.longitude !== undefined && parsedLoc.longitude !== null ? parseFloat(parsedLoc.longitude) : null,
+            address: parsedLoc.address || null,
+            city: parsedLoc.city || null,
+            state: parsedLoc.state || null,
+            country: parsedLoc.country || null,
+            pincode: parsedLoc.pincode || null,
+          };
+        } else if (typeof parsedLoc === 'string') {
+          locationData.address = parsedLoc;
+        }
+      } catch (e) {
+        locationData.address = req.body.location;
+      }
+    } else if (req.body.latitude || req.body.longitude || req.body.address) {
+      locationData = {
+        latitude: req.body.latitude ? parseFloat(req.body.latitude) : null,
+        longitude: req.body.longitude ? parseFloat(req.body.longitude) : null,
+        address: req.body.address || null,
+        city: req.body.city || null,
+        state: req.body.state || null,
+        country: req.body.country || null,
+        pincode: req.body.pincode || null,
+      };
+    }
+
     const complaint = new Complaint({
       title,
       description,
@@ -72,6 +114,7 @@ const createComplaint = async (req, res) => {
       user: req.user._id,
       image: imageUrl,
       attachments: attachments,
+      location: locationData,
       aiConfidence: aiAnalysis.confidence || 0,
       aiSummary: aiAnalysis.summary || null,
       aiSummaryHindi: aiAnalysis.summaryHindi || null,
