@@ -201,7 +201,11 @@ const Dashboard = () => {
         {/* Top Navbar Header */}
         <div className="dashboard-header" style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
           <div className="dashboard-top-row">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div
+              onClick={() => navigate('/')}
+              title={t('backToHome')}
+              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
+            >
               <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>⚡</div>
               <div>
                 <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
@@ -239,39 +243,6 @@ const Dashboard = () => {
               <span>👑</span>
               <span>Admin</span>
             </button>
-          </div>
-        </div>
-
-        {/* Single Clean Back Navigation Bar */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
-          <button
-            onClick={() => navigate('/')}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              backgroundColor: theme.cardBg,
-              border: `1px solid ${theme.cardBorder}`,
-              borderRadius: '12px',
-              padding: '8px 16px',
-              color: theme.textSecondary,
-              fontSize: '13px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              boxShadow: theme.isDark ? 'none' : '0 2px 4px rgba(0,0,0,0.04)',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = '#38bdf8'; e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.4)'; e.currentTarget.style.transform = 'translateX(-2px)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = theme.textSecondary; e.currentTarget.style.borderColor = theme.cardBorder; e.currentTarget.style.transform = 'translateX(0)'; }}
-          >
-            <span>←</span>
-            <span>{t('backToHome')}</span>
-          </button>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: theme.textMuted }}>
-            <span>Home</span>
-            <span>/</span>
-            <span style={{ color: '#0ea5e9', fontWeight: '700' }}>{t('raiseIssueTitle')}</span>
           </div>
         </div>
 

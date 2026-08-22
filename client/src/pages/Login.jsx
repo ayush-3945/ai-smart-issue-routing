@@ -201,16 +201,6 @@ const Login = () => {
             </Link>
           </p>
         </div>
-
-        {/* Back to Home */}
-        <div style={{ textAlign: 'center', marginTop: '16px' }}>
-          <Link to="/" style={{ color: '#475569', fontSize: '13px', textDecoration: 'none', fontWeight: '500' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#94a3b8'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#475569'}
-          >
-            ← Back to Home
-          </Link>
-        </div>
       </div>
 
       {/* CSS Animations */}
