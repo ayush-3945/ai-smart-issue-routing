@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import Dashboard from './pages/Dashboard';
+import ContractorDashboard from './pages/ContractorDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
