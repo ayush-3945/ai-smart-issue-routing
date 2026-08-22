@@ -32,10 +32,10 @@ const LandingPage = () => {
       <div style={{ 
         position: 'relative', 
         width: '100%', 
-        backgroundImage: `linear-gradient(to bottom, rgba(15, 17, 26, 0.85) 0%, rgba(15, 17, 26, 0.95) 100%), url('https://upload.wikimedia.org/wikipedia/commons/9/92/Open_%28visible%29_Coal_Mines.jpg')`,
+        backgroundImage: `linear-gradient(to bottom, rgba(15, 17, 26, 0.6) 0%, rgba(15, 17, 26, 0.95) 100%), url('https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
+        backgroundRepeat: 'no-repeat'
       }}>
         <section style={{ position: 'relative', padding: '120px 48px 100px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
           {/* Ambient Glow */}
