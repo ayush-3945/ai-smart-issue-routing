@@ -199,10 +199,8 @@ const Dashboard = () => {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 20px', transition: 'all 0.3s ease' }}>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        
-        {/* Top Navbar Header */}
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
+        {/* Top Navbar Header - FULL WIDTH */}
+        <div className="dashboard-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 20px 20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
           <div
             onClick={() => navigate('/')}
             title={t('backToHome')}
@@ -216,7 +214,7 @@ const Dashboard = () => {
           </div>
           
           {/* Controls Toolbar (Opposite Side) */}
-          <div className="dashboard-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <div className="dashboard-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginLeft: 'auto' }}>
             <InstallPwaButton />
             <LanguageToggle />
             <ThemeToggle />
@@ -244,6 +242,8 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
+
+      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
 
         {/* Top Live Surveillance Radar Banner */}
         <div style={{
@@ -602,15 +602,26 @@ const Dashboard = () => {
                 width: '100%',
                 padding: '16px',
                 borderRadius: '14px',
-                border: 'none',
-                background: loading ? '#64748b' : 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
-                color: '#ffffff',
-                fontSize: '15px',
+                backgroundColor: '#ea580c',
+                background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+                color: '#fff',
+                fontSize: '16px',
                 fontWeight: '800',
-                letterSpacing: '-0.01em',
+                border: 'none',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                boxShadow: loading ? 'none' : '0 10px 25px -5px rgba(245, 158, 11, 0.5), 0 0 15px rgba(234, 88, 12, 0.3)',
-                transition: 'all 0.2s ease'
+                opacity: loading ? 0.7 : 1,
+                boxShadow: '0 8px 20px -6px rgba(245, 158, 11, 0.6)',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '10px'
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
               {loading ? t('submittingButton') : t('submitButton')}
