@@ -224,30 +224,6 @@ const AdminDashboard = () => {
             </div>
 
             <div className="dashboard-controls">
-              {/* Home Button */}
-              <button
-                title={t('backToHome')}
-                onClick={() => navigate('/')}
-                style={{
-                  backgroundColor: theme.badgeBg,
-                  border: `1px solid ${theme.cardBorder}`,
-                  color: theme.textPrimary,
-                  padding: '0 12px',
-                  height: '36px',
-                  borderRadius: '10px',
-                  cursor: 'pointer',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  transition: 'all 0.2s'
-                }}
-              >
-                <span>🏠</span>
-                <span>Home</span>
-              </button>
-
               {/* Quick Search Pill */}
               <button
                 onClick={() => setIsCommandOpen(true)}
