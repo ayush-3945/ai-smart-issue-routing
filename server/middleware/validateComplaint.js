@@ -12,8 +12,8 @@ const complaintValidationSchema = Joi.object({
     'string.max': 'Description cannot exceed 1000 characters',
   }),
   category: Joi.string()
-    .valid('Safety', 'Environment', 'Production', 'Labour', 'Equipment', 'General', 'IT', 'HR', 'Finance', 'Operations')
-    .default('Safety'),
+    .valid('Safety', 'Environment', 'Production', 'Labour', 'Equipment', 'General')
+    .default('General'),
   mineSite: Joi.string().trim().allow('', null).optional(),
   priority: Joi.string()
     .valid('Low', 'Medium', 'High', 'Critical')

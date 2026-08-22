@@ -34,7 +34,7 @@ const PRIORITY_BADGES = {
   Low: { bg: '#f0fdf4', text: '#15803d', border: '#bbf7d0', dot: '#10b981' },
 };
 
-const CATEGORIES = ['All', 'IT', 'HR', 'Finance', 'Operations', 'General'];
+const CATEGORIES = ['All', 'Safety', 'Environment', 'Production', 'Labour', 'Equipment', 'General'];
 import CodeHelpSidebar from '../components/CodeHelpSidebar';
 import CommandPalette from '../components/CommandPalette';
 

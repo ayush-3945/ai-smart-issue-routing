@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [mineSite, setMineSite] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -156,6 +157,7 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append('title', title);
       formData.append('description', description);
+      formData.append('mineSite', mineSite);
       
       if (selectedFiles.length > 0) {
         selectedFiles.forEach((file) => {
@@ -177,6 +179,7 @@ const Dashboard = () => {
 
       setTitle('');
       setDescription('');
+      setMineSite('');
       setSelectedFiles([]);
       setLocation(null);
       setCustomLocationText('');
@@ -266,10 +269,10 @@ const Dashboard = () => {
         {/* Raise Issue Form Card */}
         <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <span style={{ fontSize: '20px' }}>🚀</span>
-            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>{t('raiseIssueTitle')}</h2>
+            <span style={{ fontSize: '20px' }}>⛏️</span>
+            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>Report Mine Violation / Inspection</h2>
           </div>
-          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>{t('raiseIssueSubtitle')}</p>
+          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>Describe the safety hazard or compliance anomaly. AI will auto-route it to the exact supervisor.</p>
 
           <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
@@ -369,6 +372,37 @@ const Dashboard = () => {
                 rows={4}
                 style={{ width: '100%', padding: '14px 18px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
               />
+            </div>
+
+            {/* Mine Site Selection */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>🏭 Select Mine Site</label>
+              <select
+                value={mineSite}
+                onChange={(e) => setMineSite(e.target.value)}
+                required
+                style={{
+                  width: '100%',
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  backgroundColor: theme.inputBg,
+                  border: `1px solid ${theme.cardBorder}`,
+                  color: theme.textPrimary,
+                  fontSize: '14px',
+                  outline: 'none',
+                  cursor: 'pointer',
+                  appearance: 'none'
+                }}
+              >
+                <option value="" disabled>Select the affected Mine Site or Zone...</option>
+                <option value="Dhanbad Colliery - Pit 1">Dhanbad Colliery - Pit 1</option>
+                <option value="Dhanbad Colliery - Pit 2">Dhanbad Colliery - Pit 2</option>
+                <option value="Bokaro Zone A">Bokaro Zone A</option>
+                <option value="Bokaro Zone B">Bokaro Zone B</option>
+                <option value="Jharia Open Cast">Jharia Open Cast</option>
+                <option value="Raniganj Shaft 4">Raniganj Shaft 4</option>
+                <option value="Other">Other (Specify in Description)</option>
+              </select>
             </div>
 
             {/* Multi-File Upload Component */}

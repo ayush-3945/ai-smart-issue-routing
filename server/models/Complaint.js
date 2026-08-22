@@ -13,7 +13,7 @@ const complaintSchema = new mongoose.Schema({
   category: {
     type: String,
     enum: ['Safety', 'Environment', 'Production', 'Labour', 'Equipment', 'General', 'IT', 'HR', 'Finance', 'Operations'],
-    default: 'Safety'
+    default: 'General'
   },
   mineSite: {
     type: String,
