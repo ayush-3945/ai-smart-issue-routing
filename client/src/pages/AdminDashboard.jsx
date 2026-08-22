@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../utils/api';
 import AnimatedCounter from '../components/AnimatedCounter';
 import { ToastContainer, useToast } from '../components/Toast';
@@ -38,6 +39,7 @@ import CodeHelpSidebar from '../components/CodeHelpSidebar';
 import CommandPalette from '../components/CommandPalette';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -181,7 +183,15 @@ const AdminDashboard = () => {
             <div className="dashboard-top-row">
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: theme.textMuted, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '2px' }}>
-                  <span>Home</span>
+                  <span
+                    onClick={() => navigate('/')}
+                    title={t('backToHome')}
+                    style={{ cursor: 'pointer', transition: 'color 0.2s' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = theme.textMuted}
+                  >
+                    ← Home
+                  </span>
                   <span>/</span>
                   <span style={{ color: '#0ea5e9' }}>Command Center</span>
                 </div>
@@ -192,7 +202,7 @@ const AdminDashboard = () => {
 
               {/* User Dashboard Switch on Mobile */}
               <button
-                onClick={() => window.location.href = '/dashboard'}
+                onClick={() => navigate('/dashboard')}
                 title="Go to User Dashboard"
                 style={{
                   padding: '7px 12px',
@@ -214,6 +224,30 @@ const AdminDashboard = () => {
             </div>
 
             <div className="dashboard-controls">
+              {/* Home Button */}
+              <button
+                title={t('backToHome')}
+                onClick={() => navigate('/')}
+                style={{
+                  backgroundColor: theme.badgeBg,
+                  border: `1px solid ${theme.cardBorder}`,
+                  color: theme.textPrimary,
+                  padding: '0 12px',
+                  height: '36px',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <span>🏠</span>
+                <span>Home</span>
+              </button>
+
               {/* Quick Search Pill */}
               <button
                 onClick={() => setIsCommandOpen(true)}

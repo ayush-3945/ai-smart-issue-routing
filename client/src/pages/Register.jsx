@@ -87,6 +87,27 @@ const Register = () => {
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
         zIndex: 1
       }}>
+        {/* Back to Home Link */}
+        <div style={{ marginBottom: '16px' }}>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              color: '#94a3b8',
+              textDecoration: 'none',
+              fontSize: '12px',
+              fontWeight: '600',
+              transition: 'color 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
+          >
+            <span>←</span> Back to Home
+          </Link>
+        </div>
+
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <h1 style={{ color: '#ffffff', fontSize: '26px', fontWeight: '800', margin: '0 0 8px' }}>
             Create Account

@@ -59,6 +59,27 @@ const Login = () => {
       {/* Glass Card */}
       <div style={{ width: '100%', maxWidth: '440px', backgroundColor: 'rgba(11, 14, 22, 0.85)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '28px', padding: '44px 40px', boxShadow: '0 32px 64px -16px rgba(0, 0, 0, 0.7)', zIndex: 1, animation: 'fadeUp 0.6s ease-out' }}>
         
+        {/* Back to Home Link */}
+        <div style={{ marginBottom: '16px' }}>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              color: '#94a3b8',
+              textDecoration: 'none',
+              fontSize: '12px',
+              fontWeight: '600',
+              transition: 'color 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
+          >
+            <span>←</span> Back to Home
+          </Link>
+        </div>
+
         {/* Logo + Header */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', borderRadius: '18px', fontSize: '28px', marginBottom: '20px', boxShadow: '0 12px 28px -5px rgba(14, 165, 233, 0.5)', animation: 'float3 3s ease-in-out infinite', color: '#fff' }}>

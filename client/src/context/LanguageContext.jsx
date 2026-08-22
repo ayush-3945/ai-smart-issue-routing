@@ -81,7 +81,8 @@ export const translations = {
     customAddress: 'Or specify custom building / desk location',
     incidentLocation: 'Incident Location',
     openInGoogleMaps: 'View on Google Maps',
-    locationLabel: 'Location'
+    locationLabel: 'Location',
+    backToHome: 'Back to Home'
   },
   hi: {
     appTitle: 'डिस्पैच (Dispatch) OS',
@@ -163,7 +164,8 @@ export const translations = {
     customAddress: 'या विशिष्ट कमरा / भवन / डेस्क स्थान लिखें',
     incidentLocation: 'घटना स्थल',
     openInGoogleMaps: 'गूगल मैप्स पर देखें',
-    locationLabel: 'स्थान'
+    locationLabel: 'स्थान',
+    backToHome: 'होम पेज पर जाएं'
   }
 };
 

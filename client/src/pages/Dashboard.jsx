@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../utils/api';
 import { ToastContainer, useToast } from '../components/Toast';
 import ThemeToggle from '../components/ThemeToggle';
@@ -10,6 +11,7 @@ import NotificationBell from '../components/NotificationBell';
 import InstallPwaButton from '../components/InstallPwaButton';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -199,7 +201,13 @@ const Dashboard = () => {
         {/* Top Navbar Header */}
         <div className="dashboard-header" style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
           <div className="dashboard-top-row">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div
+              onClick={() => navigate('/')}
+              title={t('backToHome')}
+              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', transition: 'opacity 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.85'}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+            >
               <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>⚡</div>
               <div>
                 <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
@@ -224,6 +232,29 @@ const Dashboard = () => {
           
           {/* Controls Toolbar */}
           <div className="dashboard-controls">
+            <button
+              title={t('backToHome')}
+              onClick={() => navigate('/')}
+              style={{
+                backgroundColor: theme.badgeBg,
+                border: `1px solid ${theme.cardBorder}`,
+                color: theme.textPrimary,
+                padding: '0 12px',
+                height: '36px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontSize: '13px',
+                fontWeight: '600',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s'
+              }}
+            >
+              <span>🏠</span>
+              <span>Home</span>
+            </button>
+
             <InstallPwaButton />
             <LanguageToggle />
             <ThemeToggle />
@@ -237,6 +268,39 @@ const Dashboard = () => {
               <span>👑</span>
               <span>Admin</span>
             </button>
+          </div>
+        </div>
+
+        {/* Back Navigation Bar */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+          <button
+            onClick={() => navigate('/')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              backgroundColor: theme.cardBg,
+              border: `1px solid ${theme.cardBorder}`,
+              borderRadius: '12px',
+              padding: '8px 16px',
+              color: theme.textSecondary,
+              fontSize: '13px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              boxShadow: theme.isDark ? 'none' : '0 2px 4px rgba(0,0,0,0.04)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#38bdf8'; e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.4)'; e.currentTarget.style.transform = 'translateX(-2px)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = theme.textSecondary; e.currentTarget.style.borderColor = theme.cardBorder; e.currentTarget.style.transform = 'translateX(0)'; }}
+          >
+            <span>←</span>
+            <span>{t('backToHome')}</span>
+          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: theme.textMuted }}>
+            <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Home</span>
+            <span>/</span>
+            <span style={{ color: '#0ea5e9', fontWeight: '700' }}>{t('raiseIssueTitle')}</span>
           </div>
         </div>
 
