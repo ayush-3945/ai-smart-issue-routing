@@ -12,8 +12,13 @@ const complaintSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['IT', 'HR', 'Finance', 'Operations', 'General'],
-    default: 'General'
+    enum: ['Safety', 'Environment', 'Production', 'Labour', 'Equipment', 'General', 'IT', 'HR', 'Finance', 'Operations'],
+    default: 'Safety'
+  },
+  mineSite: {
+    type: String,
+    default: 'Jharia Colliery - Pit 4',
+    trim: true
   },
   priority: {
     type: String,
@@ -36,7 +41,7 @@ const complaintSchema = new mongoose.Schema({
   },
   assignedLeadRole: {
     type: String,
-    default: 'General Support'
+    default: 'Mine Safety & Operations Desk'
   },
   image: {
     type: String,

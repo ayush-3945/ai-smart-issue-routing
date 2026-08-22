@@ -3,15 +3,15 @@ const { predictWorkloadSurge } = require('../services/aiService');
 
 const DEFAULT_PREDICTIONS = {
   riskLevel: 'Moderate',
-  projectedSurgePercentage: 24,
-  primarySurgeDepartment: 'IT',
-  forecastSummary: 'Expected moderate ticket volume across technical departments with stable operations in administrative teams.',
-  actionableRecommendation: 'Maintain standard SLA response teams and monitor peak hour ticket submissions.',
+  projectedSurgePercentage: 28,
+  primarySurgeDepartment: 'Safety (DGMS)',
+  forecastSummary: 'Expected moderate hazard volume across Open-Cast and Underground pit operations with elevated strata stability monitoring.',
+  actionableRecommendation: 'Deploy additional DGMS certified safety inspectors at Pit-4 and schedule HEMM brake inspections.',
   departmentForecasts: [
-    { department: 'IT', risk: 'High', projectedVolume: '+32%', insight: 'Server & network infrastructure queries' },
-    { department: 'HR', risk: 'Moderate', projectedVolume: '+14%', insight: 'Quarterly benefits & onboarding' },
-    { department: 'Finance', risk: 'Low', projectedVolume: 'Stable', insight: 'Standard invoice processing' },
-    { department: 'Operations', risk: 'Low', projectedVolume: 'Stable', insight: 'Facility maintenance steady' }
+    { department: 'Safety', risk: 'High', projectedVolume: '+38%', insight: 'Methane detection & strata slope monitoring' },
+    { department: 'Equipment', risk: 'Moderate', projectedVolume: '+18%', insight: 'HEMM dumper & dragline preventative maintenance' },
+    { department: 'Environment', risk: 'Low', projectedVolume: 'Stable', insight: 'Dust suppression & water discharge compliance' },
+    { department: 'Labour', risk: 'Low', projectedVolume: 'Stable', insight: 'Shift rosters & PPE adherence audits' }
   ]
 };
 

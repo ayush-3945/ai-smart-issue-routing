@@ -51,16 +51,23 @@ const createComplaint = async (req, res) => {
     const category = req.body.category || aiAnalysis.category || 'General';
     const priority = req.body.priority || aiAnalysis.priority || 'Medium';
 
-    // Smart Department Lead Auto-Assignment
+    // Mining Statutory Lead & Supervisor Auto-Assignment
     const DEPARTMENT_LEADS = {
-      IT: { name: 'Vikram Sharma', role: 'IT Support Lead' },
-      HR: { name: 'Neha Verma', role: 'HR Operations Lead' },
-      Finance: { name: 'Rohan Mehta', role: 'Finance Controller' },
-      Operations: { name: 'Pooja Singh', role: 'Facilities Lead' },
-      General: { name: 'Support Desk', role: 'General Ops' }
+      Safety: { name: 'Rajesh Kumar (DGMS Lead)', role: 'Chief Safety Controller' },
+      Environment: { name: 'Dr. Ananya Sen', role: 'Environmental Engineer' },
+      Production: { name: 'Virendra Singh', role: 'Mining Operations Incharge' },
+      Labour: { name: 'Pooja Verma', role: 'Welfare & Shift Officer' },
+      Equipment: { name: 'Sanjay Sharma', role: 'HEMM Chief Mechanical Lead' },
+      General: { name: 'Central Control Room', role: 'Mine Operations Desk' },
+      // Backward compatibility fallbacks
+      IT: { name: 'Rajesh Kumar (DGMS Lead)', role: 'Chief Safety Controller' },
+      HR: { name: 'Pooja Verma', role: 'Welfare & Shift Officer' },
+      Finance: { name: 'Central Control Room', role: 'Statutory Audit Desk' },
+      Operations: { name: 'Virendra Singh', role: 'Mining Operations Incharge' }
     };
 
-    const leadInfo = DEPARTMENT_LEADS[category] || DEPARTMENT_LEADS.General;
+    const leadInfo = DEPARTMENT_LEADS[category] || DEPARTMENT_LEADS.Safety || DEPARTMENT_LEADS.General;
+    const mineSite = req.body.mineSite || 'Jharia Colliery - Pit 4';
 
     // Parse Live Location Data if provided
     let locationData = {
@@ -108,6 +115,7 @@ const createComplaint = async (req, res) => {
       title,
       description,
       category,
+      mineSite,
       priority,
       assignedTo: leadInfo.name,
       assignedLeadRole: leadInfo.role,
@@ -268,15 +276,20 @@ const updateComplaintCategory = async (req, res) => {
     if (category) {
       complaint.category = category;
       const DEPARTMENT_LEADS = {
-        IT: { name: 'Vikram Sharma', role: 'IT Support Lead' },
-        HR: { name: 'Neha Verma', role: 'HR Operations Lead' },
-        Finance: { name: 'Rohan Mehta', role: 'Finance Controller' },
-        Operations: { name: 'Pooja Singh', role: 'Facilities Lead' },
-        General: { name: 'Support Desk', role: 'General Ops' }
+        Safety: { name: 'Rajesh Kumar (DGMS Lead)', role: 'Chief Safety Controller' },
+        Environment: { name: 'Dr. Ananya Sen', role: 'Environmental Engineer' },
+        Production: { name: 'Virendra Singh', role: 'Mining Operations Incharge' },
+        Labour: { name: 'Pooja Verma', role: 'Welfare & Shift Officer' },
+        Equipment: { name: 'Sanjay Sharma', role: 'HEMM Chief Mechanical Lead' },
+        General: { name: 'Central Control Room', role: 'Mine Operations Desk' },
+        IT: { name: 'Rajesh Kumar (DGMS Lead)', role: 'Chief Safety Controller' },
+        HR: { name: 'Pooja Verma', role: 'Welfare & Shift Officer' },
+        Finance: { name: 'Central Control Room', role: 'Statutory Audit Desk' },
+        Operations: { name: 'Virendra Singh', role: 'Mining Operations Incharge' }
       };
       if (!assignedTo) {
-        complaint.assignedTo = DEPARTMENT_LEADS[category]?.name || 'Support Desk';
-        complaint.assignedLeadRole = DEPARTMENT_LEADS[category]?.role || 'General Support';
+        complaint.assignedTo = DEPARTMENT_LEADS[category]?.name || 'Central Control Room';
+        complaint.assignedLeadRole = DEPARTMENT_LEADS[category]?.role || 'Mine Operations Desk';
       }
     }
 
