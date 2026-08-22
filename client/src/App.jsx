@@ -35,6 +35,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Contractor Route */}
+        <Route
+          path="/contractor"
+          element={
+            <ProtectedRoute>
+              <ContractorDashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

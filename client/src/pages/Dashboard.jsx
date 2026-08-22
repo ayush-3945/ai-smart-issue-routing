@@ -32,6 +32,7 @@ const Dashboard = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [mineSite, setMineSite] = useState('');
+  const [contractor, setContractor] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -346,6 +347,7 @@ const Dashboard = () => {
           title: title.trim(),
           description: description.trim(),
           mineSite: mineSite.trim() || 'Jharia Colliery - Pit 4 (Underground)',
+          contractor: contractor.trim() || 'Direct CIL / DGMS Departmental Team',
           location: location || (customLocationText.trim() ? { address: customLocationText.trim() } : null),
           savedAt: new Date().toISOString(),
           files: serializedFiles
@@ -358,6 +360,7 @@ const Dashboard = () => {
         setTitle('');
         setDescription('');
         setMineSite('');
+        setContractor('');
         setSelectedFiles([]);
         setLocation(null);
         setCustomLocationText('');
@@ -378,6 +381,7 @@ const Dashboard = () => {
       formData.append('title', title);
       formData.append('description', description);
       formData.append('mineSite', mineSite);
+      if (contractor) formData.append('contractor', contractor);
       
       if (selectedFiles.length > 0) {
         selectedFiles.forEach((file) => {
@@ -400,6 +404,7 @@ const Dashboard = () => {
       setTitle('');
       setDescription('');
       setMineSite('');
+      setContractor('');
       setSelectedFiles([]);
       setLocation(null);
       setCustomLocationText('');
@@ -652,6 +657,38 @@ const Dashboard = () => {
                 <option value="Singrauli Northern Coalfield">Singrauli Northern Coalfield</option>
                 <option value="Talcher Coalfield - Pit 2">Talcher Coalfield - Pit 2</option>
                 <option value="Other Mine Site">Other Mine Site (Specify in Description)</option>
+              </select>
+            </div>
+
+            {/* Operating Contractor / Mining Agency */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>
+                👷 {t('contractorLabel')}
+              </label>
+              <select
+                value={contractor}
+                onChange={(e) => setContractor(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  backgroundColor: theme.inputBg,
+                  border: `1px solid ${theme.cardBorder}`,
+                  color: theme.textPrimary,
+                  fontSize: '14px',
+                  outline: 'none',
+                  cursor: 'pointer',
+                  appearance: 'none',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <option value="">{t('contractorPlaceholder')}</option>
+                <option value="BGR Mining & Infra Ltd">BGR Mining & Infra Ltd (Tier-A Core Contractor)</option>
+                <option value="VPR Mining Infra Projects">VPR Mining Infra Projects (Under Statutory Review)</option>
+                <option value="Thriveni Earthmovers Pvt Ltd">Thriveni Earthmovers Pvt Ltd (HEMM Fleet Operator)</option>
+                <option value="Gainwell Engineering">Gainwell Engineering (Ventilation & Equipment Vendor)</option>
+                <option value="Direct CIL / DGMS Departmental Team">Direct CIL / DGMS Departmental Team</option>
+                <option value="Other Agency">Other Sub-Contractor / Vendor</option>
               </select>
             </div>
 

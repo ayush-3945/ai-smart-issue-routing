@@ -49,6 +49,7 @@ const AdminDashboard = () => {
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isCommandOpen, setIsCommandOpen] = useState(false);
+  const [selectedContractorTier, setSelectedContractorTier] = useState('All');
   const { toasts, addToast, removeToast } = useToast();
 
   // Autonomous IoT Sensor Telemetry State
@@ -779,6 +780,242 @@ const AdminDashboard = () => {
                   ))}
                 </div>
               )}
+            </div>
+          );
+        })()}
+
+        {/* Contractor Statutory Compliance & Safety Scorecard Section */}
+        {(() => {
+          const CONTRACTORS_LIST = [
+            {
+              id: 'bgr',
+              name: 'BGR Mining & Infra Ltd',
+              tier: 'Tier-A',
+              tierBadge: 'Tier-A (DGMS Certified)',
+              score: 94,
+              color: '#10b981',
+              zone: 'Jharia Open-Cast & Pit 1',
+              lead: 'Rajesh Kumar (DGMS Lead)',
+              attendance: '96.4%',
+              violationsCount: 1,
+              criticalViolations: 0,
+              productionTarget: '104%',
+              musterStatus: 'Biometric 100% Synced',
+              aiVerdict: '🟢 Exceptional statutory safety adherence. Zero lost-time injuries (LTI) in 180 days. Eligible for concession extension under Mines Act.'
+            },
+            {
+              id: 'thriveni',
+              name: 'Thriveni Earthmovers Pvt Ltd',
+              tier: 'Tier-B',
+              tierBadge: 'Tier-B (Good Standing)',
+              score: 86,
+              color: '#f59e0b',
+              zone: 'Bokaro Colliery - Pit B',
+              lead: 'Dr. Ananya Sen',
+              attendance: '91.2%',
+              violationsCount: 3,
+              criticalViolations: 0,
+              productionTarget: '98%',
+              musterStatus: 'Standard Muster (98%)',
+              aiVerdict: '🟡 Good general compliance. 2 minor haul-road dust suppression lapses detected. HEMM fleet hydraulic audit scheduled.'
+            },
+            {
+              id: 'gainwell',
+              name: 'Gainwell Engineering (HEMM)',
+              tier: 'Tier-B',
+              tierBadge: 'Tier-B (Good Standing)',
+              score: 81,
+              color: '#f59e0b',
+              zone: 'Korba West - Block A',
+              lead: 'Sanjay Sharma',
+              attendance: '88.5%',
+              violationsCount: 4,
+              criticalViolations: 1,
+              productionTarget: '93%',
+              musterStatus: 'Periodic Verification',
+              aiVerdict: '🟡 Satisfactory equipment reliability. Requires refresher safety training on flameproof electrical switchgear under DGMS Reg 153.'
+            },
+            {
+              id: 'vpr',
+              name: 'VPR Mining Infra Projects',
+              tier: 'Tier-C',
+              tierBadge: 'Tier-C (Statutory Warning)',
+              score: 64,
+              color: '#ef4444',
+              zone: 'Jharia Colliery - Pit 4 / Shaft B',
+              lead: 'Pooja Verma',
+              attendance: '74.1%',
+              violationsCount: 11,
+              criticalViolations: 4,
+              productionTarget: '82%',
+              musterStatus: 'Irregular Shift Register',
+              aiVerdict: '🔴 CRITICAL STATUTORY NOTICE: Compliance score fell to 64/100 (<70% benchmark). 4 recurrent methane detector lag & haul-road lighting breaches. Immediate DGMS Section 22 inquiry & penalty show-cause notice recommended.'
+            }
+          ];
+
+          const filteredContractors = CONTRACTORS_LIST.filter(c => {
+            if (selectedContractorTier === 'All') return true;
+            return c.tier === selectedContractorTier;
+          });
+
+          return (
+            <div id="section-contractors" className={theme.isDark ? 'glass-panel' : ''} style={{
+              backgroundColor: theme.cardBg,
+              borderRadius: '24px',
+              padding: '28px 32px',
+              marginBottom: '36px',
+              border: `1px solid ${theme.isDark ? 'rgba(245, 158, 11, 0.35)' : '#fed7aa'}`,
+              background: theme.isDark 
+                ? 'linear-gradient(135deg, rgba(15, 17, 26, 0.95) 0%, rgba(245, 158, 11, 0.05) 100%)' 
+                : 'linear-gradient(135deg, #ffffff 0%, #fffbeb 100%)',
+              boxShadow: '0 20px 40px -15px rgba(245, 158, 11, 0.12)'
+            }}>
+              {/* Header & Filter Controls */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+                    color: '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '20px',
+                    boxShadow: '0 0 15px rgba(245, 158, 11, 0.4)'
+                  }}>
+                    👷
+                  </div>
+                  <div>
+                    <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>
+                      {t('contractorIntelTitle')}
+                    </h2>
+                    <p style={{ margin: '2px 0 0', fontSize: '12px', color: theme.textSecondary }}>
+                      {t('contractorIntelSubtitle')}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Tier Filter Chips */}
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  {['All', 'Tier-A', 'Tier-B', 'Tier-C'].map((tier) => (
+                    <button
+                      key={tier}
+                      type="button"
+                      onClick={() => setSelectedContractorTier(tier)}
+                      style={{
+                        padding: '6px 14px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        border: selectedContractorTier === tier ? '1px solid #f59e0b' : `1px solid ${theme.cardBorder}`,
+                        background: selectedContractorTier === tier ? 'linear-gradient(135deg, #f59e0b, #ea580c)' : 'transparent',
+                        color: selectedContractorTier === tier ? '#ffffff' : theme.textSecondary,
+                        boxShadow: selectedContractorTier === tier ? '0 0 12px rgba(245, 158, 11, 0.35)' : 'none'
+                      }}
+                    >
+                      {tier === 'All' ? 'All Contractors (4)' : tier === 'Tier-A' ? '🟢 Tier-A (>90)' : tier === 'Tier-B' ? '🟡 Tier-B (75-90)' : '🔴 Tier-C (<75 Alert)'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Gemini AI Contractor Review Alert Box */}
+              <div style={{
+                padding: '16px 20px',
+                borderRadius: '16px',
+                backgroundColor: 'rgba(239, 68, 68, 0.12)',
+                border: '1px solid rgba(239, 68, 68, 0.35)',
+                marginBottom: '24px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px'
+              }}>
+                <span style={{ fontSize: '20px' }}>⚠️</span>
+                <div>
+                  <div style={{ fontSize: '13px', fontWeight: '800', color: '#f87171', marginBottom: '2px' }}>
+                    {t('contractorAiRecommendation')}: VPR Mining Infra Projects (Under 70% Benchmark)
+                  </div>
+                  <p style={{ margin: 0, fontSize: '12px', color: theme.isDark ? '#fca5a5' : '#b91c1c', lineHeight: 1.5 }}>
+                    AI analysis of 11 active field violations shows recurrent methane telemetry lag and haul-road lighting non-compliance in Pit 4. Under <strong>DGMS Circular 2021/04 & Mines Act Sec 22</strong>, immediate contract audit & penalty show-cause notice is recommended before concession renewal.
+                  </p>
+                </div>
+              </div>
+
+              {/* Contractor Cards Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                {filteredContractors.map((c) => (
+                  <div
+                    key={c.id}
+                    style={{
+                      padding: '20px',
+                      borderRadius: '18px',
+                      backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.85)' : '#ffffff',
+                      border: `1px solid ${c.score < 70 ? 'rgba(239, 68, 68, 0.4)' : theme.cardBorder}`,
+                      transition: 'transform 0.2s, border-color 0.2s',
+                      boxShadow: c.score < 70 ? '0 0 20px rgba(239, 68, 68, 0.15)' : 'none'
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+                  >
+                    {/* Contractor Name & Score */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                      <div>
+                        <h3 style={{ margin: 0, fontSize: '15px', fontWeight: '800', color: theme.textPrimary }}>
+                          {c.name}
+                        </h3>
+                        <span style={{ fontSize: '11px', color: theme.textMuted }}>📍 {c.zone}</span>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: '24px', fontWeight: '900', color: c.color, letterSpacing: '-0.5px' }}>
+                          {c.score}<span style={{ fontSize: '13px', fontWeight: '600', color: theme.textMuted }}>/100</span>
+                        </div>
+                        <span style={{
+                          fontSize: '10px',
+                          fontWeight: '800',
+                          padding: '2px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: `${c.color}22`,
+                          color: c.color
+                        }}>
+                          {c.tierBadge}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div style={{ width: '100%', height: '6px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.08)' : '#e2e8f0', borderRadius: '3px', marginBottom: '14px', overflow: 'hidden' }}>
+                      <div style={{ width: `${c.score}%`, height: '100%', backgroundColor: c.color, transition: 'width 0.4s ease' }}></div>
+                    </div>
+
+                    {/* 3 KPI Parameters */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', padding: '10px 0', borderTop: `1px solid ${theme.cardBorder}`, borderBottom: `1px solid ${theme.cardBorder}`, marginBottom: '12px', textAlign: 'center' }}>
+                      <div>
+                        <div style={{ fontSize: '10px', color: theme.textMuted, fontWeight: '700' }}>ATTENDANCE</div>
+                        <div style={{ fontSize: '13px', fontWeight: '800', color: theme.textPrimary, marginTop: '2px' }}>{c.attendance}</div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '10px', color: theme.textMuted, fontWeight: '700' }}>VIOLATIONS</div>
+                        <div style={{ fontSize: '13px', fontWeight: '800', color: c.violationsCount > 5 ? '#ef4444' : theme.textPrimary, marginTop: '2px' }}>
+                          {c.violationsCount} {c.criticalViolations > 0 ? `(${c.criticalViolations} Crit)` : ''}
+                        </div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '10px', color: theme.textMuted, fontWeight: '700' }}>OUTPUT</div>
+                        <div style={{ fontSize: '13px', fontWeight: '800', color: theme.textPrimary, marginTop: '2px' }}>{c.productionTarget}</div>
+                      </div>
+                    </div>
+
+                    {/* AI Verdict */}
+                    <p style={{ margin: 0, fontSize: '11px', color: theme.textSecondary, lineHeight: 1.45 }}>
+                      {c.aiVerdict}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           );
         })()}

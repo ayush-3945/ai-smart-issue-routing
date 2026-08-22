@@ -9,10 +9,11 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊', path: '/admin' },
-    { id: 'iot', label: 'IoT Telemetry', icon: '📡', path: '/admin' },
     { id: 'issues', label: 'Active Queue', icon: '📋', path: '/admin' },
+    { id: 'contractors', label: 'Contractor Intel', icon: '👷', path: '/admin' },
+    { id: 'fleet', label: 'Fleet Maintenance', icon: '🚜', path: '/admin' },
+    { id: 'iot', label: 'Live IoT Telemetry', icon: '📡', path: '/admin' },
     { id: 'predictions', label: 'AI Forecasting', icon: '🔮', path: '/admin' },
-    { id: 'userView', label: 'Raise Issue (User)', icon: '🚀', path: '/dashboard' },
   ];
 
   return (
@@ -141,6 +142,8 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                       ? 'section-overview'
                       : item.id === 'iot'
                       ? 'section-iot'
+                      : item.id === 'contractors'
+                      ? 'section-contractors'
                       : item.id === 'issues'
                       ? 'section-queue'
                       : 'section-ai-forecast';

@@ -102,7 +102,12 @@ export const translations = {
     iotSectionTitle: 'Live IoT Telemetry & Autonomous Sensor Ingestion',
     iotSectionSubtitle: 'DGMS Continuous Seam Telemetry — Active Underground Transducers (Node #JH-402)',
     simulateSpikeBtn: '⚡ Simulate Critical Gas Spike (Test Auto AI Ingestion)',
-    spikingStatus: 'Simulating Spike & Dispatching...'
+    spikingStatus: 'Simulating Spike & Dispatching...',
+    contractorLabel: 'Operating Contractor / Agency',
+    contractorPlaceholder: 'Select responsible mining contractor / operating vendor...',
+    contractorIntelTitle: 'Contractor Statutory Compliance & Safety Scorecard',
+    contractorIntelSubtitle: 'AI-Driven Multi-Factor Scoring (Worker Attendance, Safety Violations & Output Target)',
+    contractorAiRecommendation: 'DGMS Statutory AI Review Notice'
   },
   hi: {
     appTitle: 'कोल-गार्ड (CoalGuard) OS',
@@ -114,7 +119,7 @@ export const translations = {
     exportCsv: 'वैधानिक ऑडिट CSV डाउनलोड करें',
     adminView: 'कमांड सेंटर',
     userView: 'इंस्पेक्टर पोर्टल',
-    liveRadar: '● लाइव डीजीएमएस अनुपालन रडar — 4 खदान क्षेत्र जुड़े हैं',
+    liveRadar: '● लाइव डीजीएमएस अनुपालन रडार — 4 खदान क्षेत्र जुड़े हैं',
     raiseIssueTitle: 'खदान सुरक्षा खतरा / उल्लंघन दर्ज करें',
     raiseIssueSubtitle: 'खदान सुरक्षा, पर्यावरण प्रदूषण या मशीनरी खराबी की रिपोर्ट जीपीएस और फोटो साक्ष्य के साथ दर्ज करें।',
     mineSiteLabel: 'कोयला खदान / साइट स्थान',
@@ -205,7 +210,12 @@ export const translations = {
     iotSectionTitle: 'लाइव आईओटी (IoT) टेलीमेट्री एवं स्वचालित सेंसर निगरानी',
     iotSectionSubtitle: 'डीजीएमएस सतत खदान टेलीमेट्री — सक्रिय भूमिगत सेंसर नोड #JH-402',
     simulateSpikeBtn: '⚡ गंभीर गैस रिसाव का सिमुलेशन करें (Auto AI Ingestion)',
-    spikingStatus: 'गैस स्पाइक सिमुलेट एवं रिपोर्ट दर्ज हो रही है...'
+    spikingStatus: 'गैस स्पाइक सिमुलेट एवं रिपोर्ट दर्ज हो रही है...',
+    contractorLabel: 'कार्यकारी ठेकेदार / एजेंसी',
+    contractorPlaceholder: 'जिम्मेदार खनन ठेकेदार / विक्रेता चुनें...',
+    contractorIntelTitle: 'ठेकेदार वैधानिक अनुपालन एवं सुरक्षा स्कोरकार्ड',
+    contractorIntelSubtitle: 'AI-संचालित बहु-कारक स्कोरिंग (श्रमिक उपस्थिति, सुरक्षा उल्लंघन व उत्पादन)',
+    contractorAiRecommendation: 'डीजीएमएस वैधानिक AI समीक्षा नोटिस'
   }
 };
 
