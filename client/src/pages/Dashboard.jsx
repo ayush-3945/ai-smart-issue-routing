@@ -199,7 +199,7 @@ const Dashboard = () => {
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         
         {/* Top Navbar Header */}
-        <div className="dashboard-header" style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
+        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
           <div
             onClick={() => navigate('/')}
             title={t('backToHome')}
@@ -212,32 +212,8 @@ const Dashboard = () => {
             </div>
           </div>
           
-          {/* Controls Toolbar */}
-          <div className="dashboard-controls">
-            <button
-              title={t('backToHome')}
-              onClick={() => navigate('/')}
-              style={{
-                backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : '#f1f5f9',
-                border: `1px solid ${theme.cardBorder}`,
-                color: theme.textPrimary,
-                padding: '0 12px',
-                height: '36px',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: '700',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#38bdf8'; e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.4)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = theme.textPrimary; e.currentTarget.style.borderColor = theme.cardBorder; }}
-            >
-              <span>🏠</span>
-              <span>Home</span>
-            </button>
+          {/* Controls Toolbar (Opposite Side) */}
+          <div className="dashboard-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             <InstallPwaButton />
             <LanguageToggle />
             <ThemeToggle />
@@ -253,7 +229,7 @@ const Dashboard = () => {
             </button>
 
             {/* User Avatar & Sign Out */}
-            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>
+            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)', marginLeft: '4px' }}>
               {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
             </div>
             <button
@@ -263,6 +239,27 @@ const Dashboard = () => {
             >
               🚪
             </button>
+          </div>
+        </div>
+
+        {/* Back to Home Link */}
+        <div style={{ marginBottom: '20px' }}>
+          <div
+            onClick={() => navigate('/')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              color: '#94a3b8',
+              fontSize: '14px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'color 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
+          >
+            <span>←</span> Back to Home
           </div>
         </div>
 
