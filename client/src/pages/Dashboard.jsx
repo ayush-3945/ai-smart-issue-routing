@@ -200,31 +200,15 @@ const Dashboard = () => {
         
         {/* Top Navbar Header */}
         <div className="dashboard-header" style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
-          <div className="dashboard-top-row">
-            <div
-              onClick={() => navigate('/')}
-              title={t('backToHome')}
-              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
-            >
-              <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>⚡</div>
-              <div>
-                <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
-                <p style={{ margin: '1px 0 0', color: theme.textSecondary, fontSize: '12px' }}>{t('appSubtitle')}</p>
-              </div>
-            </div>
-
-            {/* Mobile User Avatar & Sign Out */}
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '34px', height: '34px', borderRadius: '10px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>
-                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-              </div>
-              <button
-                title={t('signOut')}
-                onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
-                style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '34px', height: '34px', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
-              >
-                🚪
-              </button>
+          <div
+            onClick={() => navigate('/')}
+            title={t('backToHome')}
+            style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
+          >
+            <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>⚡</div>
+            <div>
+              <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
+              <p style={{ margin: '1px 0 0', color: theme.textSecondary, fontSize: '12px' }}>{t('appSubtitle')}</p>
             </div>
           </div>
           
@@ -266,6 +250,18 @@ const Dashboard = () => {
             >
               <span>👑</span>
               <span>Admin</span>
+            </button>
+
+            {/* User Avatar & Sign Out */}
+            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #0ea5e9, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(14, 165, 233, 0.4)' }}>
+              {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+            </div>
+            <button
+              title={t('signOut')}
+              onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
+              style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
+            >
+              🚪
             </button>
           </div>
         </div>

@@ -118,13 +118,6 @@ h1, h2, h3, h4, .font-heading {
   flex-wrap: wrap;
 }
 
-.dashboard-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
 @media (max-width: 640px) {
   .dashboard-header {
     flex-direction: column;
@@ -133,16 +126,10 @@ h1, h2, h3, h4, .font-heading {
     margin-bottom: 20px !important;
     padding-bottom: 14px !important;
   }
-  .dashboard-top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
   .dashboard-controls {
     width: 100%;
-    justify-content: space-between;
-    gap: 6px !important;
+    justify-content: flex-start;
+    gap: 8px !important;
   }
   .dashboard-controls button,
   .dashboard-controls div {
