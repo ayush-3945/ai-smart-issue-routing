@@ -33,7 +33,7 @@ const LandingPage = () => {
         {/* Ambient Glow */}
         <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
-        <h1 style={{ fontSize: 'clamp(36px, 5.5vw, 68px)', fontWeight: '900', lineHeight: 1.1, letterSpacing: '-0.04em', margin: '0 0 24px', color: theme.textPrimary }}>
+        <h1 style={{ fontSize: 'clamp(28px, 4.2vw, 50px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 20px', color: theme.textPrimary }}>
           AI-Powered Smart Governance <br />
           <span style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: theme.isDark ? 'drop-shadow(0 0 35px rgba(245, 158, 11, 0.35))' : 'none' }}>
             & Compliance for Coal Mines
