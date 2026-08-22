@@ -33,10 +33,6 @@ const LandingPage = () => {
         {/* Ambient Glow */}
         <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 20px', borderRadius: '30px', backgroundColor: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.3)', fontSize: '13px', fontWeight: '700', color: '#f59e0b', marginBottom: '28px', boxShadow: '0 0 20px -5px rgba(245, 158, 11, 0.3)' }}>
-          <span>⛏️</span> Smart India Hackathon 2026 • Ministry of Coal / DGMS Solution
-        </div>
-
         <h1 style={{ fontSize: 'clamp(36px, 5.5vw, 68px)', fontWeight: '900', lineHeight: 1.1, letterSpacing: '-0.04em', margin: '0 0 24px', color: theme.textPrimary }}>
           AI-Powered Smart Governance <br />
           <span style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: theme.isDark ? 'drop-shadow(0 0 35px rgba(245, 158, 11, 0.35))' : 'none' }}>
@@ -234,10 +230,10 @@ const LandingPage = () => {
       <footer style={{ padding: '32px 48px', borderTop: `1px solid ${theme.cardBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '16px' }}>⛏️</span>
-          <span style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted }}>CoalGuard OS • SIH 2026</span>
+          <span style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted }}>CoalGuard OS</span>
         </div>
         <p style={{ fontSize: '13px', color: theme.textMuted, margin: 0 }}>
-          Built for Ministry of Coal Smart Governance • © 2026
+          Autonomous AI Smart Governance & Compliance Monitoring System • © 2026
         </p>
       </footer>
 
