@@ -51,6 +51,56 @@ const AdminDashboard = () => {
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
 
+  // Autonomous IoT Sensor Telemetry State
+  const [iotSensors, setIotSensors] = useState({ methane: 0.38, co: 14, airflow: 4.2, strata: 14.5 });
+  const [isSpiking, setIsSpiking] = useState(false);
+  const [lastSpikeTriggered, setLastSpikeTriggered] = useState(null);
+
+  // Subtle real-time sensor fluctuation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIotSensors((prev) => {
+        if (prev.methane > 1.0) return prev; // Keep spike active until user refreshes or resets
+        return {
+          methane: parseFloat((0.34 + Math.random() * 0.08).toFixed(2)),
+          co: Math.floor(12 + Math.random() * 5),
+          airflow: parseFloat((4.1 + Math.random() * 0.3).toFixed(1)),
+          strata: parseFloat((14.2 + Math.random() * 0.6).toFixed(1))
+        };
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSimulateSpike = async () => {
+    setIsSpiking(true);
+    setIotSensors({
+      methane: 1.85,
+      co: 88,
+      airflow: 1.6,
+      strata: 28.4
+    });
+
+    try {
+      const automatedIncident = {
+        title: '🚨 IoT Telemetry Alert: Critical Methane (CH4) Surge 1.85% at Pit 4 / Shaft B',
+        description: 'AUTONOMOUS SENSOR INGESTION: Continuous underground mine telemetry detected dangerous methane surge of 1.85% (DGMS statutory evacuation threshold >1.40% under CMR 2017 Reg 153). Carbon Monoxide spiked to 88 PPM and intake airflow dropped below safety limit to 1.6 m/s. Autonomous ventilation auxiliary fans engaged. Immediate personnel evacuation and safety nodal controller dispatch required.',
+        mineSite: 'Jharia Colliery - Pit 4 (Underground)'
+      };
+
+      const res = await api.post('/complaints', automatedIncident);
+      setLastSpikeTriggered(new Date().toLocaleTimeString());
+      addToast(`🚨 Autonomous IoT Sensor Breach Ingested! AI routed to DGMS Safety Controller with Emergency Containment SOP.`, 'warning', 7000);
+      
+      await fetchData();
+    } catch (err) {
+      console.error('Spike simulation failed:', err);
+      addToast(err.response?.data?.message || 'Failed to trigger autonomous IoT incident', 'error', 4000);
+    } finally {
+      setIsSpiking(false);
+    }
+  };
+
   let user = {};
   try {
     const raw = localStorage.getItem('user');
@@ -296,6 +346,264 @@ const AdminDashboard = () => {
           >
             <span style={{ color: '#059669', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('resolvedClosed')}</span>
             <div style={{ marginTop: '10px' }}><AnimatedCounter target={resolved} color="#059669" /></div>
+          </div>
+        </div>
+
+        {/* Live IoT Telemetry & Autonomous Sensor Ingestion Section */}
+        <div id="section-iot" className={theme.isDark ? 'glass-panel' : ''} style={{
+          backgroundColor: theme.cardBg,
+          borderRadius: '24px',
+          padding: '28px 32px',
+          marginBottom: '36px',
+          border: `1px solid ${iotSensors.methane > 1.25 ? 'rgba(239, 68, 68, 0.45)' : 'rgba(245, 158, 11, 0.3)'}`,
+          background: theme.isDark
+            ? iotSensors.methane > 1.25
+              ? 'linear-gradient(135deg, rgba(25, 10, 10, 0.95) 0%, rgba(239, 68, 68, 0.12) 100%)'
+              : 'linear-gradient(135deg, rgba(15, 17, 26, 0.95) 0%, rgba(245, 158, 11, 0.06) 100%)'
+            : iotSensors.methane > 1.25
+              ? 'linear-gradient(135deg, #ffffff 0%, #fef2f2 100%)'
+              : 'linear-gradient(135deg, #ffffff 0%, #fffbeb 100%)',
+          boxShadow: iotSensors.methane > 1.25
+            ? '0 20px 40px -15px rgba(239, 68, 68, 0.3)'
+            : '0 20px 40px -15px rgba(245, 158, 11, 0.12)'
+        }}>
+          {/* Header Row */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '12px',
+                background: iotSensors.methane > 1.25 ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #f59e0b, #ea580c)',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '20px',
+                boxShadow: iotSensors.methane > 1.25 ? '0 0 20px rgba(239, 68, 68, 0.6)' : '0 0 15px rgba(245, 158, 11, 0.4)'
+              }}>
+                📡
+              </div>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>
+                    {t('iotSectionTitle')}
+                  </h2>
+                  <span style={{
+                    padding: '2px 8px',
+                    borderRadius: '12px',
+                    backgroundColor: iotSensors.methane > 1.25 ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.15)',
+                    color: iotSensors.methane > 1.25 ? '#ef4444' : '#10b981',
+                    fontSize: '11px',
+                    fontWeight: '800',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: iotSensors.methane > 1.25 ? '#ef4444' : '#10b981', animation: 'pulse 1s infinite' }}></span>
+                    {iotSensors.methane > 1.25 ? 'CRITICAL BREACH' : 'LIVE 3s TELEMETRY'}
+                  </span>
+                </div>
+                <p style={{ margin: '2px 0 0', fontSize: '12px', color: theme.textSecondary }}>
+                  {t('iotSectionSubtitle')}
+                </p>
+              </div>
+            </div>
+
+            {/* Spike Simulation Button */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {lastSpikeTriggered && (
+                <span style={{ fontSize: '11px', color: theme.textMuted }}>
+                  Last Spike: {lastSpikeTriggered}
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={handleSimulateSpike}
+                disabled={isSpiking}
+                style={{
+                  padding: '10px 18px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  background: isSpiking ? '#64748b' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                  color: '#ffffff',
+                  fontSize: '13px',
+                  fontWeight: '800',
+                  cursor: isSpiking ? 'wait' : 'pointer',
+                  boxShadow: '0 8px 20px -5px rgba(239, 68, 68, 0.5)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'transform 0.2s'
+                }}
+                onMouseEnter={(e) => { if (!isSpiking) e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseLeave={(e) => { if (!isSpiking) e.currentTarget.style.transform = 'translateY(0)'; }}
+              >
+                <span>{isSpiking ? '⏳' : '⚡'}</span>
+                <span>{isSpiking ? t('spikingStatus') : t('simulateSpikeBtn')}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* 4 Multi-Sensor Telemetry Gauges */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+            
+            {/* Sensor 1: Methane (CH4) */}
+            <div style={{
+              padding: '18px',
+              borderRadius: '16px',
+              backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.85)' : '#ffffff',
+              border: `1px solid ${iotSensors.methane > 1.25 ? '#ef4444' : theme.cardBorder}`,
+              boxShadow: iotSensors.methane > 1.25 ? '0 0 15px rgba(239, 68, 68, 0.2)' : 'none'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: theme.textSecondary }}>🔥 Methane (CH4)</span>
+                <span style={{
+                  fontSize: '10px',
+                  fontWeight: '800',
+                  padding: '2px 8px',
+                  borderRadius: '6px',
+                  backgroundColor: iotSensors.methane > 1.25 ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.15)',
+                  color: iotSensors.methane > 1.25 ? '#ef4444' : '#10b981'
+                }}>
+                  {iotSensors.methane > 1.25 ? 'CRITICAL EVAC' : 'Optimal'}
+                </span>
+              </div>
+              <div style={{ fontSize: '26px', fontWeight: '900', color: iotSensors.methane > 1.25 ? '#ef4444' : theme.textPrimary, letterSpacing: '-0.5px' }}>
+                {iotSensors.methane}%
+              </div>
+              {/* Mini Gauge Bar */}
+              <div style={{ width: '100%', height: '6px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0', borderRadius: '3px', margin: '10px 0 8px', overflow: 'hidden' }}>
+                <div style={{
+                  width: `${Math.min(100, (iotSensors.methane / 2.0) * 100)}%`,
+                  height: '100%',
+                  backgroundColor: iotSensors.methane > 1.25 ? '#ef4444' : iotSensors.methane > 0.8 ? '#f59e0b' : '#10b981',
+                  transition: 'width 0.4s ease'
+                }}></div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: theme.textMuted }}>
+                <span>DGMS Limit: 1.25%</span>
+                <span>Shaft B - Seam 4</span>
+              </div>
+            </div>
+
+            {/* Sensor 2: Carbon Monoxide (CO) */}
+            <div style={{
+              padding: '18px',
+              borderRadius: '16px',
+              backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.85)' : '#ffffff',
+              border: `1px solid ${iotSensors.co > 50 ? '#ef4444' : theme.cardBorder}`,
+              boxShadow: iotSensors.co > 50 ? '0 0 15px rgba(239, 68, 68, 0.2)' : 'none'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: theme.textSecondary }}>☠️ Carbon Monoxide (CO)</span>
+                <span style={{
+                  fontSize: '10px',
+                  fontWeight: '800',
+                  padding: '2px 8px',
+                  borderRadius: '6px',
+                  backgroundColor: iotSensors.co > 50 ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.15)',
+                  color: iotSensors.co > 50 ? '#ef4444' : '#10b981'
+                }}>
+                  {iotSensors.co > 50 ? 'TOXIC SPIKE' : 'Safe'}
+                </span>
+              </div>
+              <div style={{ fontSize: '26px', fontWeight: '900', color: iotSensors.co > 50 ? '#ef4444' : theme.textPrimary, letterSpacing: '-0.5px' }}>
+                {iotSensors.co} <span style={{ fontSize: '14px', fontWeight: '600' }}>PPM</span>
+              </div>
+              {/* Mini Gauge Bar */}
+              <div style={{ width: '100%', height: '6px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0', borderRadius: '3px', margin: '10px 0 8px', overflow: 'hidden' }}>
+                <div style={{
+                  width: `${Math.min(100, (iotSensors.co / 100) * 100)}%`,
+                  height: '100%',
+                  backgroundColor: iotSensors.co > 50 ? '#ef4444' : '#10b981',
+                  transition: 'width 0.4s ease'
+                }}></div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: theme.textMuted }}>
+                <span>Threshold: 50 PPM</span>
+                <span>Haulage Roadway</span>
+              </div>
+            </div>
+
+            {/* Sensor 3: Intake Airflow */}
+            <div style={{
+              padding: '18px',
+              borderRadius: '16px',
+              backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.85)' : '#ffffff',
+              border: `1px solid ${iotSensors.airflow < 2.5 ? '#ef4444' : theme.cardBorder}`,
+              boxShadow: iotSensors.airflow < 2.5 ? '0 0 15px rgba(239, 68, 68, 0.2)' : 'none'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: theme.textSecondary }}>💨 Intake Airflow</span>
+                <span style={{
+                  fontSize: '10px',
+                  fontWeight: '800',
+                  padding: '2px 8px',
+                  borderRadius: '6px',
+                  backgroundColor: iotSensors.airflow < 2.5 ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.15)',
+                  color: iotSensors.airflow < 2.5 ? '#ef4444' : '#10b981'
+                }}>
+                  {iotSensors.airflow < 2.5 ? 'LOW FLOW' : 'Optimal'}
+                </span>
+              </div>
+              <div style={{ fontSize: '26px', fontWeight: '900', color: iotSensors.airflow < 2.5 ? '#ef4444' : theme.textPrimary, letterSpacing: '-0.5px' }}>
+                {iotSensors.airflow} <span style={{ fontSize: '14px', fontWeight: '600' }}>m/s</span>
+              </div>
+              {/* Mini Gauge Bar */}
+              <div style={{ width: '100%', height: '6px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0', borderRadius: '3px', margin: '10px 0 8px', overflow: 'hidden' }}>
+                <div style={{
+                  width: `${Math.min(100, (iotSensors.airflow / 6.0) * 100)}%`,
+                  height: '100%',
+                  backgroundColor: iotSensors.airflow < 2.5 ? '#ef4444' : '#10b981',
+                  transition: 'width 0.4s ease'
+                }}></div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: theme.textMuted }}>
+                <span>Min Limit: 2.5 m/s</span>
+                <span>Aux Fan #2</span>
+              </div>
+            </div>
+
+            {/* Sensor 4: Strata Stress */}
+            <div style={{
+              padding: '18px',
+              borderRadius: '16px',
+              backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.85)' : '#ffffff',
+              border: `1px solid ${iotSensors.strata > 20.0 ? '#ef4444' : theme.cardBorder}`,
+              boxShadow: iotSensors.strata > 20.0 ? '0 0 15px rgba(239, 68, 68, 0.2)' : 'none'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: theme.textSecondary }}>🪨 Strata Stress</span>
+                <span style={{
+                  fontSize: '10px',
+                  fontWeight: '800',
+                  padding: '2px 8px',
+                  borderRadius: '6px',
+                  backgroundColor: iotSensors.strata > 20.0 ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.15)',
+                  color: iotSensors.strata > 20.0 ? '#ef4444' : '#10b981'
+                }}>
+                  {iotSensors.strata > 20.0 ? 'SURGE RISK' : 'Normal'}
+                </span>
+              </div>
+              <div style={{ fontSize: '26px', fontWeight: '900', color: iotSensors.strata > 20.0 ? '#ef4444' : theme.textPrimary, letterSpacing: '-0.5px' }}>
+                {iotSensors.strata} <span style={{ fontSize: '14px', fontWeight: '600' }}>MPa</span>
+              </div>
+              {/* Mini Gauge Bar */}
+              <div style={{ width: '100%', height: '6px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0', borderRadius: '3px', margin: '10px 0 8px', overflow: 'hidden' }}>
+                <div style={{
+                  width: `${Math.min(100, (iotSensors.strata / 35.0) * 100)}%`,
+                  height: '100%',
+                  backgroundColor: iotSensors.strata > 20.0 ? '#ef4444' : '#10b981',
+                  transition: 'width 0.4s ease'
+                }}></div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: theme.textMuted }}>
+                <span>Safe Max: 20 MPa</span>
+                <span>Longwall Face</span>
+              </div>
+            </div>
+
           </div>
         </div>
 

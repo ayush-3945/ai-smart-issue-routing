@@ -98,7 +98,11 @@ export const translations = {
     syncingReports: 'Syncing queued reports to DGMS Command...',
     voiceInputButton: 'Voice Dictation (बोलकर लिखें)',
     listeningState: 'Listening... Speak now',
-    voiceHintText: 'Speak in Hindi or English — AI will auto-translate & structure the DGMS hazard report.'
+    voiceHintText: 'Speak in Hindi or English — AI will auto-translate & structure the DGMS hazard report.',
+    iotSectionTitle: 'Live IoT Telemetry & Autonomous Sensor Ingestion',
+    iotSectionSubtitle: 'DGMS Continuous Seam Telemetry — Active Underground Transducers (Node #JH-402)',
+    simulateSpikeBtn: '⚡ Simulate Critical Gas Spike (Test Auto AI Ingestion)',
+    spikingStatus: 'Simulating Spike & Dispatching...'
   },
   hi: {
     appTitle: 'कोल-गार्ड (CoalGuard) OS',
@@ -110,7 +114,7 @@ export const translations = {
     exportCsv: 'वैधानिक ऑडिट CSV डाउनलोड करें',
     adminView: 'कमांड सेंटर',
     userView: 'इंस्पेक्टर पोर्टल',
-    liveRadar: '● लाइव डीजीएमएस अनुपालन रडार — 4 खदान क्षेत्र जुड़े हैं',
+    liveRadar: '● लाइव डीजीएमएस अनुपालन रडar — 4 खदान क्षेत्र जुड़े हैं',
     raiseIssueTitle: 'खदान सुरक्षा खतरा / उल्लंघन दर्ज करें',
     raiseIssueSubtitle: 'खदान सुरक्षा, पर्यावरण प्रदूषण या मशीनरी खराबी की रिपोर्ट जीपीएस और फोटो साक्ष्य के साथ दर्ज करें।',
     mineSiteLabel: 'कोयला खदान / साइट स्थान',
@@ -197,7 +201,11 @@ export const translations = {
     syncingReports: 'कतारबद्ध रिपोर्ट को डीजीएमएस कमांड में सिंक किया जा रहा है...',
     voiceInputButton: 'आवाज से लिखें (Voice Input)',
     listeningState: 'सुन रहे हैं... बोलिए',
-    voiceHintText: 'हिंदी या अंग्रेजी में बोलें — AI स्वतः अनुवाद एवं डीजीएमएस रिपोर्ट तैयार करेगा।'
+    voiceHintText: 'हिंदी या अंग्रेजी में बोलें — AI स्वतः अनुवाद एवं डीजीएमएस रिपोर्ट तैयार करेगा।',
+    iotSectionTitle: 'लाइव आईओटी (IoT) टेलीमेट्री एवं स्वचालित सेंसर निगरानी',
+    iotSectionSubtitle: 'डीजीएमएस सतत खदान टेलीमेट्री — सक्रिय भूमिगत सेंसर नोड #JH-402',
+    simulateSpikeBtn: '⚡ गंभीर गैस रिसाव का सिमुलेशन करें (Auto AI Ingestion)',
+    spikingStatus: 'गैस स्पाइक सिमुलेट एवं रिपोर्ट दर्ज हो रही है...'
   }
 };
 

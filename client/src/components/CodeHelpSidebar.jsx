@@ -9,6 +9,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊', path: '/admin' },
+    { id: 'iot', label: 'IoT Telemetry', icon: '📡', path: '/admin' },
     { id: 'issues', label: 'Active Queue', icon: '📋', path: '/admin' },
     { id: 'predictions', label: 'AI Forecasting', icon: '🔮', path: '/admin' },
     { id: 'userView', label: 'Raise Issue (User)', icon: '🚀', path: '/dashboard' },
@@ -138,6 +139,8 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                     // Smooth scroll to target section if on admin page
                     const targetId = item.id === 'dashboard'
                       ? 'section-overview'
+                      : item.id === 'iot'
+                      ? 'section-iot'
                       : item.id === 'issues'
                       ? 'section-queue'
                       : 'section-ai-forecast';
