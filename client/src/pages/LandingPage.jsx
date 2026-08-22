@@ -19,10 +19,10 @@ const LandingPage = () => {
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <InstallPwaButton />
           <ThemeToggle />
-          <Link to="/login" className="nav-btn-compact nav-btn-text-hide" style={{ borderRadius: '10px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', backgroundColor: theme.badgeBg }}>
+          <Link to="/login" className="nav-btn-compact nav-btn-text-hide" style={{ padding: '10px 20px', borderRadius: '10px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', backgroundColor: theme.badgeBg, display: 'inline-flex', alignItems: 'center' }}>
             Sign In
           </Link>
-          <Link to="/register" className="nav-btn-compact" style={{ background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(14,165,233,0.35)' }}>
+          <Link to="/register" className="nav-btn-compact" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(14,165,233,0.35)', display: 'inline-flex', alignItems: 'center' }}>
             Sign Up
           </Link>
         </div>
