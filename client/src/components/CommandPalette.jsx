@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -27,6 +27,7 @@ const CommandPalette = ({ isOpen, onClose, complaints, onSelectComplaint }) => {
     (c) =>
       c.title.toLowerCase().includes(query.toLowerCase()) ||
       c.category.toLowerCase().includes(query.toLowerCase()) ||
+      (c.mineSite && c.mineSite.toLowerCase().includes(query.toLowerCase())) ||
       (c.assignedTo && c.assignedTo.toLowerCase().includes(query.toLowerCase()))
   );
 
@@ -51,8 +52,8 @@ const CommandPalette = ({ isOpen, onClose, complaints, onSelectComplaint }) => {
           maxWidth: '620px',
           backgroundColor: theme.isDark ? '#0f121d' : '#ffffff',
           borderRadius: '20px',
-          border: `1px solid ${theme.isDark ? 'rgba(139, 92, 246, 0.35)' : '#e2e8f0'}`,
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 92, 246, 0.25)',
+          border: `1px solid ${theme.isDark ? 'rgba(14, 165, 233, 0.35)' : '#e2e8f0'}`,
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(14, 165, 233, 0.25)',
           overflow: 'hidden'
         }}
         onClick={(e) => e.stopPropagation()}
@@ -71,7 +72,7 @@ const CommandPalette = ({ isOpen, onClose, complaints, onSelectComplaint }) => {
           <input
             type="text"
             autoFocus
-            placeholder="Search tickets, department leads, categories or action commands... (ESC to close)"
+            placeholder="Search mine hazards, pit zones, DGMS leads or status... (ESC to close)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             style={{
@@ -102,7 +103,7 @@ const CommandPalette = ({ isOpen, onClose, complaints, onSelectComplaint }) => {
         <div style={{ maxHeight: '380px', overflowY: 'auto', padding: '12px' }}>
           {filtered.length === 0 ? (
             <div style={{ padding: '32px', textAlign: 'center', color: theme.textMuted, fontSize: '14px' }}>
-              No matching tickets or commands found.
+              No matching mine violations or commands found.
             </div>
           ) : (
             filtered.slice(0, 8).map((c) => (
@@ -122,7 +123,7 @@ const CommandPalette = ({ isOpen, onClose, complaints, onSelectComplaint }) => {
                   transition: 'all 0.15s ease',
                   backgroundColor: 'transparent'
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(139, 92, 246, 0.15)' : '#f8fafc')}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(14, 165, 233, 0.15)' : '#f8fafc')}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
                 <div>
@@ -130,13 +131,13 @@ const CommandPalette = ({ isOpen, onClose, complaints, onSelectComplaint }) => {
                     {c.title}
                   </div>
                   <div style={{ fontSize: '12px', color: theme.textMuted, marginTop: '2px' }}>
-                    📁 {c.category} • 👤 {c.assignedTo || 'Unassigned'} • Status:{' '}
+                    {c.mineSite ? `🏭 ${c.mineSite} • ` : ''}📁 {c.category} • 👤 {c.assignedTo || 'Unassigned'} • Status:{' '}
                     <span style={{ color: c.status === 'Resolved' ? '#10b981' : '#f59e0b', fontWeight: '700' }}>
                       {c.status}
                     </span>
                   </div>
                 </div>
-                <span style={{ fontSize: '12px', color: '#8b5cf6', fontWeight: '700' }}>Jump ➔</span>
+                <span style={{ fontSize: '12px', color: '#38bdf8', fontWeight: '700' }}>Jump ➔</span>
               </div>
             ))
           )}

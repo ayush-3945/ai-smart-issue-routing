@@ -1,4 +1,4 @@
-export const exportToCSV = (complaints, filename = 'SmartIssue_Analytics_Report.csv') => {
+export const exportToCSV = (complaints, filename = 'DGMS_CoalMine_Compliance_Report.csv') => {
   if (!complaints || !complaints.length) {
     alert('No data available to export!');
     return;
@@ -6,19 +6,21 @@ export const exportToCSV = (complaints, filename = 'SmartIssue_Analytics_Report.
 
   // CSV Column Headers
   const headers = [
-    'Issue ID',
+    'Violation ID',
     'Title',
     'Description',
+    'Mine Site / Coalfield',
     'Category',
-    'Priority',
+    'Severity / Priority',
     'Status',
+    'Safety Controller (Lead)',
     'AI Confidence (%)',
     'AI Summary',
     'Location Address',
     'Coordinates (Lat, Long)',
-    'Submitted By (Name)',
-    'Submitted By (Email)',
-    'Created At'
+    'Reported By (Name)',
+    'Reported By (Email)',
+    'Logged At'
   ];
 
   // Convert objects to CSV formatted rows
@@ -26,14 +28,16 @@ export const exportToCSV = (complaints, filename = 'SmartIssue_Analytics_Report.
     `"${c._id || ''}"`,
     `"${(c.title || '').replace(/"/g, '""')}"`,
     `"${(c.description || '').replace(/"/g, '""')}"`,
+    `"${(c.mineSite || 'Jharia Colliery - Pit 4').replace(/"/g, '""')}"`,
     `"${c.category || ''}"`,
     `"${c.priority || ''}"`,
     `"${c.status || ''}"`,
+    `"${(c.assignedTo || 'Unassigned').replace(/"/g, '""')}"`,
     `"${c.aiConfidence || 0}"`,
     `"${(c.aiSummary || '').replace(/"/g, '""')}"`,
     `"${(c.location?.address || 'N/A').replace(/"/g, '""')}"`,
     `"${c.location?.latitude && c.location?.longitude ? `${c.location.latitude}, ${c.location.longitude}` : 'N/A'}"`,
-    `"${(c.user?.name || 'Anonymous').replace(/"/g, '""')}"`,
+    `"${(c.user?.name || 'Anonymous Inspector').replace(/"/g, '""')}"`,
     `"${(c.user?.email || 'N/A').replace(/"/g, '""')}"`,
     `"${c.createdAt ? new Date(c.createdAt).toLocaleString() : ''}"`
   ]);
