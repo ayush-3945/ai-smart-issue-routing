@@ -118,6 +118,13 @@ h1, h2, h3, h4, .font-heading {
   flex-wrap: wrap;
 }
 
+.dashboard-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
 @media (max-width: 640px) {
   .dashboard-header {
     flex-direction: column;

@@ -230,6 +230,30 @@ const Dashboard = () => {
           
           {/* Controls Toolbar */}
           <div className="dashboard-controls">
+            <button
+              title={t('backToHome')}
+              onClick={() => navigate('/')}
+              style={{
+                backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.06)' : '#f1f5f9',
+                border: `1px solid ${theme.cardBorder}`,
+                color: theme.textPrimary,
+                padding: '0 12px',
+                height: '36px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontSize: '13px',
+                fontWeight: '700',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#38bdf8'; e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.4)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = theme.textPrimary; e.currentTarget.style.borderColor = theme.cardBorder; }}
+            >
+              <span>🏠</span>
+              <span>Home</span>
+            </button>
             <InstallPwaButton />
             <LanguageToggle />
             <ThemeToggle />
