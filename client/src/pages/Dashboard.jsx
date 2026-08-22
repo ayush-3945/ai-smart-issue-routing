@@ -29,10 +29,12 @@ const base64ToFile = async (base64Data, filename, mimeType) => {
 const Dashboard = () => {
   const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
+  const [reportType, setReportType] = useState('hazard'); // 'hazard' | 'maintenance'
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [mineSite, setMineSite] = useState('');
   const [contractor, setContractor] = useState('');
+  const [equipmentId, setEquipmentId] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -342,12 +344,18 @@ const Dashboard = () => {
           );
         }
 
+        const finalTitle = reportType === 'maintenance' && !title.startsWith('[MAINTENANCE]') 
+          ? `[MAINTENANCE] ${equipmentId ? equipmentId + ' — ' : ''}${title.trim()}`
+          : title.trim();
+
         const offlineItem = {
           id: 'offline_' + Date.now(),
-          title: title.trim(),
+          title: finalTitle,
           description: description.trim(),
           mineSite: mineSite.trim() || 'Jharia Colliery - Pit 4 (Underground)',
           contractor: contractor.trim() || 'Direct CIL / DGMS Departmental Team',
+          equipmentId: equipmentId.trim(),
+          reportType: reportType,
           location: location || (customLocationText.trim() ? { address: customLocationText.trim() } : null),
           savedAt: new Date().toISOString(),
           files: serializedFiles
@@ -361,6 +369,7 @@ const Dashboard = () => {
         setDescription('');
         setMineSite('');
         setContractor('');
+        setEquipmentId('');
         setSelectedFiles([]);
         setLocation(null);
         setCustomLocationText('');
@@ -377,11 +386,17 @@ const Dashboard = () => {
     }
 
     try {
+      const finalTitle = reportType === 'maintenance' && !title.startsWith('[MAINTENANCE]') 
+        ? `[MAINTENANCE] ${equipmentId ? equipmentId + ' — ' : ''}${title.trim()}`
+        : title.trim();
+
       const formData = new FormData();
-      formData.append('title', title);
+      formData.append('title', finalTitle);
       formData.append('description', description);
       formData.append('mineSite', mineSite);
       if (contractor) formData.append('contractor', contractor);
+      if (equipmentId) formData.append('equipmentId', equipmentId);
+      if (reportType === 'maintenance') formData.append('category', 'Equipment');
       
       if (selectedFiles.length > 0) {
         selectedFiles.forEach((file) => {
@@ -405,11 +420,12 @@ const Dashboard = () => {
       setDescription('');
       setMineSite('');
       setContractor('');
+      setEquipmentId('');
       setSelectedFiles([]);
       setLocation(null);
       setCustomLocationText('');
       setShowCustomLocation(false);
-      addToast(`🤖 "${res.data.complaint?.title || title}" — AI analyzed & submitted!`, 'success', 5000);
+      addToast(`🤖 "${res.data.complaint?.title || finalTitle}" — AI analyzed & logged!`, 'success', 5000);
       fetchMyComplaints();
     } catch (err) {
       const serverMsg = err.response?.data?.errors?.join(', ') || err.response?.data?.message || err.message || 'Failed to create complaint';
@@ -588,11 +604,57 @@ const Dashboard = () => {
 
         {/* Report Mine Violation / Safety Observation Form Card */}
         <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.isDark ? 'rgba(245, 158, 11, 0.25)' : theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? '0 20px 40px -15px rgba(245, 158, 11, 0.1)' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <span style={{ fontSize: '22px' }}>⛏️</span>
-            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>{t('raiseIssueTitle')}</h2>
+          {/* Issue Type Switcher Pills */}
+          <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => setReportType('hazard')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '20px',
+                fontSize: '13px',
+                fontWeight: '800',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                border: reportType === 'hazard' ? '1px solid #f59e0b' : `1px solid ${theme.cardBorder}`,
+                background: reportType === 'hazard' ? 'linear-gradient(135deg, #f59e0b, #ea580c)' : 'transparent',
+                color: reportType === 'hazard' ? '#ffffff' : theme.textSecondary,
+                boxShadow: reportType === 'hazard' ? '0 0 15px rgba(245, 158, 11, 0.4)' : 'none'
+              }}
+            >
+              {t('reportHazardTab')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setReportType('maintenance')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '20px',
+                fontSize: '13px',
+                fontWeight: '800',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                border: reportType === 'maintenance' ? '1px solid #f59e0b' : `1px solid ${theme.cardBorder}`,
+                background: reportType === 'maintenance' ? 'linear-gradient(135deg, #f59e0b, #ea580c)' : 'transparent',
+                color: reportType === 'maintenance' ? '#ffffff' : theme.textSecondary,
+                boxShadow: reportType === 'maintenance' ? '0 0 15px rgba(245, 158, 11, 0.4)' : 'none'
+              }}
+            >
+              {t('logMaintenanceTab')}
+            </button>
           </div>
-          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>{t('raiseIssueSubtitle')}</p>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span style={{ fontSize: '22px' }}>{reportType === 'maintenance' ? '🔧' : '⛏️'}</span>
+            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>
+              {reportType === 'maintenance' ? 'Log Heavy Machinery Servicing & Calibration' : t('raiseIssueTitle')}
+            </h2>
+          </div>
+          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>
+            {reportType === 'maintenance' 
+              ? 'Record scheduled engine overhaul, hydraulic line replacement, or statutory DGMS calibration certificate.'
+              : t('raiseIssueSubtitle')}
+          </p>
 
           <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {/* Mine Site Selection with Quick Chips */}
@@ -689,6 +751,40 @@ const Dashboard = () => {
                 <option value="Gainwell Engineering">Gainwell Engineering (Ventilation & Equipment Vendor)</option>
                 <option value="Direct CIL / DGMS Departmental Team">Direct CIL / DGMS Departmental Team</option>
                 <option value="Other Agency">Other Sub-Contractor / Vendor</option>
+              </select>
+            </div>
+
+            {/* Heavy Machinery / Equipment Selection */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>
+                🚜 {t('equipmentLabel')} {reportType === 'maintenance' && <span style={{ color: '#f59e0b' }}>* (Required for Servicing Log)</span>}
+              </label>
+              <select
+                value={equipmentId}
+                onChange={(e) => setEquipmentId(e.target.value)}
+                required={reportType === 'maintenance'}
+                style={{
+                  width: '100%',
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  backgroundColor: theme.inputBg,
+                  border: reportType === 'maintenance' ? '1px solid rgba(245, 158, 11, 0.6)' : `1px solid ${theme.cardBorder}`,
+                  color: theme.textPrimary,
+                  fontSize: '14px',
+                  outline: 'none',
+                  cursor: 'pointer',
+                  appearance: 'none',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <option value="">{t('equipmentPlaceholder')}</option>
+                <option value="Dumper D-402 (CAT 777E 100-Ton)">Dumper D-402 (CAT 777E 100-Ton - Pit 4)</option>
+                <option value="Shovel S-18 (Komatsu PC2000)">Shovel S-18 (Komatsu PC2000 Hydraulic Excavator)</option>
+                <option value="Ventilation Fan V-02 (Howden 500kW)">Ventilation Fan V-02 (Howden 500kW Deep Seam)</option>
+                <option value="Continuous Miner CM-05 (Joy Underground)">Continuous Miner CM-05 (Joy Underground 12CM12)</option>
+                <option value="Dragline DL-01 (Marion 35-Yard)">Dragline DL-01 (Marion 35-Yard)</option>
+                <option value="Water Drainage High-Pressure Pump P-12">Water Drainage High-Pressure Pump P-12</option>
+                <option value="Other Equipment">Other Machinery / Sensor Unit</option>
               </select>
             </div>
 

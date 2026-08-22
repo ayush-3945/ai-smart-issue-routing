@@ -107,7 +107,13 @@ export const translations = {
     contractorPlaceholder: 'Select responsible mining contractor / operating vendor...',
     contractorIntelTitle: 'Contractor Statutory Compliance & Safety Scorecard',
     contractorIntelSubtitle: 'AI-Driven Multi-Factor Scoring (Worker Attendance, Safety Violations & Output Target)',
-    contractorAiRecommendation: 'DGMS Statutory AI Review Notice'
+    contractorAiRecommendation: 'DGMS Statutory AI Review Notice',
+    reportHazardTab: '⚠️ Report Safety Hazard / Violation',
+    logMaintenanceTab: '🔧 Log Machinery Servicing / Maintenance',
+    equipmentLabel: 'Heavy Machinery / Equipment ID',
+    equipmentPlaceholder: 'Select equipment (e.g. Dumper D-402, Shovel S-18, Fan V-02)...',
+    fleetSectionTitle: 'Heavy Machinery & Fleet Preventive Maintenance',
+    fleetSectionSubtitle: 'AI-Predicted Lifecycle Overhauls & DGMS Statutory Calibration Schedules'
   },
   hi: {
     appTitle: 'कोल-गार्ड (CoalGuard) OS',
@@ -215,7 +221,13 @@ export const translations = {
     contractorPlaceholder: 'जिम्मेदार खनन ठेकेदार / विक्रेता चुनें...',
     contractorIntelTitle: 'ठेकेदार वैधानिक अनुपालन एवं सुरक्षा स्कोरकार्ड',
     contractorIntelSubtitle: 'AI-संचालित बहु-कारक स्कोरिंग (श्रमिक उपस्थिति, सुरक्षा उल्लंघन व उत्पादन)',
-    contractorAiRecommendation: 'डीजीएमएस वैधानिक AI समीक्षा नोटिस'
+    contractorAiRecommendation: 'डीजीएमएस वैधानिक AI समीक्षा नोटिस',
+    reportHazardTab: '⚠️ सुरक्षा खतरा / उल्लंघन दर्ज करें',
+    logMaintenanceTab: '🔧 मशीनरी सर्विसिंग एवं रखरखाव लॉग करें',
+    equipmentLabel: 'भारी मशीनरी / उपकरण आईडी',
+    equipmentPlaceholder: 'उपकरण चुनें (उदा. डंपर D-402, शॉवेल S-18, पंखा V-02)...',
+    fleetSectionTitle: 'भारी मशीनरी एवं वाहन बेड़ा निवारक रखरखाव',
+    fleetSectionSubtitle: 'AI-पूर्वानुमानित सर्विसिंग चक्र एवं डीजीएमएस वैधानिक कैलिब्रेशन अनुसूची'
   }
 };
 

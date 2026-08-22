@@ -50,6 +50,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [selectedContractorTier, setSelectedContractorTier] = useState('All');
+  const [selectedFleetFilter, setSelectedFleetFilter] = useState('All');
   const { toasts, addToast, removeToast } = useToast();
 
   // Autonomous IoT Sensor Telemetry State
@@ -1012,6 +1013,248 @@ const AdminDashboard = () => {
                     {/* AI Verdict */}
                     <p style={{ margin: 0, fontSize: '11px', color: theme.textSecondary, lineHeight: 1.45 }}>
                       {c.aiVerdict}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Heavy Machinery & Fleet Preventive Maintenance Section */}
+        {(() => {
+          const FLEET_LIST = [
+            {
+              id: 'D-402',
+              name: 'Dumper D-402',
+              model: 'CAT 777E (100-Ton Hauler)',
+              type: 'HEMM Heavy Hauler',
+              zone: 'Jharia Open-Cast Pit 4',
+              contractor: 'BGR Mining & Infra Ltd',
+              lastServiced: '12 Jul 2026',
+              nextDue: '12 Jan 2027',
+              dueDays: 142,
+              health: 92,
+              status: 'Operational',
+              statusBadge: '🟢 Operational',
+              engineHours: '3,420 hrs',
+              aiInsight: 'Hydraulic pressure & brake retarder operating within normal DGMS thermal thresholds. Next routine checkup in 140 hrs.'
+            },
+            {
+              id: 'S-18',
+              name: 'Shovel S-18',
+              model: 'Komatsu PC2000 Hydraulic',
+              type: 'Heavy Excavator',
+              zone: 'Bokaro Colliery - Pit B',
+              contractor: 'Thriveni Earthmovers',
+              lastServiced: '28 Aug 2026',
+              nextDue: '28 Feb 2027',
+              dueDays: 189,
+              health: 88,
+              status: 'Operational',
+              statusBadge: '🟢 Operational',
+              engineHours: '5,190 hrs',
+              aiInsight: 'Bucket teeth wear at 32%. AI scheduled ultrasonic non-destructive weld testing in 90 operational days.'
+            },
+            {
+              id: 'CM-05',
+              name: 'Continuous Miner CM-05',
+              model: 'Joy 12CM12 Underground',
+              type: 'Seam Extraction Unit',
+              zone: 'Raniganj - Shaft 3 (Deep Seam)',
+              contractor: 'Gainwell Engineering',
+              lastServiced: '15 Jun 2026',
+              nextDue: '15 Dec 2026',
+              dueDays: 14,
+              health: 76,
+              status: 'Warning',
+              statusBadge: '🟡 Due in 14 Days (15-Day Alert)',
+              engineHours: '2,840 hrs',
+              aiInsight: '⚡ 15-Day Advance DGMS Warning: Cutter drum pick wear threshold reached. Automatic service requisition dispatched to Gainwell Engineering.'
+            },
+            {
+              id: 'V-02',
+              name: 'Main Ventilation Fan V-02',
+              model: 'Howden 500kW Dual-Speed',
+              type: 'Shaft Ventilation Fan',
+              zone: 'Jharia Pit 4 / Shaft B',
+              contractor: 'VPR Mining Infra Projects',
+              lastServiced: '04 Feb 2026',
+              nextDue: '04 Aug 2026',
+              dueDays: -19,
+              health: 54,
+              status: 'Critical',
+              statusBadge: '🔴 OVERDUE BY 19 DAYS',
+              engineHours: '8,760 hrs (Continuous)',
+              aiInsight: '🚨 DGMS Regulation 153 Non-Compliance: Stator bearing vibration exceeds 4.8 mm/s limit. Urgent overhaul required to prevent methane accumulation.'
+            }
+          ];
+
+          const filteredFleet = FLEET_LIST.filter(f => {
+            if (selectedFleetFilter === 'All') return true;
+            return f.status === selectedFleetFilter;
+          });
+
+          return (
+            <div id="section-fleet" className={theme.isDark ? 'glass-panel' : ''} style={{
+              backgroundColor: theme.cardBg,
+              borderRadius: '24px',
+              padding: '28px 32px',
+              marginBottom: '36px',
+              border: `1px solid ${theme.isDark ? 'rgba(245, 158, 11, 0.35)' : '#fed7aa'}`,
+              background: theme.isDark 
+                ? 'linear-gradient(135deg, rgba(15, 17, 26, 0.95) 0%, rgba(245, 158, 11, 0.05) 100%)' 
+                : 'linear-gradient(135deg, #ffffff 0%, #fffbeb 100%)',
+              boxShadow: '0 20px 40px -15px rgba(245, 158, 11, 0.12)'
+            }}>
+              {/* Header & Filter Controls */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+                    color: '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '20px',
+                    boxShadow: '0 0 15px rgba(245, 158, 11, 0.4)'
+                  }}>
+                    🚜
+                  </div>
+                  <div>
+                    <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>
+                      {t('fleetSectionTitle')}
+                    </h2>
+                    <p style={{ margin: '2px 0 0', fontSize: '12px', color: theme.textSecondary }}>
+                      {t('fleetSectionSubtitle')}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Status Filter Chips */}
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  {[
+                    { key: 'All', label: 'All Fleet (4)' },
+                    { key: 'Operational', label: '🟢 Operational (2)' },
+                    { key: 'Warning', label: '🟡 Due in 14 Days (1)' },
+                    { key: 'Critical', label: '🔴 Overdue / Alert (1)' }
+                  ].map((filter) => (
+                    <button
+                      key={filter.key}
+                      type="button"
+                      onClick={() => setSelectedFleetFilter(filter.key)}
+                      style={{
+                        padding: '6px 14px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        border: selectedFleetFilter === filter.key ? '1px solid #f59e0b' : `1px solid ${theme.cardBorder}`,
+                        background: selectedFleetFilter === filter.key ? 'linear-gradient(135deg, #f59e0b, #ea580c)' : 'transparent',
+                        color: selectedFleetFilter === filter.key ? '#ffffff' : theme.textSecondary,
+                        boxShadow: selectedFleetFilter === filter.key ? '0 0 12px rgba(245, 158, 11, 0.35)' : 'none'
+                      }}
+                    >
+                      {filter.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* AI 15-Day Predictive Maintenance Alert */}
+              <div style={{
+                padding: '16px 20px',
+                borderRadius: '16px',
+                backgroundColor: 'rgba(245, 158, 11, 0.12)',
+                border: '1px solid rgba(245, 158, 11, 0.35)',
+                marginBottom: '24px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px'
+              }}>
+                <span style={{ fontSize: '20px' }}>⚡</span>
+                <div>
+                  <div style={{ fontSize: '13px', fontWeight: '800', color: '#fbbf24', marginBottom: '2px' }}>
+                    AI Predictive Overhaul Schedule (Continuous Miner CM-05 & Fan V-02)
+                  </div>
+                  <p style={{ margin: 0, fontSize: '12px', color: theme.isDark ? '#fde68a' : '#b45309', lineHeight: 1.5 }}>
+                    System predicted a 15-day service window for <strong>CM-05</strong> (underground cutter drum wear) and flagged <strong>Ventilation Fan V-02</strong> as 19 days overdue under DGMS Coal Mines Regulation 153. Automatic vendor alerts dispatched to prevent unscheduled seam shutdowns.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fleet Machinery Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                {filteredFleet.map((m) => (
+                  <div
+                    key={m.id}
+                    style={{
+                      padding: '20px',
+                      borderRadius: '18px',
+                      backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.85)' : '#ffffff',
+                      border: `1px solid ${m.status === 'Critical' ? 'rgba(239, 68, 68, 0.45)' : m.status === 'Warning' ? 'rgba(245, 158, 11, 0.4)' : theme.cardBorder}`,
+                      transition: 'transform 0.2s, border-color 0.2s',
+                      boxShadow: m.status === 'Critical' ? '0 0 20px rgba(239, 68, 68, 0.15)' : 'none'
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+                  >
+                    {/* Machine Header & Health */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                      <div>
+                        <h3 style={{ margin: 0, fontSize: '15px', fontWeight: '800', color: theme.textPrimary }}>
+                          {m.name}
+                        </h3>
+                        <span style={{ fontSize: '11px', color: theme.textMuted }}>{m.model} • {m.zone}</span>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: '22px', fontWeight: '900', color: m.health >= 80 ? '#10b981' : m.health >= 70 ? '#f59e0b' : '#ef4444', letterSpacing: '-0.5px' }}>
+                          {m.health}%
+                        </div>
+                        <span style={{
+                          fontSize: '10px',
+                          fontWeight: '800',
+                          padding: '2px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: m.status === 'Critical' ? 'rgba(239, 68, 68, 0.2)' : m.status === 'Warning' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(16, 185, 129, 0.15)',
+                          color: m.status === 'Critical' ? '#ef4444' : m.status === 'Warning' ? '#f59e0b' : '#10b981'
+                        }}>
+                          {m.statusBadge}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Progress Bar for Machine Health */}
+                    <div style={{ width: '100%', height: '6px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.08)' : '#e2e8f0', borderRadius: '3px', marginBottom: '14px', overflow: 'hidden' }}>
+                      <div style={{
+                        width: `${m.health}%`,
+                        height: '100%',
+                        backgroundColor: m.health >= 80 ? '#10b981' : m.health >= 70 ? '#f59e0b' : '#ef4444',
+                        transition: 'width 0.4s ease'
+                      }}></div>
+                    </div>
+
+                    {/* Schedule Dates & Hours */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', padding: '10px 0', borderTop: `1px solid ${theme.cardBorder}`, borderBottom: `1px solid ${theme.cardBorder}`, marginBottom: '12px', fontSize: '11px' }}>
+                      <div>
+                        <span style={{ color: theme.textMuted }}>LAST SERVICED:</span>
+                        <div style={{ fontWeight: '700', color: theme.textPrimary, marginTop: '2px' }}>{m.lastServiced}</div>
+                      </div>
+                      <div>
+                        <span style={{ color: theme.textMuted }}>AI DUE DATE:</span>
+                        <div style={{ fontWeight: '800', color: m.dueDays < 0 ? '#ef4444' : m.dueDays <= 15 ? '#f59e0b' : '#10b981', marginTop: '2px' }}>
+                          {m.nextDue}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* AI Diagnostic Insight */}
+                    <p style={{ margin: 0, fontSize: '11px', color: theme.textSecondary, lineHeight: 1.45 }}>
+                      {m.aiInsight}
                     </p>
                   </div>
                 ))}

@@ -144,6 +144,8 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                       ? 'section-iot'
                       : item.id === 'contractors'
                       ? 'section-contractors'
+                      : item.id === 'fleet'
+                      ? 'section-fleet'
                       : item.id === 'issues'
                       ? 'section-queue'
                       : 'section-ai-forecast';
