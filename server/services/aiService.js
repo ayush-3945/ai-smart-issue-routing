@@ -2,7 +2,7 @@ require('dotenv').config();
 
 // Helper to call Gemini models with fallback
 async function callGeminiApi(prompt) {
-  const models = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+  const models = ['gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.7-flash'];
   const apiKey = process.env.GEMINI_API_KEY;
 
   for (const model of models) {
