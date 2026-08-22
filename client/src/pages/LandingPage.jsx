@@ -32,16 +32,17 @@ const LandingPage = () => {
       <div style={{ 
         position: 'relative', 
         width: '100%', 
-        backgroundImage: `linear-gradient(to bottom, rgba(15, 17, 26, 0.6) 0%, rgba(15, 17, 26, 0.95) 100%), url('https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg')`,
+        minHeight: '80vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg')`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundPosition: 'center'
       }}>
-        <section style={{ position: 'relative', padding: '120px 48px 100px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
-          {/* Ambient Glow */}
-          <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.25) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
-
-          <h1 style={{ fontSize: 'clamp(28px, 4.2vw, 50px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 20px', color: '#ffffff' }}>
+        <section style={{ position: 'relative', padding: '120px 48px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
+          
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 24px', color: '#ffffff', textShadow: '0 4px 15px rgba(0,0,0,0.6)' }}>
             AI-Powered Smart Governance <br />
             <span style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 35px rgba(245, 158, 11, 0.35))' }}>
               & Compliance for Coal Mines
