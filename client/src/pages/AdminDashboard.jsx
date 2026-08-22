@@ -26,7 +26,7 @@ import {
   Line,
 } from 'recharts';
 
-const COLORS = ['#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
+const COLORS = ['#ef4444', '#10b981', '#f59e0b', '#06b6d4', '#8b5cf6', '#64748b'];
 const PRIORITY_BADGES = {
   Critical: { bg: '#fef2f2', text: '#b91c1c', border: '#fecaca', dot: '#ef4444' },
   High: { bg: '#fffbeb', text: '#b45309', border: '#fde68a', dot: '#f59e0b' },
@@ -34,7 +34,7 @@ const PRIORITY_BADGES = {
   Low: { bg: '#f0fdf4', text: '#15803d', border: '#bbf7d0', dot: '#10b981' },
 };
 
-const CATEGORIES = ['All', 'Safety', 'Environment', 'Production', 'Labour', 'Equipment', 'General'];
+const CATEGORIES = ['All', 'Safety', 'Environment', 'Equipment', 'Labour', 'Production', 'General'];
 import CodeHelpSidebar from '../components/CodeHelpSidebar';
 import CommandPalette from '../components/CommandPalette';
 
@@ -538,24 +538,29 @@ const AdminDashboard = () => {
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         <td style={{ padding: '20px 24px' }}>
-                          <div style={{ color: theme.textPrimary, fontSize: '15px', fontWeight: '600' }}>
-                            {c.title}
+                          <div style={{ color: theme.textPrimary, fontSize: '15px', fontWeight: '600', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                            <span>{c.title}</span>
+                            {c.mineSite && (
+                              <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '8px', backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b', fontWeight: '700', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
+                                🏭 {c.mineSite}
+                              </span>
+                            )}
                             {c.comments && c.comments.length > 0 && (
-                              <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
+                              <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
                                 💬 {c.comments.length}
                               </span>
                             )}
                             {c.attachments && c.attachments.length > 0 && (
-                              <span style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
+                              <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
                                 📎 {c.attachments.length}
                               </span>
                             )}
                             {c.location && (c.location.address || c.location.city || c.location.latitude) && (
                               <span
                                 title={c.location.address || `${c.location.latitude}, ${c.location.longitude}`}
-                                style={{ marginLeft: '8px', fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}
+                                style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '12px', backgroundColor: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}
                               >
-                                📍 {c.location.city || 'Location'}
+                                📍 {c.location.city || 'Pit Location'}
                               </span>
                             )}
                           </div>
@@ -586,11 +591,12 @@ const AdminDashboard = () => {
                               outline: 'none',
                               boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                             }}>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="IT">💻 IT</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="HR">👥 HR</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Finance">💳 Finance</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Operations">🏢 Operations</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="General">🌐 General</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Safety">🦺 Safety (DGMS)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Environment">🌿 Environment</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Equipment">⚙️ Equipment (HEMM)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Labour">👷 Labour & PPE</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Production">⛏️ Production</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="General">📜 General</option>
                           </select>
                         </td>
                         <td style={{ padding: '20px' }} onClick={(e) => e.stopPropagation()}>
@@ -607,11 +613,12 @@ const AdminDashboard = () => {
                               outline: 'none',
                               boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                             }}>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Vikram Sharma">👤 Vikram Sharma (IT)</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Neha Verma">👤 Neha Verma (HR)</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Rohan Mehta">👤 Rohan Mehta (Finance)</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Pooja Singh">👤 Pooja Singh (Ops)</option>
-                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Support Desk">👤 Support Desk</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Rajesh Kumar (DGMS Lead)">👤 Rajesh Kumar (DGMS)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Dr. Ananya Sen">👤 Dr. Ananya Sen (Env)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Sanjay Sharma">👤 Sanjay Sharma (HEMM)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Pooja Verma">👤 Pooja Verma (Labour)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Virendra Singh">👤 Virendra Singh (Prod)</option>
+                            <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Central Control Room">👤 Central Control Room</option>
                             <option style={{ backgroundColor: '#0f172a', color: '#ffffff' }} value="Unassigned">Unassigned</option>
                           </select>
                         </td>

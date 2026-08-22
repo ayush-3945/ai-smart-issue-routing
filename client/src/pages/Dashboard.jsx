@@ -245,6 +245,28 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Top Live Surveillance Radar Banner */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '8px 16px',
+          borderRadius: '12px',
+          backgroundColor: 'rgba(16, 185, 129, 0.08)',
+          border: '1px solid rgba(16, 185, 129, 0.25)',
+          marginBottom: '20px',
+          fontSize: '12px',
+          fontWeight: '700',
+          color: '#10b981',
+          letterSpacing: '0.5px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block', boxShadow: '0 0 10px #10b981' }}></span>
+            <span>{t('liveRadar')}</span>
+          </div>
+          <span style={{ fontSize: '11px', color: theme.textMuted }}>DGMS REG-124 ACTIVE</span>
+        </div>
+
         {/* Back to Home Link */}
         <div style={{ marginBottom: '20px' }}>
           <div
@@ -254,27 +276,92 @@ const Dashboard = () => {
               alignItems: 'center',
               gap: '6px',
               color: '#94a3b8',
-              fontSize: '14px',
-              fontWeight: '600',
+              fontSize: '13px',
+              fontWeight: '700',
               cursor: 'pointer',
               transition: 'color 0.2s ease'
             }}
             onMouseEnter={(e) => e.currentTarget.style.color = '#38bdf8'}
             onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
           >
-            <span>←</span> Back to Home
+            <span>←</span> {t('backToHome')}
           </div>
         </div>
 
-        {/* Raise Issue Form Card */}
+        {/* Report Mine Violation / Safety Observation Form Card */}
         <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <span style={{ fontSize: '20px' }}>⛏️</span>
-            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>Report Mine Violation / Inspection</h2>
+            <span style={{ fontSize: '22px' }}>⛏️</span>
+            <h2 className="gradient-text" style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>{t('raiseIssueTitle')}</h2>
           </div>
-          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>Describe the safety hazard or compliance anomaly. AI will auto-route it to the exact supervisor.</p>
+          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: '0 0 24px' }}>{t('raiseIssueSubtitle')}</p>
 
           <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {/* Mine Site Selection with Quick Chips */}
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>
+                🏭 {t('mineSiteLabel')}
+              </label>
+              
+              {/* Quick Select Chips */}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '10px' }}>
+                {[
+                  'Jharia Colliery - Pit 4 (Underground)',
+                  'Bokaro Colliery - Open-Cast Pit B',
+                  'Korba West - Block A',
+                  'Raniganj - Shaft 3'
+                ].map((site) => (
+                  <button
+                    key={site}
+                    type="button"
+                    onClick={() => setMineSite(site)}
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: '8px',
+                      fontSize: '11px',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      border: mineSite === site ? '1px solid #0ea5e9' : `1px solid ${theme.cardBorder}`,
+                      backgroundColor: mineSite === site ? 'rgba(14, 165, 233, 0.18)' : theme.badgeBg,
+                      color: mineSite === site ? '#38bdf8' : theme.textSecondary,
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    {site.split(' - ')[0]}
+                  </button>
+                ))}
+              </div>
+
+              <select
+                value={mineSite}
+                onChange={(e) => setMineSite(e.target.value)}
+                required
+                style={{
+                  width: '100%',
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  backgroundColor: theme.inputBg,
+                  border: `1px solid ${theme.cardBorder}`,
+                  color: theme.textPrimary,
+                  fontSize: '14px',
+                  outline: 'none',
+                  cursor: 'pointer',
+                  appearance: 'none',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <option value="" disabled>Select Coalfield / Mine Site Location...</option>
+                <option value="Jharia Colliery - Pit 4 (Underground)">Jharia Colliery - Pit 4 (Underground Shaft)</option>
+                <option value="Bokaro Colliery - Open-Cast Pit B">Bokaro Colliery - Open-Cast Pit B</option>
+                <option value="Korba West - Block A (HEMM Zone)">Korba West - Block A (HEMM Zone)</option>
+                <option value="Raniganj - Shaft 3 (Deep Seam)">Raniganj - Shaft 3 (Deep Seam)</option>
+                <option value="Dhanbad Central Coalfield">Dhanbad Central Coalfield</option>
+                <option value="Singrauli Northern Coalfield">Singrauli Northern Coalfield</option>
+                <option value="Talcher Coalfield - Pit 2">Talcher Coalfield - Pit 2</option>
+                <option value="Other Mine Site">Other Mine Site (Specify in Description)</option>
+              </select>
+            </div>
+
             <div>
               <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>{t('issueTitleLabel')}</label>
               <input
@@ -613,13 +700,19 @@ const Dashboard = () => {
                 <p style={{ margin: '0 0 14px', color: theme.textSecondary, fontSize: '13px', lineHeight: '1.5' }}>{c.description}</p>
                 
                 <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '13px', color: theme.textSecondary, borderTop: `1px solid ${theme.cardBorder}`, paddingTop: '12px' }}>
-                  <span>🏷️ Category: <strong style={{ color: '#38bdf8' }}>{c.category}</strong></span>
-                  <span>⚡ Priority: <strong style={{ color: c.priority === 'Critical' ? '#f87171' : '#60a5fa' }}>{c.priority}</strong></span>
-                  <span>🎯 Confidence: <strong style={{ color: '#34d399' }}>{c.aiConfidence}%</strong></span>
-                  {c.location?.address && (
-                    <span style={{ color: theme.textMuted }}>📍 <strong>{c.location.address.length > 35 ? `${c.location.address.slice(0, 35)}...` : c.location.address}</strong></span>
+                  {c.mineSite && (
+                    <span>🏭 Mine: <strong style={{ color: '#f59e0b' }}>{c.mineSite}</strong></span>
                   )}
-                  <span style={{ marginLeft: 'auto', color: '#38bdf8', fontWeight: '600', fontSize: '12px' }}>Click to view details & chat ➔</span>
+                  <span>🏷️ Category: <strong style={{ color: '#38bdf8' }}>{c.category}</strong></span>
+                  <span>⚡ Severity: <strong style={{ color: c.priority === 'Critical' ? '#f87171' : c.priority === 'High' ? '#fb923c' : '#60a5fa' }}>{c.priority}</strong></span>
+                  <span>🎯 AI Confidence: <strong style={{ color: '#34d399' }}>{c.aiConfidence}%</strong></span>
+                  {c.assignedTo && (
+                    <span>👷 Lead: <strong style={{ color: theme.textPrimary }}>{c.assignedTo}</strong></span>
+                  )}
+                  {c.location?.address && (
+                    <span style={{ color: theme.textMuted }}>📍 <strong>{c.location.address.length > 30 ? `${c.location.address.slice(0, 30)}...` : c.location.address}</strong></span>
+                  )}
+                  <span style={{ marginLeft: 'auto', color: '#38bdf8', fontWeight: '600', fontSize: '12px' }}>Inspection Details & SOP ➔</span>
                 </div>
                 
                 {c.aiSummary && (

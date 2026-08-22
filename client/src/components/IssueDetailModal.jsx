@@ -123,8 +123,21 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                 color: '#38bdf8',
                 border: '1px solid rgba(14, 165, 233, 0.3)'
               }}>
-                📂 {complaint.category || 'General'}
+                📂 {complaint.category || 'Safety'}
               </span>
+              {complaint.mineSite && (
+                <span style={{
+                  padding: '4px 10px',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  fontWeight: '700',
+                  backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                  color: '#f59e0b',
+                  border: '1px solid rgba(245, 158, 11, 0.3)'
+                }}>
+                  🏭 {complaint.mineSite}
+                </span>
+              )}
               <span style={{
                 padding: '4px 10px',
                 borderRadius: '8px',
@@ -156,7 +169,7 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                   color: '#38bdf8',
                   border: '1px solid rgba(14, 165, 233, 0.3)'
                 }}>
-                  👤 {complaint.assignedTo} ({complaint.assignedLeadRole || 'Lead'})
+                  👤 {complaint.assignedTo} ({complaint.assignedLeadRole || 'Safety Lead'})
                 </span>
               )}
             </div>
