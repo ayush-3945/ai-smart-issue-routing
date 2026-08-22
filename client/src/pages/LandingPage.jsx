@@ -23,7 +23,7 @@ const LandingPage = () => {
             Sign In
           </Link>
           <Link to="/register" className="nav-btn-compact" style={{ background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(14,165,233,0.35)' }}>
-            Get Started ➔
+            Sign Up
           </Link>
         </div>
       </nav>
