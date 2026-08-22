@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../utils/api';
 import { ToastContainer, useToast } from '../components/Toast';
@@ -43,7 +43,11 @@ const Dashboard = () => {
   const [customLocationText, setCustomLocationText] = useState('');
   const [showCustomLocation, setShowCustomLocation] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  // Voice-to-Text Dictation State
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
 
   // Offline-First Sync State
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -259,6 +263,68 @@ const Dashboard = () => {
   const handleClearLocation = () => {
     setLocation(null);
     setCustomLocationText('');
+  };
+
+  // Multilingual Voice-to-Text Dictation (Web Speech API)
+  const handleToggleVoice = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      addToast('Speech Recognition is not supported in this browser. Please use Chrome or Edge.', 'error', 5000);
+      return;
+    }
+
+    if (isListening) {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      setIsListening(false);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognitionRef.current = recognition;
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+
+      recognition.onstart = () => {
+        setIsListening(true);
+        addToast('🎙️ Listening... Speak your hazard report in Hindi or English.', 'info', 3000);
+      };
+
+      recognition.onresult = (event) => {
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript + ' ';
+          }
+        }
+
+        if (finalTranscript) {
+          setDescription((prev) => (prev ? `${prev.trim()} ${finalTranscript.trim()}` : finalTranscript.trim()));
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.warn('Speech recognition error:', event.error);
+        if (event.error !== 'no-speech') {
+          addToast(`Microphone notice: ${event.error}`, 'error', 4000);
+        }
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    } catch (err) {
+      console.error('Speech recognition start failed:', err);
+      setIsListening(false);
+      addToast('Could not start microphone', 'error', 4000);
+    }
   };
 
   const handleCreate = async (e) => {
@@ -677,15 +743,58 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>{t('problemDescriptionLabel')}</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: theme.textSecondary, margin: 0 }}>
+                  {t('problemDescriptionLabel')}
+                </label>
+
+                <button
+                  type="button"
+                  onClick={handleToggleVoice}
+                  title="Speak in Hindi or English using Web Speech API"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '5px 12px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    border: isListening ? '1px solid #ef4444' : '1px solid rgba(245, 158, 11, 0.4)',
+                    background: isListening 
+                      ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(220, 38, 38, 0.25))' 
+                      : 'linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(234, 88, 12, 0.15))',
+                    color: isListening ? '#f87171' : '#fbbf24',
+                    boxShadow: isListening ? '0 0 15px rgba(239, 68, 68, 0.4)' : 'none',
+                    animation: isListening ? 'pulse 1.2s infinite' : 'none'
+                  }}
+                >
+                  <span style={{ fontSize: '14px' }}>{isListening ? '🔴' : '🎤'}</span>
+                  <span>{isListening ? t('listeningState') : t('voiceInputButton')}</span>
+                </button>
+              </div>
+
               <textarea
                 placeholder={t('problemDescriptionPlaceholder')}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 rows={4}
-                style={{ width: '100%', padding: '14px 18px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
+                style={{ width: '100%', padding: '14px 18px', borderRadius: '12px', backgroundColor: theme.inputBg, border: `1px solid ${isListening ? '#f59e0b' : theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', resize: 'vertical', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
               />
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '6px', flexWrap: 'wrap', gap: '6px' }}>
+                <span style={{ fontSize: '11px', color: theme.textMuted }}>
+                  🎙️ {t('voiceHintText')}
+                </span>
+                {description && (
+                  <span style={{ fontSize: '11px', color: theme.textMuted }}>
+                    {description.length} chars
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Multi-File Upload Component */}

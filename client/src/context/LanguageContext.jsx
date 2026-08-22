@@ -95,7 +95,10 @@ export const translations = {
     offlineQueuedBadge: 'Queued for Sync',
     offlineSubmitButton: '💾 Queue Offline Report (Underground Mode) ➔',
     syncNowButton: 'Sync Now ➔',
-    syncingReports: 'Syncing queued reports to DGMS Command...'
+    syncingReports: 'Syncing queued reports to DGMS Command...',
+    voiceInputButton: 'Voice Dictation (बोलकर लिखें)',
+    listeningState: 'Listening... Speak now',
+    voiceHintText: 'Speak in Hindi or English — AI will auto-translate & structure the DGMS hazard report.'
   },
   hi: {
     appTitle: 'कोल-गार्ड (CoalGuard) OS',
@@ -191,7 +194,10 @@ export const translations = {
     offlineQueuedBadge: 'सिंक के लिए कतार में',
     offlineSubmitButton: '💾 ऑफलाइन रिपोर्ट कतार में जोड़ें (भूमिगत मोड) ➔',
     syncNowButton: 'अभी सिंक करें ➔',
-    syncingReports: 'कतारबद्ध रिपोर्ट को डीजीएमएस कमांड में सिंक किया जा रहा है...'
+    syncingReports: 'कतारबद्ध रिपोर्ट को डीजीएमएस कमांड में सिंक किया जा रहा है...',
+    voiceInputButton: 'आवाज से लिखें (Voice Input)',
+    listeningState: 'सुन रहे हैं... बोलिए',
+    voiceHintText: 'हिंदी या अंग्रेजी में बोलें — AI स्वतः अनुवाद एवं डीजीएमएस रिपोर्ट तैयार करेगा।'
   }
 };
 
