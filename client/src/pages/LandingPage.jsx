@@ -55,6 +55,9 @@ const LandingPage = () => {
           <a href="#key-indicators" onClick={(e) => { e.preventDefault(); document.getElementById('key-indicators').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
             Key Indicators <span style={{ fontSize: '10px', color: theme.textMuted }}>▼</span>
           </a>
+          <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            Features <span style={{ fontSize: '10px', color: theme.textMuted }}>▼</span>
+          </a>
           <a href="#map" onClick={(e) => { e.preventDefault(); document.getElementById('map').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
             Geospatial Map <span style={{ fontSize: '10px', color: theme.textMuted }}>▼</span>
           </a>
@@ -436,7 +439,7 @@ const LandingPage = () => {
       </div>
 
       {/* Features Grid */}
-      <section style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="features" style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
           <h2 style={{ fontSize: '36px', fontWeight: '800', margin: '0 0 12px', letterSpacing: '-0.5px', color: theme.textPrimary }}>
             Engineered for <span style={{ color: '#f59e0b' }}>Indian Coal Mining Operations</span>
