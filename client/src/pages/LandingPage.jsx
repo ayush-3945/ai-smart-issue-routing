@@ -41,15 +41,23 @@ const LandingPage = () => {
           <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>CoalGuard OS</span>
         </div>
         
-        {/* Navigation Links */}
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', display: 'none' }} className="desktop-nav-links">
-          {/* We'll use a media query in CSS to hide this on mobile, but for inline styles we'll just show it if there's space. Let's make it visible on all screens for now, or just hide on very small screens. */}
-        </div>
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginLeft: 'auto', marginRight: '20px' }}>
-          <a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>About Us</a>
-          <a href="#gallery" onClick={(e) => { e.preventDefault(); document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Galleries</a>
-          <a href="#key-indicators" onClick={(e) => { e.preventDefault(); document.getElementById('key-indicators').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Key Indicators</a>
-          <a href="#map" onClick={(e) => { e.preventDefault(); document.getElementById('map').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Map</a>
+        {/* Navigation Links - Centered like Government Portal */}
+        <div style={{ display: 'flex', gap: '28px', alignItems: 'center', margin: '0 auto' }}>
+          <a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#2563eb' }}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </a>
+          <a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            About Us <span style={{ fontSize: '10px', color: theme.textMuted }}>▼</span>
+          </a>
+          <a href="#gallery" onClick={(e) => { e.preventDefault(); document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            Surveillance <span style={{ fontSize: '10px', color: theme.textMuted }}>▼</span>
+          </a>
+          <a href="#key-indicators" onClick={(e) => { e.preventDefault(); document.getElementById('key-indicators').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            Key Indicators <span style={{ fontSize: '10px', color: theme.textMuted }}>▼</span>
+          </a>
+          <a href="#map" onClick={(e) => { e.preventDefault(); document.getElementById('map').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            Geospatial Map <span style={{ fontSize: '10px', color: theme.textMuted }}>▼</span>
+          </a>
         </div>
 
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
