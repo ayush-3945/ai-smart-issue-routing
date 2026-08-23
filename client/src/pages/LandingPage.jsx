@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import ThemeToggle from '../components/ThemeToggle';
 import InstallPwaButton from '../components/InstallPwaButton';
+import IndiaMapDashboard from '../components/IndiaMapDashboard';
 import { useTheme } from '../context/ThemeContext';
 
 const LandingPage = () => {
@@ -343,6 +344,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Interactive India Map Dashboard */}
+      <IndiaMapDashboard />
 
       {/* Features Grid */}
       <section style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto' }}>
