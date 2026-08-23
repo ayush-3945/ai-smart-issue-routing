@@ -36,13 +36,15 @@ const LandingPage = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('/mines/hero_bg.jpg')`,
+        backgroundColor: '#0f172a',
+        backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/mines/hero_bg.jpg')`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
+        backgroundBlendMode: 'overlay'
       }}>
         <section style={{ position: 'relative', padding: '120px 48px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
           
-          <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 24px', color: '#ffffff', textShadow: '0 4px 15px rgba(0,0,0,0.6)' }}>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 24px', color: '#ffffff', textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}>
             AI-Powered Smart Governance <br />
             <span style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 35px rgba(245, 158, 11, 0.35))' }}>
               & Compliance for Coal Mines
