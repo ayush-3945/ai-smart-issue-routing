@@ -34,10 +34,10 @@ const RegulatoryDashboard = () => {
       setComplaints(data);
 
       setAnalytics({
-        total: data.length,
-        resolved: data.filter(c => c.status === 'Resolved' || c.status === 'Closed').length,
-        open: data.filter(c => c.status === 'Pending' || c.status === 'In Progress').length,
-        critical: data.filter(c => c.priority === 'Critical').length
+        total: data.length || 0,
+        resolved: data.filter(c => c.status === 'Resolved' || c.status === 'Closed').length || 0,
+        open: data.filter(c => c.status === 'Pending' || c.status === 'In Progress').length || 0,
+        critical: data.filter(c => c.priority === 'Critical').length || 0
       });
     } catch (err) {
       console.error(err);
@@ -84,7 +84,7 @@ const RegulatoryDashboard = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: theme.background, color: theme.textPrimary, fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: theme.background === '#0f172a' ? 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)' : theme.background, color: theme.textPrimary, fontFamily: "'Inter', sans-serif" }}>
       <ToastContainer toasts={toasts} />
       
       {/* Navbar */}
@@ -115,28 +115,28 @@ const RegulatoryDashboard = () => {
       <div style={{ padding: '32px 24px', maxWidth: '1400px', margin: '0 auto' }}>
         {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
-          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}` }}>
+          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}`, boxShadow: '0 10px 30px rgba(0,0,0,0.2)', backdropFilter: 'blur(10px)' }}>
             <h3 style={{ margin: '0 0 8px', color: theme.textSecondary, fontSize: '14px', fontWeight: '600' }}>Total Violations</h3>
             <div style={{ fontSize: '32px', fontWeight: '800' }}>
-              {loading ? '-' : <AnimatedCounter value={analytics?.total} />}
+              {loading ? '-' : <AnimatedCounter value={analytics?.total || 0} />}
             </div>
           </div>
-          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}` }}>
+          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}`, boxShadow: '0 10px 30px rgba(0,0,0,0.2)', backdropFilter: 'blur(10px)' }}>
             <h3 style={{ margin: '0 0 8px', color: theme.textSecondary, fontSize: '14px', fontWeight: '600' }}>Open & Unresolved</h3>
             <div style={{ fontSize: '32px', fontWeight: '800', color: '#f59e0b' }}>
-              {loading ? '-' : <AnimatedCounter value={analytics?.open} />}
+              {loading ? '-' : <AnimatedCounter value={analytics?.open || 0} />}
             </div>
           </div>
-          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}` }}>
+          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}`, boxShadow: '0 10px 30px rgba(0,0,0,0.2)', backdropFilter: 'blur(10px)' }}>
             <h3 style={{ margin: '0 0 8px', color: theme.textSecondary, fontSize: '14px', fontWeight: '600' }}>Resolved Compliances</h3>
             <div style={{ fontSize: '32px', fontWeight: '800', color: '#10b981' }}>
-              {loading ? '-' : <AnimatedCounter value={analytics?.resolved} />}
+              {loading ? '-' : <AnimatedCounter value={analytics?.resolved || 0} />}
             </div>
           </div>
-          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}` }}>
+          <div style={{ backgroundColor: theme.cardBg, padding: '24px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}`, boxShadow: '0 10px 30px rgba(0,0,0,0.2)', backdropFilter: 'blur(10px)' }}>
             <h3 style={{ margin: '0 0 8px', color: theme.textSecondary, fontSize: '14px', fontWeight: '600' }}>Critical Alerts</h3>
             <div style={{ fontSize: '32px', fontWeight: '800', color: '#ef4444' }}>
-              {loading ? '-' : <AnimatedCounter value={analytics?.critical} />}
+              {loading ? '-' : <AnimatedCounter value={analytics?.critical || 0} />}
             </div>
           </div>
         </div>
