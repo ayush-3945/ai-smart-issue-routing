@@ -195,7 +195,7 @@ const LandingPage = () => {
                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
                  style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
             >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Coal_train_in_the_Powder_River_Basin.jpg" alt="Coal Transport" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+              <img src="/images/coal-transport.jpg" alt="Coal Transport" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
                 <span style={{ fontSize: '11px', fontWeight: '800', color: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.2)', padding: '4px 10px', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
                   📍 TRANSPORT
@@ -210,7 +210,7 @@ const LandingPage = () => {
                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
                  style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
             >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Neyveli_Lignite_Corporation_Mine_II.jpg" alt="Heavy Excavation" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+              <img src="/images/heavy-excavation.jpg" alt="Heavy Excavation" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
                 <span style={{ fontSize: '11px', fontWeight: '800', color: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.2)', padding: '4px 10px', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
                   📍 EXCAVATION
