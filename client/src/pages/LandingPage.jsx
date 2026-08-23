@@ -189,6 +189,36 @@ const LandingPage = () => {
               </div>
             </div>
 
+            {/* Image Card 5 */}
+            <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.2)'; }}
+                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Coal_train_in_the_Powder_River_Basin.jpg/800px-Coal_train_in_the_Powder_River_Basin.jpg" alt="Coal Transport" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.2)', padding: '4px 10px', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
+                  📍 TRANSPORT
+                </span>
+                <h3 style={{ margin: '8px 0 0', color: '#fff', fontSize: '16px', fontWeight: '700' }}>Talcher Coalfields</h3>
+              </div>
+            </div>
+
+            {/* Image Card 6 */}
+            <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(239, 68, 68, 0.2)'; }}
+                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Neyveli_Lignite_Corporation_Mine_II.jpg/800px-Neyveli_Lignite_Corporation_Mine_II.jpg" alt="Heavy Excavation" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.2)', padding: '4px 10px', borderRadius: '12px', backdropFilter: 'blur(4px)' }}>
+                  📍 EXCAVATION
+                </span>
+                <h3 style={{ margin: '8px 0 0', color: '#fff', fontSize: '16px', fontWeight: '700' }}>Singrauli Northern</h3>
+              </div>
+            </div>
+
           </div>
         </div>
 
