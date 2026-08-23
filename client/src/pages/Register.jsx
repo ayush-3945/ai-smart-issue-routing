@@ -268,6 +268,8 @@ const Register = () => {
                 <option value="DGMS">DGMS Inspector (Safety)</option>
                 <option value="MoEFCC">MoEFCC Officer (Environment)</option>
                 <option value="State Pollution Control Board">State Pollution Control Board</option>
+                <option value="Ministry of Coal">Ministry of Coal (Production)</option>
+                <option value="Labour Department">Labour Department (Worker Affairs)</option>
               </select>
             </div>
           )}

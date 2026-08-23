@@ -202,13 +202,17 @@ const getAllComplaints = async (req, res) => {
     let filter = {};
 
     if (req.user && req.user.role === 'regulatoryAuthority') {
-      // Exclude Labour/HR strictly
-      filter.category = { $nin: ['Labour', 'HR'] };
-
       if (req.user.authorityType === 'DGMS') {
         filter.category = 'Safety';
       } else if (req.user.authorityType === 'MoEFCC' || req.user.authorityType === 'State Pollution Control Board') {
         filter.category = 'Environment';
+      } else if (req.user.authorityType === 'Ministry of Coal') {
+        filter.category = 'Production';
+      } else if (req.user.authorityType === 'Labour Department') {
+        filter.category = 'Labour';
+      } else {
+        // Fallback for unknown regulatory authorities - give them nothing
+        filter.category = 'None';
       }
     }
 

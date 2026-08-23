@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true, minlength: 6 },
   role: { type: String, enum: ['user', 'admin', 'regulatoryAuthority'], default: 'user' },
-  authorityType: { type: String, enum: ['DGMS', 'MoEFCC', 'State Pollution Control Board', null], default: null },
+  authorityType: { type: String, enum: ['DGMS', 'MoEFCC', 'State Pollution Control Board', 'Ministry of Coal', 'Labour Department', null], default: null },
   department: { type: String, default: null }
 }, { timestamps: true });
 
