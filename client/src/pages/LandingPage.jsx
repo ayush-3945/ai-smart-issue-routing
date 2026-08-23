@@ -80,7 +80,7 @@ const LandingPage = () => {
         position: 'relative', 
         padding: '120px 20px 80px', 
         width: '100%',
-        backgroundImage: `linear-gradient(to bottom, ${theme.isDark ? 'rgba(11, 14, 22, 0.75)' : 'rgba(255, 255, 255, 0.85)'}, ${theme.isDark ? 'rgba(11, 14, 22, 0.98)' : 'rgba(255, 255, 255, 0.98)'}), url('https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg')`,
+        backgroundImage: `linear-gradient(to bottom, ${theme.isDark ? 'rgba(11, 14, 22, 0.4)' : 'rgba(255, 255, 255, 0.5)'}, ${theme.isDark ? 'rgba(11, 14, 22, 0.85)' : 'rgba(255, 255, 255, 0.9)'}), url('https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
