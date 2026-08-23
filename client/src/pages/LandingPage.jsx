@@ -265,82 +265,147 @@ const LandingPage = () => {
       </section>
 
       {/* Key Indicators Interactive Dashboard */}
-      <section style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
-            Key Performance Indicators
+      <section style={{ padding: '80px 48px', maxWidth: '1200px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
+        <div style={{ marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: '500', margin: '0 0 12px', color: theme.textPrimary, borderBottom: '2px solid #8b4513', display: 'inline-block', paddingBottom: '4px' }}>
+            Key Indicators
           </h2>
-          <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Live metrics and statutory targets across all managed coalfields.</p>
         </div>
 
-        <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap', backgroundColor: theme.cardBg, borderRadius: '24px', padding: '30px', border: `1px solid ${theme.cardBorder}`, boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)' }}>
+        <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
           {/* Sidebar Tabs */}
-          <div style={{ flex: '1', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div style={{ flex: '1', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '0' }}>
             {[
-              { id: 'dmf', label: 'DMF Fund Status', icon: '💰' },
-              { id: 'production', label: 'Mineral Production', icon: '⛏️' },
-              { id: 'auction', label: 'Auction & Blocks', icon: '📜' },
-            ].map(tab => (
-              <div 
-                key={tab.id}
-                onClick={() => setActiveIndicator(tab.id)}
-                style={{ 
-                  padding: '16px 20px', 
-                  borderRadius: '12px', 
-                  cursor: 'pointer', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '12px',
-                  backgroundColor: activeIndicator === tab.id ? 'rgba(245, 158, 11, 0.15)' : 'transparent',
-                  borderLeft: activeIndicator === tab.id ? '4px solid #f59e0b' : '4px solid transparent',
-                  color: activeIndicator === tab.id ? '#f59e0b' : theme.textPrimary,
-                  fontWeight: activeIndicator === tab.id ? '700' : '500',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <span style={{ fontSize: '18px' }}>{tab.icon}</span>
-                {tab.label}
-              </div>
-            ))}
+              { id: 'dmf', label: 'DMF Fund Status' },
+              { id: 'production', label: 'Mineral Production' },
+              { id: 'auction', label: 'Auction' },
+              { id: 'exploration', label: 'Exploration' },
+              { id: 'nmedt', label: 'NMEDT' },
+            ].map((tab, idx) => {
+              const isActive = activeIndicator === tab.id;
+              return (
+                <div 
+                  key={tab.id}
+                  onClick={() => setActiveIndicator(tab.id)}
+                  style={{ 
+                    padding: '16px 8px', 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between',
+                    borderBottom: '1px solid #f1f5f9',
+                    color: isActive ? '#1e293b' : '#64748b',
+                    fontWeight: '500',
+                    transition: 'all 0.2s ease',
+                    backgroundColor: 'transparent'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div style={{ 
+                      width: '40px', height: '40px', borderRadius: '50%', 
+                      backgroundColor: isActive ? '#1e3a8a' : '#f1f5f9',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: isActive ? '#fff' : '#64748b',
+                      fontSize: '18px'
+                    }}>
+                      {/* Document Icon Placeholder */}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+                    <span>{tab.label}</span>
+                  </div>
+                  {isActive && <span style={{ color: '#1e293b' }}>›</span>}
+                </div>
+              );
+            })}
           </div>
 
           {/* Chart Container */}
-          <div style={{ flex: '3', minWidth: '300px', height: '360px', backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: '16px', padding: '24px' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: '16px', color: theme.textSecondary, textAlign: 'center' }}>
-              {activeIndicator === 'dmf' ? 'DMF Collection & Allocation (in Cr.)' : activeIndicator === 'production' ? 'Coal Production Targets (in MT)' : 'Auctioned Blocks & Value (in Cr.)'}
-            </h3>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={indicatorData[activeIndicator]} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
-                <XAxis dataKey="name" stroke={theme.textMuted} fontSize={12} tickMargin={10} axisLine={false} tickLine={false} />
-                <YAxis stroke={theme.textMuted} fontSize={12} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} axisLine={false} tickLine={false} />
-                <Tooltip 
-                  cursor={{fill: 'rgba(255,255,255,0.05)'}}
-                  contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.95)', border: `1px solid ${theme.cardBorder}`, borderRadius: '12px', color: '#fff', padding: '12px 16px' }} 
-                  itemStyle={{ fontSize: '13px', fontWeight: '600' }}
-                />
-                <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '13px' }} />
-                {activeIndicator === 'dmf' && (
-                  <>
-                    <Bar dataKey="collection" name="Collection (Cr.)" fill="#d97706" radius={[4, 4, 0, 0]} barSize={24} />
-                    <Bar dataKey="allocated" name="Allocated (Cr.)" fill="#10b981" radius={[4, 4, 0, 0]} barSize={24} />
-                    <Bar dataKey="spent" name="Spent (Cr.)" fill="#0284c7" radius={[4, 4, 0, 0]} barSize={24} />
-                  </>
-                )}
-                {activeIndicator === 'production' && (
-                  <>
-                    <Bar dataKey="target" name="Target (MT)" fill="#64748b" radius={[4, 4, 0, 0]} barSize={32} />
-                    <Bar dataKey="achieved" name="Achieved (MT)" fill="#10b981" radius={[4, 4, 0, 0]} barSize={32} />
-                  </>
-                )}
-                {activeIndicator === 'auction' && (
-                  <>
-                    <Bar dataKey="blocks" name="Blocks Auctioned" fill="#8b5cf6" radius={[4, 4, 0, 0]} barSize={32} />
-                    <Bar dataKey="value" name="Value (Cr.)" fill="#f59e0b" radius={[4, 4, 0, 0]} barSize={32} />
-                  </>
-                )}
-              </BarChart>
-            </ResponsiveContainer>
+          <div style={{ 
+            flex: '3', minWidth: '300px', height: '420px', 
+            backgroundColor: '#ffffff', 
+            borderRadius: '8px', 
+            padding: '24px',
+            position: 'relative',
+            boxShadow: '0 10px 40px -10px rgba(0,0,0,0.08)',
+            border: '1px solid #e2e8f0',
+            backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 0)',
+            backgroundSize: '16px 16px',
+            backgroundPosition: 'calc(100% + 8px) -8px, -8px calc(100% + 8px)',
+            backgroundRepeat: 'no-repeat',
+          }}>
+            {/* White overlay to cover dots except in corners */}
+            <div style={{ position: 'absolute', top: '16px', left: '16px', right: '16px', bottom: '16px', backgroundColor: '#fff', borderRadius: '4px', zIndex: 0 }}></div>
+            
+            <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '12px', marginBottom: '16px' }}>
+                <span style={{ fontSize: '18px', color: '#475569', fontWeight: '400' }}>
+                  {activeIndicator === 'dmf' ? 'DMF Fund Status - Till Jun 2026' : activeIndicator === 'production' ? 'Mineral Production - 2026' : 'Auction & Blocks'}
+                </span>
+              </div>
+              <h3 style={{ margin: '0 0 24px', fontSize: '18px', color: '#1e293b', textAlign: 'center', fontWeight: '400' }}>
+                {activeIndicator === 'dmf' ? 'DMF Fund Status' : activeIndicator === 'production' ? 'Mineral Production' : 'Auction'}
+              </h3>
+              
+              <div style={{ flex: 1, position: 'relative' }}>
+                <div style={{ position: 'absolute', left: '-30px', top: '50%', transform: 'translateY(-50%) rotate(-90deg)', fontSize: '12px', fontWeight: '600', color: '#1e293b', whiteSpace: 'nowrap' }}>
+                  Amount (in Cr.)
+                </div>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={
+                    activeIndicator === 'dmf' ? [
+                      { name: 'Till May\n2018', collection: 18000, allocated: 12000, spent: 5000 },
+                      { name: 'Till march\n2019', collection: 25000, allocated: 22000, spent: 8000 },
+                      { name: 'Till march\n2020', collection: 35000, allocated: 30000, spent: 12000 },
+                      { name: 'Till march\n2021', collection: 48000, allocated: 45000, spent: 22000 },
+                      { name: 'Till march\n2022', collection: 62000, allocated: 55000, spent: 30000 },
+                      { name: 'Till Jun\n2023', collection: 80000, allocated: 72000, spent: 42000 },
+                      { name: 'Till Aug\n2024', collection: 85000, allocated: 78000, spent: 45000 },
+                      { name: 'Till Nov\n2025', collection: 125000, allocated: 105000, spent: 65000 },
+                      { name: 'Till Jun\n2026', collection: 135000, allocated: 110000, spent: 70000 },
+                    ] : activeIndicator === 'production' ? [
+                      { name: '2023', target: 700, achieved: 690 },
+                      { name: '2024', target: 750, achieved: 780 },
+                      { name: '2025', target: 800, achieved: 830 },
+                      { name: '2026', target: 900, achieved: 880 },
+                    ] : [
+                      { name: '2023', blocks: 15, value: 5000 },
+                      { name: '2024', blocks: 25, value: 8500 },
+                      { name: '2025', blocks: 42, value: 14000 },
+                      { name: '2026', blocks: 68, value: 22000 },
+                    ]
+                  } margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                    <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickMargin={10} axisLine={false} tickLine={false} fontWeight="600" />
+                    <YAxis stroke="#64748b" fontSize={12} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} axisLine={false} tickLine={false} fontWeight="600" />
+                    <Tooltip 
+                      cursor={{fill: '#f8fafc'}}
+                      contentStyle={{ backgroundColor: '#fff', border: `1px solid #e2e8f0`, borderRadius: '4px', color: '#1e293b', padding: '12px 16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }} 
+                      itemStyle={{ fontSize: '13px', fontWeight: '600' }}
+                    />
+                    <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '12px', color: '#475569', fontWeight: '500' }} iconType="circle" iconSize={10} />
+                    {activeIndicator === 'dmf' && (
+                      <>
+                        <Bar dataKey="collection" name="DMF Collection in Cr." fill="#8b4513" barSize={16} />
+                        <Bar dataKey="allocated" name="Amount Allocated in Cr." fill="#0f5132" barSize={16} />
+                        <Bar dataKey="spent" name="Amount Spent in Cr." fill="#084298" barSize={16} />
+                      </>
+                    )}
+                    {activeIndicator === 'production' && (
+                      <>
+                        <Bar dataKey="target" name="Target (MT)" fill="#8b4513" barSize={24} />
+                        <Bar dataKey="achieved" name="Achieved (MT)" fill="#0f5132" barSize={24} />
+                      </>
+                    )}
+                    {activeIndicator === 'auction' && (
+                      <>
+                        <Bar dataKey="blocks" name="Blocks Auctioned" fill="#8b4513" barSize={24} />
+                        <Bar dataKey="value" name="Value (Cr.)" fill="#0f5132" barSize={24} />
+                      </>
+                    )}
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
           </div>
         </div>
       </section>
