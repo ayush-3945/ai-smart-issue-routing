@@ -5,17 +5,7 @@ import InstallPwaButton from '../components/InstallPwaButton';
 import { useTheme } from '../context/ThemeContext';
 
 const LandingPage = () => {
-  // Override theme to force "Official Coal India" Premium Green & Gold look globally on landing page
-  const theme = {
-    bg: '#022c22', // Emerald 950
-    navBg: 'rgba(2, 44, 34, 0.85)',
-    cardBg: '#064e3b', // Emerald 900
-    cardBorder: 'rgba(52, 211, 153, 0.15)', // Emerald 400
-    textPrimary: '#f8fafc',
-    textSecondary: '#cbd5e1',
-    textMuted: '#94a3b8',
-    isDark: true
-  };
+  const { theme } = useTheme();
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", overflow: 'hidden', transition: 'all 0.3s ease' }}>
@@ -39,49 +29,38 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <div style={{ 
-        position: 'relative', 
-        width: '100%', 
-        minHeight: '80vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#0f172a',
-        backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), url('/mines/hero_bg.jpg')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundBlendMode: 'overlay'
-      }}>
-        <section style={{ position: 'relative', padding: '120px 48px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
-          
-          <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 24px', color: '#ffffff', textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}>
-            AI-Powered Smart Governance <br />
-            <span style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 35px rgba(245, 158, 11, 0.35))' }}>
-              & Compliance for Coal Mines
-            </span>
-          </h1>
+      <section style={{ position: 'relative', padding: '100px 48px 80px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
+        {/* Ambient Glow */}
+        <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
-          <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.8)', lineHeight: 1.7, maxWidth: '720px', margin: '0 auto 44px', fontWeight: '400', letterSpacing: '-0.01em' }}>
-            Centralized AI-enabled operations hub digitizing statutory compliance, real-time pit inspection tracking, geo-tagged hazard reporting, and predictive surge forecasting across Indian coalfields.
-          </p>
+        <h1 style={{ fontSize: 'clamp(28px, 4.2vw, 50px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 20px', color: theme.textPrimary }}>
+          AI-Powered Smart Governance <br />
+          <span style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: theme.isDark ? 'drop-shadow(0 0 35px rgba(245, 158, 11, 0.35))' : 'none' }}>
+            & Compliance for Coal Mines
+          </span>
+        </h1>
 
-          <div style={{ display: 'flex', gap: '18px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/dashboard" style={{ padding: '16px 38px', borderRadius: '16px', background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#fff', textDecoration: 'none', fontSize: '16px', fontWeight: '800', letterSpacing: '-0.02em', boxShadow: '0 15px 35px -5px rgba(245, 158, 11, 0.4), 0 0 20px rgba(217, 119, 6, 0.2)', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)' }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              Report Pit Hazard ➔
-            </Link>
-            <Link to="/admin" style={{ padding: '16px 38px', borderRadius: '16px', border: `1px solid rgba(255,255,255,0.1)`, color: '#ffffff', textDecoration: 'none', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.02em', backgroundColor: 'rgba(15, 17, 26, 0.8)', backdropFilter: 'blur(12px)', transition: 'all 0.2s ease', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(25, 29, 45, 0.9)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(15, 17, 26, 0.8)'}
-            >
-              Command Center 👑
-            </Link>
-          </div>
+        <p style={{ fontSize: '18px', color: theme.textSecondary, lineHeight: 1.7, maxWidth: '720px', margin: '0 auto 44px', fontWeight: '400', letterSpacing: '-0.01em' }}>
+          Centralized AI-enabled operations hub digitizing statutory compliance, real-time pit inspection tracking, geo-tagged hazard reporting, and predictive surge forecasting across Indian coalfields.
+        </p>
 
-          {/* Trust badges */}
-          <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
+        <div style={{ display: 'flex', gap: '18px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link to="/dashboard" style={{ padding: '16px 38px', borderRadius: '16px', background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#fff', textDecoration: 'none', fontSize: '16px', fontWeight: '800', letterSpacing: '-0.02em', boxShadow: '0 15px 35px -5px rgba(245, 158, 11, 0.4), 0 0 20px rgba(217, 119, 6, 0.2)', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)' }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            Report Pit Hazard ➔
+          </Link>
+          <Link to="/admin" style={{ padding: '16px 38px', borderRadius: '16px', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, textDecoration: 'none', fontSize: '16px', fontWeight: '700', letterSpacing: '-0.02em', backgroundColor: theme.isDark ? 'rgba(15, 17, 26, 0.8)' : '#ffffff', backdropFilter: 'blur(12px)', transition: 'all 0.2s ease', boxShadow: theme.isDark ? 'none' : '0 4px 12px rgba(0,0,0,0.06)' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(25, 29, 45, 0.9)' : '#f8fafc'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(15, 17, 26, 0.8)' : '#ffffff'}
+          >
+            Command Center 👑
+          </Link>
+        </div>
+
+        {/* Trust badges */}
+        <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
           <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>🔒 DGMS & MoEFCC Compliant</span>
           <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>📍 Satellite GPS Pit Pinning</span>
           <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>⚡ Real-Time Socket.io Radar</span>
@@ -98,6 +77,7 @@ const LandingPage = () => {
             <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.2)'; }}
                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
             >
               <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg" alt="Jharia Open-Cast Mine" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
@@ -112,6 +92,7 @@ const LandingPage = () => {
             <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(16, 185, 129, 0.2)'; }}
                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
             >
               <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Coal_mines_in_singrauli.jpg" alt="Underground Coal Seam" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
@@ -126,6 +107,7 @@ const LandingPage = () => {
             <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(56, 189, 248, 0.2)'; }}
                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
             >
               <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/GEVRA_DUMPERS.jpg" alt="Coal Processing Plant" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
@@ -140,6 +122,7 @@ const LandingPage = () => {
             <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(168, 85, 247, 0.2)'; }}
                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)'; }}
+                 style={{ transition: 'all 0.3s ease', position: 'relative', borderRadius: '20px', overflow: 'hidden', height: '220px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', border: `1px solid ${theme.cardBorder}` }}
             >
               <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Open_%28visible%29_Coal_Mines.jpg" alt="Night Shift Mine Operations" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 20px 16px', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', textAlign: 'left', pointerEvents: 'none' }}>
@@ -241,7 +224,6 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-    </div>
 
       {/* Stats Bar */}
       <section style={{ display: 'flex', justifyContent: 'center', gap: '48px', padding: '40px 48px', borderTop: `1px solid ${theme.cardBorder}`, borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', backgroundColor: theme.cardBg }}>
