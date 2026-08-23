@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "axios": "^1.18.1",
+    "prop-types": "^15.8.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1",
+    "react-simple-maps": "^3.0.0",
     "recharts": "^3.10.1",
     "socket.io-client": "^4.8.3"
   },
