@@ -30,10 +30,10 @@ const IndiaMapDashboard = () => {
   return (
     <section style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
+        <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: '#1e293b', letterSpacing: '-0.5px' }}>
           State-wise Mining Summary
         </h2>
-        <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
+        <p style={{ color: '#64748b', fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
       </div>
 
       <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '40px 0' }}>
@@ -107,10 +107,10 @@ const IndiaMapDashboard = () => {
         {/* Right Side: Data Panel */}
         <div style={{ flex: '1', minWidth: '300px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <h3 style={{ fontSize: '24px', fontWeight: '800', color: theme.textPrimary, margin: '0 0 4px', borderBottom: `2px solid #f59e0b`, display: 'inline-block', paddingBottom: '4px' }}>
+            <h3 style={{ fontSize: '24px', fontWeight: '800', color: '#1e293b', margin: '0 0 4px', borderBottom: `2px solid #f59e0b`, display: 'inline-block', paddingBottom: '4px' }}>
               {selectedState || "India"}
             </h3>
-            <p style={{ color: theme.textSecondary, fontSize: '13px', margin: '4px 0 0' }}>Live District Mineral Foundation (DMF) Data</p>
+            <p style={{ color: '#64748b', fontSize: '13px', margin: '4px 0 0' }}>Live District Mineral Foundation (DMF) Data</p>
           </div>
 
           <div style={{ backgroundColor: '#78350f', borderRadius: '12px', padding: '24px', color: '#fff', boxShadow: '0 10px 25px -5px rgba(120, 53, 15, 0.4)' }}>
