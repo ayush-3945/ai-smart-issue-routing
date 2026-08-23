@@ -30,10 +30,10 @@ const IndiaMapDashboard = () => {
   return (
     <section style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: '#1e293b', letterSpacing: '-0.5px' }}>
+        <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
           State-wise Mining Summary
         </h2>
-        <p style={{ color: '#64748b', fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
+        <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
       </div>
 
       <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '40px 0' }}>
