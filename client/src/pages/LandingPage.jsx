@@ -76,9 +76,18 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="about" style={{ position: 'relative', padding: '100px 48px 80px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
-        {/* Ambient Glow */}
-        <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+      <section id="about" style={{ 
+        position: 'relative', 
+        padding: '120px 20px 80px', 
+        width: '100%',
+        backgroundImage: `linear-gradient(to bottom, ${theme.isDark ? 'rgba(11, 14, 22, 0.85)' : 'rgba(255, 255, 255, 0.92)'}, ${theme.isDark ? 'rgba(11, 14, 22, 1)' : 'rgba(255, 255, 255, 1)'}), url('https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          {/* Ambient Glow */}
+          <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
         <h1 style={{ fontSize: 'clamp(28px, 4.2vw, 50px)', fontWeight: '900', lineHeight: 1.2, letterSpacing: '-0.03em', margin: '0 0 20px', color: theme.textPrimary }}>
           AI-Powered Smart Governance <br />
@@ -268,6 +277,7 @@ const LandingPage = () => {
                 </span>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </section>
