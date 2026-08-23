@@ -2,8 +2,23 @@ const Complaint = require('../models/Complaint');
 const User = require('../models/User'); // Import User model for emails
 const cloudinary = require('../config/cloudinary');
 const streamifier = require('streamifier');
-const { analyzeComplaint } = require('../services/aiService');
+const { analyzeComplaint, extractTextFromImage } = require('../services/aiService');
 const { sendComplaintCreatedEmail, sendStatusUpdatedEmail, sendWebhookAlert } = require('../services/emailService'); // Day 23 Email & Webhook Service
+
+// New endpoint for OCR extraction
+const extractOcrData = async (req, res) => {
+  try {
+    const { imageBase64 } = req.body;
+    if (!imageBase64) {
+      return res.status(400).json({ error: 'No image provided for OCR' });
+    }
+    const extractedData = await extractTextFromImage(imageBase64);
+    res.json(extractedData);
+  } catch (error) {
+    console.error('OCR Error:', error);
+    res.status(500).json({ error: 'Failed to extract text from document.' });
+  }
+};
 
 // Helper to upload buffer to Cloudinary
 const uploadToCloudinary = (buffer, resourceType = 'auto') => {
@@ -438,5 +453,6 @@ module.exports = {
   updateComplaintCategory,
   updateComplaintAssignee,
   addCommentToComplaint,
-  checkDuplicateComplaint
+  checkDuplicateComplaint,
+  extractOcrData
 };

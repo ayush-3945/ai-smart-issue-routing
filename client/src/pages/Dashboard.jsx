@@ -52,6 +52,10 @@ const Dashboard = () => {
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef(null);
 
+  // OCR Scan State
+  const [isExtractingOcr, setIsExtractingOcr] = useState(false);
+  const ocrInputRef = useRef(null);
+
   // Offline-First Sync State
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [offlineQueue, setOfflineQueue] = useState(() => {
@@ -197,6 +201,31 @@ const Dashboard = () => {
   const handleFileChange = (e) => {
     if (e.target.files) {
       setSelectedFiles(Array.from(e.target.files));
+    }
+  };
+
+  const handleOcrUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setIsExtractingOcr(true);
+    addToast('Scanning document using AI...', 'info');
+
+    try {
+      const base64Data = await fileToBase64(file);
+      const res = await api.post('/complaints/ocr', { imageBase64: base64Data.data });
+      
+      if (res.data) {
+        if (res.data.title) setTitle(res.data.title);
+        if (res.data.description) setDescription(res.data.description);
+        addToast('Document scanned and fields auto-filled successfully!', 'success', 5000);
+      }
+    } catch (err) {
+      console.error('OCR failed:', err);
+      addToast('Failed to scan document. Please try again or enter details manually.', 'error');
+    } finally {
+      setIsExtractingOcr(false);
+      if (ocrInputRef.current) ocrInputRef.current.value = '';
     }
   };
 
@@ -789,7 +818,40 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>{t('issueTitleLabel')}</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: theme.textSecondary }}>{t('issueTitleLabel')}</label>
+                
+                <button
+                  type="button"
+                  onClick={() => ocrInputRef.current?.click()}
+                  disabled={isExtractingOcr}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '6px 12px',
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(59, 130, 246, 0.15)',
+                    border: '1px solid rgba(59, 130, 246, 0.4)',
+                    color: '#3b82f6',
+                    fontSize: '11px',
+                    fontWeight: '700',
+                    cursor: isExtractingOcr ? 'wait' : 'pointer',
+                    transition: 'all 0.2s ease',
+                    opacity: isExtractingOcr ? 0.7 : 1
+                  }}
+                >
+                  {isExtractingOcr ? '⏳ Scanning...' : '📷 Scan Logbook (AI OCR)'}
+                </button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  ref={ocrInputRef}
+                  style={{ display: 'none' }}
+                  onChange={handleOcrUpload}
+                />
+              </div>
               <input
                 type="text"
                 placeholder={t('issueTitlePlaceholder')}

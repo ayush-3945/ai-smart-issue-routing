@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 // Helper to call Gemini models with fallback
-async function callGeminiApi(prompt) {
-  const models = ['gemini-3.6-flash', 'gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-flash-latest'];
+async function callGeminiApi(prompt, base64Image = null) {
+  const models = ['gemini-3.6-flash', 'gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-flash-latest', 'gemini-1.5-flash'];
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -11,13 +11,27 @@ async function callGeminiApi(prompt) {
 
   for (const model of models) {
     try {
+      const parts = [{ text: prompt }];
+      if (base64Image) {
+        // Strip the data URL prefix if present (e.g., "data:image/jpeg;base64,")
+        const base64Data = base64Image.includes(',') ? base64Image.split(',')[1] : base64Image;
+        const mimeType = base64Image.includes('data:') ? base64Image.split(';')[0].split(':')[1] : 'image/jpeg';
+        
+        parts.push({
+          inlineData: {
+            mimeType: mimeType,
+            data: base64Data
+          }
+        });
+      }
+
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
+            contents: [{ parts: parts }],
             generationConfig: {
               temperature: 0.2,
               responseMimeType: 'application/json'
@@ -205,4 +219,26 @@ Return ONLY a valid JSON response with this exact structure:
   }
 };
 
-module.exports = { analyzeComplaint, predictWorkloadSurge };
+const extractTextFromImage = async (base64Image) => {
+  const prompt = `You are CoalGuard AI, an expert mining safety compliance OCR engine.
+Read the attached image (which could be a handwritten logbook, safety challan, violation slip, or incident photo).
+Extract the core issue and return a JSON object with 'title' (a short, clear summary) and 'description' (the full extracted details or context).
+
+Return ONLY a valid JSON object with these exact fields:
+{
+  "title": "Short 3-6 word title summarizing the issue",
+  "description": "Full extracted text or a detailed summary of the handwritten note/document"
+}`;
+
+  try {
+    return await callGeminiApi(prompt, base64Image);
+  } catch (error) {
+    console.error('OCR fallback triggered:', error.message);
+    return {
+      title: "Extracted: Safety Violation",
+      description: "Fallback: Unable to parse document via AI. Please enter details manually."
+    };
+  }
+};
+
+module.exports = { analyzeComplaint, predictWorkloadSurge, extractTextFromImage };
