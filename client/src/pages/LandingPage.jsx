@@ -36,7 +36,7 @@ const LandingPage = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('https://upload.wikimedia.org/wikipedia/commons/8/89/Coal_mine_in_West_bengal.jpg')`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('/mines/hero_bg.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
