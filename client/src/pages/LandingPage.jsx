@@ -5,7 +5,17 @@ import InstallPwaButton from '../components/InstallPwaButton';
 import { useTheme } from '../context/ThemeContext';
 
 const LandingPage = () => {
-  const { theme } = useTheme();
+  // Override theme to force "Official Coal India" Premium Green & Gold look globally on landing page
+  const theme = {
+    bg: '#022c22', // Emerald 950
+    navBg: 'rgba(2, 44, 34, 0.85)',
+    cardBg: '#064e3b', // Emerald 900
+    cardBorder: 'rgba(52, 211, 153, 0.15)', // Emerald 400
+    textPrimary: '#f8fafc',
+    textSecondary: '#cbd5e1',
+    textMuted: '#94a3b8',
+    isDark: true
+  };
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", overflow: 'hidden', transition: 'all 0.3s ease' }}>
