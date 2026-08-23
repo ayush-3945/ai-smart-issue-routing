@@ -67,11 +67,9 @@ const LandingPage = () => {
               Command Center 👑
             </Link>
           </div>
-        </section>
-      </div>
 
-        {/* Trust badges */}
-        <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
+          {/* Trust badges */}
+          <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
           <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>🔒 DGMS & MoEFCC Compliant</span>
           <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>📍 Satellite GPS Pit Pinning</span>
           <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>⚡ Real-Time Socket.io Radar</span>
@@ -231,6 +229,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+    </div>
 
       {/* Stats Bar */}
       <section style={{ display: 'flex', justifyContent: 'center', gap: '48px', padding: '40px 48px', borderTop: `1px solid ${theme.cardBorder}`, borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', backgroundColor: theme.cardBg }}>
