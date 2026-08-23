@@ -36,17 +36,25 @@ const IndiaMapDashboard = () => {
         <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
       </div>
 
-      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: theme.cardBg, borderRadius: '24px', padding: '40px', border: `1px solid ${theme.cardBorder}`, boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)' }}>
+      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '40px 0' }}>
         
         {/* Left Side: Interactive Map */}
-        <div style={{ flex: '1', minWidth: '350px', position: 'relative' }}>
+        <div style={{ flex: '1.2', minWidth: '350px', position: 'relative', backgroundColor: '#f4f5f7', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          
+          {/* Dashed Concentric Circles Background */}
+          <svg style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px', pointerEvents: 'none', opacity: 0.5 }} viewBox="0 0 800 800">
+            {[...Array(15)].map((_, i) => (
+              <circle key={i} cx="400" cy="400" r={(i + 1) * 30} fill="none" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4 4" />
+            ))}
+          </svg>
+
           <ComposableMap
             projection="geoMercator"
             projectionConfig={{
-              scale: 1000,
-              center: [82.5, 22.5] // Centered on India
+              scale: 1100,
+              center: [82.5, 22.5]
             }}
-            style={{ width: '100%', height: '400px', backgroundColor: 'transparent' }}
+            style={{ width: '100%', height: '500px', backgroundColor: 'transparent', position: 'relative', zIndex: 1 }}
           >
             <Geographies geography={geoUrl}>
               {({ geographies }) =>
@@ -64,22 +72,22 @@ const IndiaMapDashboard = () => {
                       onClick={() => setSelectedState(stateName)}
                       style={{
                         default: {
-                          fill: isSelected ? '#f59e0b' : theme.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0',
-                          stroke: theme.isDark ? 'rgba(255,255,255,0.2)' : '#cbd5e1',
-                          strokeWidth: 0.75,
+                          fill: isSelected ? '#f59e0b' : '#274b78',
+                          stroke: '#ffffff',
+                          strokeWidth: 0.5,
                           outline: 'none',
                           transition: 'all 0.2s ease',
                           cursor: 'pointer'
                         },
                         hover: {
-                          fill: '#fbbf24',
-                          stroke: theme.isDark ? 'rgba(255,255,255,0.4)' : '#94a3b8',
+                          fill: '#3b6a9e',
+                          stroke: '#ffffff',
                           strokeWidth: 1,
                           outline: 'none',
                           cursor: 'pointer'
                         },
                         pressed: {
-                          fill: '#d97706',
+                          fill: '#1e3a5f',
                           outline: 'none',
                         },
                       }}
