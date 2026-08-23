@@ -35,11 +35,23 @@ const LandingPage = () => {
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", overflow: 'hidden', transition: 'all 0.3s ease' }}>
 
       {/* Navbar */}
-      <nav className="landing-nav" style={{ borderBottom: `1px solid ${theme.cardBorder}`, backgroundColor: theme.navBg }}>
+      <nav className="landing-nav" style={{ borderBottom: `1px solid ${theme.cardBorder}`, backgroundColor: theme.navBg, position: 'sticky', top: 0, zIndex: 100 }}>
         <div className="landing-nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <div style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)' }}>⛏️</div>
           <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>CoalGuard OS</span>
         </div>
+        
+        {/* Navigation Links */}
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', display: 'none' }} className="desktop-nav-links">
+          {/* We'll use a media query in CSS to hide this on mobile, but for inline styles we'll just show it if there's space. Let's make it visible on all screens for now, or just hide on very small screens. */}
+        </div>
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginLeft: 'auto', marginRight: '20px' }}>
+          <a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>About Us</a>
+          <a href="#gallery" onClick={(e) => { e.preventDefault(); document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Galleries</a>
+          <a href="#key-indicators" onClick={(e) => { e.preventDefault(); document.getElementById('key-indicators').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Key Indicators</a>
+          <a href="#map" onClick={(e) => { e.preventDefault(); document.getElementById('map').scrollIntoView({ behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Map</a>
+        </div>
+
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <InstallPwaButton />
           <ThemeToggle />
@@ -53,7 +65,7 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section style={{ position: 'relative', padding: '100px 48px 80px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
+      <section id="about" style={{ position: 'relative', padding: '100px 48px 80px', textAlign: 'center', maxWidth: '960px', margin: '0 auto' }}>
         {/* Ambient Glow */}
         <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
@@ -91,7 +103,7 @@ const LandingPage = () => {
         </div>
 
         {/* Indian Mines Photo Gallery Section */}
-        <div style={{ marginTop: '56px', width: '100%', maxWidth: '1000px', margin: '56px auto 0' }}>
+        <div id="gallery" style={{ marginTop: '56px', width: '100%', maxWidth: '1000px', margin: '56px auto 0' }}>
           <h2 style={{ fontSize: '20px', fontWeight: '800', color: theme.textPrimary, marginBottom: '24px', textAlign: 'center' }}>
             Active Surveillance Zones
           </h2>
@@ -265,7 +277,7 @@ const LandingPage = () => {
       </section>
 
       {/* Key Indicators Interactive Dashboard */}
-      <section style={{ padding: '80px 48px', maxWidth: '1200px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
+      <section id="key-indicators" style={{ padding: '80px 48px', maxWidth: '1200px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
         <div style={{ marginBottom: '20px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: '500', margin: '0 0 12px', color: theme.textPrimary, borderBottom: '2px solid #8b4513', display: 'inline-block', paddingBottom: '4px' }}>
             Key Indicators
@@ -411,7 +423,9 @@ const LandingPage = () => {
       </section>
 
       {/* Interactive India Map Dashboard */}
-      <IndiaMapDashboard />
+      <div id="map">
+        <IndiaMapDashboard />
+      </div>
 
       {/* Features Grid */}
       <section style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto' }}>
