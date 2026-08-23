@@ -20,6 +20,8 @@ const Login = () => {
     if (token) {
       if (savedUser.role === 'admin') {
         navigate('/admin');
+      } else if (savedUser.role === 'regulatoryAuthority') {
+        navigate('/regulatory-dashboard');
       } else if (savedUser.role === 'contractor') {
         navigate('/contractor');
       } else {
@@ -44,6 +46,8 @@ const Login = () => {
 
       if (res.data.user?.role === 'admin') {
         navigate('/admin');
+      } else if (res.data.user?.role === 'regulatoryAuthority') {
+        navigate('/regulatory-dashboard');
       } else if (res.data.user?.role === 'contractor') {
         navigate('/contractor');
       } else {

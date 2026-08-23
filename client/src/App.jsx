@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import Dashboard from './pages/Dashboard';
 import ContractorDashboard from './pages/ContractorDashboard';
+import RegulatoryDashboard from './pages/RegulatoryDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -43,6 +44,16 @@ function App() {
           element={
             <ProtectedRoute>
               <ContractorDashboard />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Regulatory Route */}
+        <Route
+          path="/regulatory-dashboard"
+          element={
+            <ProtectedRoute>
+              <RegulatoryDashboard />
             </ProtectedRoute>
           }
         />

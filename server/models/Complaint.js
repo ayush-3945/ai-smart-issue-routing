@@ -75,6 +75,10 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     default: null
   },
+  statutoryClause: {
+    type: String,
+    default: null
+  },
   detectedLanguage: {
     type: String,
     default: 'English'

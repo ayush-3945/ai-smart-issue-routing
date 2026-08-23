@@ -287,27 +287,29 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '800', color: '#10b981' }}>
                   <span>⚡ Automated Resolution Protocol</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const stepsText = complaint.troubleshootingSteps?.length > 0
-                      ? complaint.troubleshootingSteps.join(' | ')
-                      : complaint.suggestedResolution;
-                    setNewComment(`💡 Suggested Action Plan: ${stepsText}`);
-                  }}
-                  style={{
-                    backgroundColor: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.3)',
-                    color: '#10b981',
-                    fontSize: '11px',
-                    fontWeight: '700',
-                    padding: '4px 10px',
-                    borderRadius: '8px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  ⚡ Insert to Reply
-                </button>
+                {!isRegulatory && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const stepsText = complaint.troubleshootingSteps?.length > 0
+                        ? complaint.troubleshootingSteps.join(' | ')
+                        : complaint.suggestedResolution;
+                      setNewComment(`💡 Suggested Action Plan: ${stepsText}`);
+                    }}
+                    style={{
+                      backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                      border: '1px solid rgba(16, 185, 129, 0.3)',
+                      color: '#10b981',
+                      fontSize: '11px',
+                      fontWeight: '700',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    ⚡ Insert to Reply
+                  </button>
+                )}
               </div>
 
               {complaint.suggestedResolution && (
@@ -510,52 +512,54 @@ const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser 
           </div>
         </div>
 
-        {/* Comment Input Footer */}
-        <form onSubmit={handleSendComment} style={{
-          padding: '16px 28px',
-          borderTop: `1px solid ${theme.cardBorder}`,
-          display: 'flex',
-          gap: '12px',
-          backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(248, 250, 252, 0.9)'
-        }}>
-          <input
-            type="text"
-            placeholder="Type your reply, updates or troubleshooting steps..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            style={{
-              flex: 1,
-              padding: '12px 18px',
-              borderRadius: '12px',
-              backgroundColor: theme.inputBg,
-              border: `1px solid ${theme.cardBorder}`,
-              color: theme.textPrimary,
-              fontSize: '14px',
-              outline: 'none'
-            }}
-          />
-          <button
-            type="submit"
-            disabled={!newComment.trim() || submitting}
-            style={{
-              padding: '12px 24px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
-              color: '#ffffff',
-              border: 'none',
-              fontWeight: '800',
-              fontSize: '14px',
-              cursor: (!newComment.trim() || submitting) ? 'not-allowed' : 'pointer',
-              opacity: (!newComment.trim() || submitting) ? 0.6 : 1,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              boxShadow: '0 4px 15px rgba(14, 165, 233, 0.4)'
-            }}
-          >
-            {submitting ? 'Sending...' : 'Send 💬'}
-          </button>
-        </form>
+        {/* Comment Input Footer - Hidden for Regulatory */}
+        {!isRegulatory && (
+          <form onSubmit={handleSendComment} style={{
+            padding: '16px 28px',
+            borderTop: `1px solid ${theme.cardBorder}`,
+            display: 'flex',
+            gap: '12px',
+            backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(248, 250, 252, 0.9)'
+          }}>
+            <input
+              type="text"
+              placeholder="Type your reply, updates or troubleshooting steps..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              style={{
+                flex: 1,
+                padding: '12px 18px',
+                borderRadius: '12px',
+                backgroundColor: theme.inputBg,
+                border: `1px solid ${theme.cardBorder}`,
+                color: theme.textPrimary,
+                fontSize: '14px',
+                outline: 'none'
+              }}
+            />
+            <button
+              type="submit"
+              disabled={!newComment.trim() || submitting}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
+                color: '#ffffff',
+                border: 'none',
+                fontWeight: '800',
+                fontSize: '14px',
+                cursor: (!newComment.trim() || submitting) ? 'not-allowed' : 'pointer',
+                opacity: (!newComment.trim() || submitting) ? 0.6 : 1,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.4)'
+              }}
+            >
+              {submitting ? 'Sending...' : 'Send 💬'}
+            </button>
+          </form>
+        )}
       </div>
 
       <style>{`

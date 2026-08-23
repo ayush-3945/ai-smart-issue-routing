@@ -7,6 +7,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');
+  const [authorityType, setAuthorityType] = useState('DGMS');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ const Register = () => {
       if (raw && raw !== 'undefined') savedUser = JSON.parse(raw);
     } catch (e) {}
     if (token) {
-      navigate(savedUser.role === 'admin' ? '/admin' : '/dashboard');
+      if (savedUser.role === 'admin') navigate('/admin');
+      else if (savedUser.role === 'regulatoryAuthority') navigate('/regulatory-dashboard');
+      else navigate('/dashboard');
     }
   }, [navigate]);
 
@@ -29,18 +32,26 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await API.post('/auth/register', {
+      const payload = {
         name: name.trim(),
         email: email.trim().toLowerCase(),
         password: password.trim(),
         role
-      });
+      };
+      
+      if (role === 'regulatoryAuthority') {
+        payload.authorityType = authorityType;
+      }
+
+      const res = await API.post('/auth/register', payload);
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
       if (res.data.user?.role === 'admin') {
         navigate('/admin');
+      } else if (res.data.user?.role === 'regulatoryAuthority') {
+        navigate('/regulatory-dashboard');
       } else {
         navigate('/dashboard');
       }
@@ -229,8 +240,37 @@ const Register = () => {
             >
               <option value="admin">Mine Official / Safety Controller (Admin)</option>
               <option value="user">Field Inspector / Shift Worker (User)</option>
+              <option value="regulatoryAuthority">Regulatory Authority (Sarkaari Adhikari)</option>
             </select>
           </div>
+
+          {role === 'regulatoryAuthority' && (
+            <div style={{ marginBottom: '24px' }}>
+              <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+                Authority Type
+              </label>
+              <select
+                value={authorityType}
+                onChange={(e) => setAuthorityType(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
+                  backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: '#ffffff',
+                  fontSize: '14px',
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                  cursor: 'pointer'
+                }}
+              >
+                <option value="DGMS">DGMS Inspector (Safety)</option>
+                <option value="MoEFCC">MoEFCC Officer (Environment)</option>
+                <option value="State Pollution Control Board">State Pollution Control Board</option>
+              </select>
+            </div>
+          )}
 
           <button
             type="submit"

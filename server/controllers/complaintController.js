@@ -141,6 +141,7 @@ const createComplaint = async (req, res) => {
       aiConfidence: aiAnalysis.confidence || 0,
       aiSummary: aiAnalysis.summary || null,
       aiSummaryHindi: aiAnalysis.summaryHindi || null,
+      statutoryClause: aiAnalysis.statutoryClause || null,
       detectedLanguage: aiAnalysis.detectedLanguage || 'English',
       suggestedResolution: aiAnalysis.suggestedResolution || null,
       troubleshootingSteps: aiAnalysis.troubleshootingSteps || [],
@@ -198,7 +199,20 @@ const getMyComplaints = async (req, res) => {
 
 const getAllComplaints = async (req, res) => {
   try {
-    const complaints = await Complaint.find({})
+    let filter = {};
+
+    if (req.user && req.user.role === 'regulatoryAuthority') {
+      // Exclude Labour/HR strictly
+      filter.category = { $nin: ['Labour', 'HR'] };
+
+      if (req.user.authorityType === 'DGMS') {
+        filter.category = 'Safety';
+      } else if (req.user.authorityType === 'MoEFCC' || req.user.authorityType === 'State Pollution Control Board') {
+        filter.category = 'Environment';
+      }
+    }
+
+    const complaints = await Complaint.find(filter)
       .populate('user', 'name email')
       .sort({ createdAt: -1 });
 

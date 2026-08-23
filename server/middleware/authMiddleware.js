@@ -33,4 +33,11 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = { protect };
+const blockRegulatoryWrites = (req, res, next) => {
+  if (req.user && req.user.role === 'regulatoryAuthority') {
+    return res.status(403).json({ message: 'Regulatory Authority users have Read-Only access.' });
+  }
+  next();
+};
+
+module.exports = { protect, blockRegulatoryWrites };
