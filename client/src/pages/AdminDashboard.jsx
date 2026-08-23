@@ -1307,13 +1307,13 @@ const AdminDashboard = () => {
             <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
               <table style={{ width: '100%', minWidth: '800px', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
-                  <tr style={{ backgroundColor: 'rgba(15, 23, 42, 0.4)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableIssueDetails')}</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableAiCategory')}</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableAssignedLead')}</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tablePriority')}</th>
-                    <th style={{ padding: '16px 20px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableConfidence')}</th>
-                    <th style={{ padding: '16px 24px', color: '#94a3b8', fontSize: '12px', fontWeight: '700' }}>{t('tableLifecycleAction')}</th>
+                  <tr style={{ backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.4)' : '#f1f5f9', borderBottom: `1px solid ${theme.cardBorder}` }}>
+                    <th style={{ padding: '16px 24px', color: theme.textSecondary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase' }}>{t('tableIssueDetails')}</th>
+                    <th style={{ padding: '16px 20px', color: theme.textSecondary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase' }}>{t('tableAiCategory')}</th>
+                    <th style={{ padding: '16px 20px', color: theme.textSecondary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase' }}>{t('tableAssignedLead')}</th>
+                    <th style={{ padding: '16px 20px', color: theme.textSecondary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase' }}>{t('tablePriority')}</th>
+                    <th style={{ padding: '16px 20px', color: theme.textSecondary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase' }}>{t('tableConfidence')}</th>
+                    <th style={{ padding: '16px 24px', color: theme.textSecondary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase' }}>{t('tableLifecycleAction')}</th>
                   </tr>
                 </thead>
                 <tbody>
