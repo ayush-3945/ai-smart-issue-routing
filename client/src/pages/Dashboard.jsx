@@ -482,18 +482,63 @@ const Dashboard = () => {
     }
   };
 
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371e3; // Earth radius in meters
+    const rad = Math.PI / 180;
+    const dLat = (lat2 - lat1) * rad;
+    const dLon = (lon2 - lon1) * rad;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * rad) * Math.cos(lat2 * rad) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in meters
+  };
+
   const handlePunch = () => {
-    if (attendanceStatus === 'out') {
-      setAttendanceStatus('in');
-      setPunchTime(new Date().toLocaleTimeString());
-      localStorage.setItem('attendance_status', 'in');
-      localStorage.setItem('punch_time', new Date().toLocaleTimeString());
-      addToast('Punched IN successfully!', 'success', 3000);
-    } else {
+    if (attendanceStatus === 'in') {
       setAttendanceStatus('out');
       localStorage.setItem('attendance_status', 'out');
       addToast('Punched OUT successfully!', 'info', 3000);
+      return;
     }
+
+    if (!navigator.geolocation) {
+      addToast('Geolocation is not supported by your browser', 'error', 3000);
+      return;
+    }
+
+    addToast('Verifying your location...', 'info', 2000);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+        
+        // Example: Jharia Coal Field, Dhanbad coordinates
+        const MINE_LAT = 23.7431;
+        const MINE_LNG = 86.4116;
+        const ALLOWED_RADIUS_METERS = 500;
+
+        const distance = calculateDistance(userLat, userLng, MINE_LAT, MINE_LNG);
+
+        if (distance > ALLOWED_RADIUS_METERS) {
+          addToast(`Access Denied! You are ${(distance/1000).toFixed(1)} km away from the mine site. You must be on-site to Punch In.`, 'error', 6000);
+        } else {
+          setAttendanceStatus('in');
+          const time = new Date().toLocaleTimeString();
+          setPunchTime(time);
+          localStorage.setItem('attendance_status', 'in');
+          localStorage.setItem('punch_time', time);
+          addToast('Verified: On-site. Punched IN successfully!', 'success', 3000);
+        }
+      },
+      (error) => {
+        let msg = 'Failed to get location';
+        if (error.code === 1) msg = 'Please allow Location Access to Punch In.';
+        addToast(msg, 'error', 4000);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
   };
 
   const renderMobileMenu = () => (
