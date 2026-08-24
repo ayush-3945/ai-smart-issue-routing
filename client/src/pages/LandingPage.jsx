@@ -365,7 +365,7 @@ const LandingPage = () => {
 
           <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
           {/* Sidebar Tabs */}
-          <div style={{ flex: '1', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '0' }}>
+          <div style={{ flex: '1 1 250px', maxWidth: '300px', display: 'flex', flexDirection: 'column', gap: '0' }}>
             {[
               { id: 'dmf', label: 'DMF Fund Status' },
               { id: 'production', label: 'Mineral Production' },
@@ -412,7 +412,7 @@ const LandingPage = () => {
 
           {/* Chart Container */}
           <div style={{ 
-            flex: '3', minWidth: '300px', height: '460px', 
+            flex: '3 1 600px', minWidth: '300px', height: '460px', 
             background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)',
             backdropFilter: 'blur(20px)',
             borderRadius: '24px', 
