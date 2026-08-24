@@ -52,10 +52,15 @@ const MinesGISMap = ({ onBack }) => {
     <div style={{
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
+      height: '75vh', // Fixed height to ensure map renders
+      minHeight: '500px',
       width: '100%',
       backgroundColor: theme.background,
-      position: 'relative'
+      position: 'relative',
+      borderRadius: '16px',
+      overflow: 'hidden',
+      border: `1px solid ${theme.cardBorder}`,
+      marginTop: '16px'
     }}>
       {/* Header */}
       <div style={{
