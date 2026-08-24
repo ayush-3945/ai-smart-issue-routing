@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../utils/api';
+import { useTheme } from '../context/ThemeContext';
 
 const Login = () => {
+  const { theme } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +63,7 @@ const Login = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#07090e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Inter', system-ui, sans-serif", padding: '20px', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: theme.background, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Inter', system-ui, sans-serif", padding: '20px', position: 'relative', overflow: 'hidden' }}>
       
       {/* Animated Ambient Orbs */}
       <div style={{ position: 'absolute', top: '15%', left: '20%', width: '400px', height: '400px', backgroundColor: '#f59e0b', filter: 'blur(160px)', opacity: 0.14, borderRadius: '50%', animation: 'float1 8s ease-in-out infinite' }}></div>
@@ -69,7 +71,7 @@ const Login = () => {
       <div style={{ position: 'absolute', top: '60%', left: '60%', width: '250px', height: '250px', backgroundColor: '#d97706', filter: 'blur(120px)', opacity: 0.08, borderRadius: '50%', animation: 'float1 12s ease-in-out infinite reverse' }}></div>
 
       {/* Glass Card */}
-      <div style={{ width: '100%', maxWidth: '440px', backgroundColor: 'rgba(11, 15, 25, 0.92)', backdropFilter: 'blur(24px)', border: '1px solid rgba(245, 158, 11, 0.25)', borderRadius: '28px', padding: '44px 40px', boxShadow: '0 32px 64px -16px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(245, 158, 11, 0.15)', zIndex: 1, animation: 'fadeUp 0.6s ease-out' }}>
+      <div style={{ width: '100%', maxWidth: '440px', backgroundColor: theme.isDark ? 'rgba(11, 15, 25, 0.92)' : 'rgba(255, 255, 255, 0.92)', backdropFilter: 'blur(24px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '28px', padding: '44px 40px', boxShadow: theme.isDark ? '0 32px 64px -16px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(245, 158, 11, 0.15)' : '0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 0 40px -10px rgba(245, 158, 11, 0.1)', zIndex: 1, animation: 'fadeUp 0.6s ease-out' }}>
         
         {/* Back to Home Link */}
         <div style={{ marginBottom: '16px' }}>
@@ -97,10 +99,10 @@ const Login = () => {
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', borderRadius: '18px', fontSize: '28px', marginBottom: '20px', boxShadow: '0 12px 28px -5px rgba(245, 158, 11, 0.5)', animation: 'float3 3s ease-in-out infinite', color: '#fff' }}>
             ⛏️
           </div>
-          <h1 style={{ color: '#ffffff', fontSize: '28px', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-0.7px' }}>
+          <h1 style={{ color: theme.textPrimary, fontSize: '28px', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-0.7px' }}>
             CoalGuard OS
           </h1>
-          <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0, lineHeight: 1.5 }}>
+          <p style={{ color: theme.textSecondary, fontSize: '14px', margin: 0, lineHeight: 1.5 }}>
             Sign in to Mine Operations & Compliance Command
           </p>
         </div>
@@ -115,7 +117,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           {/* Email */}
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '8px', letterSpacing: '0.3px' }}>
+            <label style={{ display: 'block', color: theme.textSecondary, fontSize: '13px', fontWeight: '600', marginBottom: '8px', letterSpacing: '0.3px' }}>
               Field Officer / Admin Email
             </label>
             <div style={{ position: 'relative' }}>
@@ -126,9 +128,9 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="officer@mine.gov.in"
-                style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
+                style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: '12px', backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : '#ffffff', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
                 onFocus={(e) => { e.target.style.borderColor = 'rgba(245, 158, 11, 0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.2)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.boxShadow = 'none'; }}
+                onBlur={(e) => { e.target.style.borderColor = theme.cardBorder; e.target.style.boxShadow = 'none'; }}
               />
             </div>
           </div>
@@ -136,7 +138,7 @@ const Login = () => {
           {/* Password */}
           <div style={{ marginBottom: '28px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <label style={{ color: '#cbd5e1', fontSize: '13px', fontWeight: '600', letterSpacing: '0.3px' }}>
+              <label style={{ color: theme.textSecondary, fontSize: '13px', fontWeight: '600', letterSpacing: '0.3px' }}>
                 Password
               </label>
             </div>
@@ -148,9 +150,9 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                style={{ width: '100%', padding: '14px 48px 14px 44px', borderRadius: '12px', backgroundColor: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#ffffff', fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
+                style={{ width: '100%', padding: '14px 48px 14px 44px', borderRadius: '12px', backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : '#ffffff', border: `1px solid ${theme.cardBorder}`, color: theme.textPrimary, fontSize: '14px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.3s, box-shadow 0.3s' }}
                 onFocus={(e) => { e.target.style.borderColor = 'rgba(245, 158, 11, 0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.2)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.boxShadow = 'none'; }}
+                onBlur={(e) => { e.target.style.borderColor = theme.cardBorder; e.target.style.boxShadow = 'none'; }}
               />
               <button
                 type="button"

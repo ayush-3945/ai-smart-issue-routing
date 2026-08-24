@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../utils/api';
+import { useTheme } from '../context/ThemeContext';
 
 const Register = () => {
+  const { theme } = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,7 +68,7 @@ const Register = () => {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundColor: '#07090e',
+      backgroundColor: theme.background,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -90,9 +92,9 @@ const Register = () => {
       <div style={{
         width: '100%',
         maxWidth: '440px',
-        backgroundColor: 'rgba(11, 15, 25, 0.92)',
+        backgroundColor: theme.isDark ? 'rgba(11, 15, 25, 0.92)' : 'rgba(255, 255, 255, 0.92)',
         backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(245, 158, 11, 0.25)',
+        border: `1px solid ${theme.cardBorder}`,
         borderRadius: '24px',
         padding: '40px',
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.15)',
@@ -123,10 +125,10 @@ const Register = () => {
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '50px', height: '50px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', borderRadius: '14px', fontSize: '24px', marginBottom: '14px', boxShadow: '0 8px 20px -3px rgba(245, 158, 11, 0.45)', color: '#fff' }}>
             ⛏️
           </div>
-          <h1 style={{ color: '#ffffff', fontSize: '24px', fontWeight: '800', margin: '0 0 6px' }}>
+          <h1 style={{ color: theme.textPrimary, fontSize: '24px', fontWeight: '800', margin: '0 0 6px' }}>
             Register Field Officer
           </h1>
-          <p style={{ color: '#94a3b8', fontSize: '13px', margin: 0 }}>
+          <p style={{ color: theme.textSecondary, fontSize: '13px', margin: 0 }}>
             Join CoalGuard OS Smart Mining Compliance Hub
           </p>
         </div>
@@ -147,7 +149,7 @@ const Register = () => {
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+            <label style={{ display: 'block', color: theme.textSecondary, fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
               Full Name
             </label>
             <input
@@ -160,9 +162,9 @@ const Register = () => {
                 width: '100%',
                 padding: '12px 16px',
                 borderRadius: '12px',
-                backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                color: '#ffffff',
+                backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : '#ffffff',
+                border: `1px solid ${theme.cardBorder}`,
+                color: theme.textPrimary,
                 fontSize: '14px',
                 outline: 'none',
                 boxSizing: 'border-box'
@@ -171,7 +173,7 @@ const Register = () => {
           </div>
 
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+            <label style={{ display: 'block', color: theme.textSecondary, fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
               Email Address
             </label>
             <input
@@ -184,9 +186,9 @@ const Register = () => {
                 width: '100%',
                 padding: '12px 16px',
                 borderRadius: '12px',
-                backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                color: '#ffffff',
+                backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : '#ffffff',
+                border: `1px solid ${theme.cardBorder}`,
+                color: theme.textPrimary,
                 fontSize: '14px',
                 outline: 'none',
                 boxSizing: 'border-box'
@@ -195,7 +197,7 @@ const Register = () => {
           </div>
 
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+            <label style={{ display: 'block', color: theme.textSecondary, fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
               Password
             </label>
             <input
@@ -208,9 +210,9 @@ const Register = () => {
                 width: '100%',
                 padding: '12px 16px',
                 borderRadius: '12px',
-                backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                color: '#ffffff',
+                backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : '#ffffff',
+                border: `1px solid ${theme.cardBorder}`,
+                color: theme.textPrimary,
                 fontSize: '14px',
                 outline: 'none',
                 boxSizing: 'border-box'
@@ -219,7 +221,7 @@ const Register = () => {
           </div>
 
           <div style={{ marginBottom: '24px' }}>
-            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+            <label style={{ display: 'block', color: theme.textSecondary, fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
               Account Type / Role
             </label>
             <select
@@ -246,7 +248,7 @@ const Register = () => {
 
           {role === 'regulatoryAuthority' && (
             <div style={{ marginBottom: '24px' }}>
-              <label style={{ display: 'block', color: '#cbd5e1', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+              <label style={{ display: 'block', color: theme.textSecondary, fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
                 Authority Type
               </label>
               <select
