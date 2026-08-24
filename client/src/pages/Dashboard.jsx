@@ -68,6 +68,17 @@ const Dashboard = () => {
   });
   const [isSyncing, setIsSyncing] = useState(false);
 
+  // Mobile Dashboard & Attendance State
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [mobileView, setMobileView] = useState('menu'); // 'menu' | 'form' | 'attendance'
+  const [attendanceStatus, setAttendanceStatus] = useState(() => localStorage.getItem('attendance_status') || 'out');
+  const [punchTime, setPunchTime] = useState(() => localStorage.getItem('punch_time') || null);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   let user = {};
   try {
     const raw = localStorage.getItem('user');
@@ -471,6 +482,120 @@ const Dashboard = () => {
     }
   };
 
+  const handlePunch = () => {
+    if (attendanceStatus === 'out') {
+      setAttendanceStatus('in');
+      setPunchTime(new Date().toLocaleTimeString());
+      localStorage.setItem('attendance_status', 'in');
+      localStorage.setItem('punch_time', new Date().toLocaleTimeString());
+      addToast('Punched IN successfully!', 'success', 3000);
+    } else {
+      setAttendanceStatus('out');
+      localStorage.setItem('attendance_status', 'out');
+      addToast('Punched OUT successfully!', 'info', 3000);
+    }
+  };
+
+  const renderMobileMenu = () => (
+    <div style={{ padding: '10px 0' }}>
+      {/* Profile Card */}
+      <div style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '24px', display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}>
+        <div style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px' }}>👤</div>
+        <div>
+          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '700', color: theme.textPrimary }}>Welcome, {user.name || 'User'}!</h2>
+          <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '14px' }}>{user.phone || '+91 7834949144'}</p>
+        </div>
+      </div>
+
+      {/* Grid of Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+        {/* File a Complaint */}
+        <div 
+          onClick={() => setMobileView('form')}
+          style={{ gridColumn: '1 / -1', backgroundColor: theme.cardBg, borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}
+        >
+          <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px' }}>🛡️</div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: theme.textPrimary }}>File a Complaint</h3>
+            <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '13px' }}>Report issues quickly</p>
+          </div>
+        </div>
+
+        {/* Mines GIS */}
+        <div 
+          onClick={() => addToast('Mines GIS feature coming soon!', 'info', 3000)}
+          style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}
+        >
+          <div style={{ backgroundColor: 'rgba(14, 165, 233, 0.15)', width: '36px', height: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📍</div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>Mines GIS</h3>
+            <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '12px' }}>Interactive map data</p>
+          </div>
+        </div>
+
+        {/* Explore Area */}
+        <div 
+          onClick={() => addToast('Explore Area feature coming soon!', 'info', 3000)}
+          style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}
+        >
+          <div style={{ backgroundColor: 'rgba(34, 197, 94, 0.15)', width: '36px', height: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🧭</div>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>Explore Area</h3>
+            <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '12px' }}>View on Maps</p>
+          </div>
+        </div>
+
+        {/* Attendance Tracker */}
+        <div 
+          onClick={() => setMobileView('attendance')}
+          style={{ gridColumn: '1 / -1', backgroundColor: theme.cardBg, borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}
+        >
+          <div style={{ backgroundColor: 'rgba(139, 92, 246, 0.15)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px' }}>🕒</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: theme.textPrimary }}>Attendance Tracker</h3>
+              <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '13px' }}>Punch in / Punch out</p>
+            </div>
+            <span style={{ fontSize: '12px', padding: '4px 10px', borderRadius: '20px', backgroundColor: attendanceStatus === 'in' ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.15)', color: attendanceStatus === 'in' ? '#22c55e' : '#ef4444', fontWeight: '700' }}>
+              {attendanceStatus === 'in' ? 'PUNCHED IN' : 'PUNCHED OUT'}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderAttendanceTracker = () => (
+    <div style={{ padding: '10px 0' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+        <button onClick={() => setMobileView('menu')} style={{ background: 'none', border: 'none', color: theme.textPrimary, fontSize: '24px', cursor: 'pointer' }}>←</button>
+        <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>Attendance</h2>
+      </div>
+
+      <div style={{ backgroundColor: theme.cardBg, borderRadius: '20px', padding: '32px 24px', textAlign: 'center', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? 'none' : '0 4px 12px rgba(0,0,0,0.05)' }}>
+        <div style={{ fontSize: '64px', marginBottom: '16px' }}>🕒</div>
+        <h3 style={{ fontSize: '24px', fontWeight: '700', color: theme.textPrimary, margin: '0 0 8px' }}>
+          {attendanceStatus === 'in' ? 'You are ON SHIFT' : 'You are OFF SHIFT'}
+        </h3>
+        <p style={{ color: theme.textSecondary, fontSize: '15px', margin: '0 0 32px' }}>
+          {attendanceStatus === 'in' && punchTime ? `Punched in at ${punchTime}` : 'Punch in to start your shift'}
+        </p>
+
+        <button 
+          onClick={handlePunch}
+          style={{ width: '100%', padding: '20px', borderRadius: '16px', fontSize: '18px', fontWeight: '800', cursor: 'pointer', border: 'none', color: '#fff', transition: 'transform 0.2s',
+            background: attendanceStatus === 'in' ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #10b981, #059669)',
+            boxShadow: attendanceStatus === 'in' ? '0 10px 25px -5px rgba(239, 68, 68, 0.4)' : '0 10px 25px -5px rgba(16, 185, 129, 0.4)'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+        >
+          {attendanceStatus === 'in' ? 'PUNCH OUT' : 'PUNCH IN'}
+        </button>
+      </div>
+    </div>
+  );
+
   const { theme } = useTheme();
 
   return (
@@ -497,14 +622,16 @@ const Dashboard = () => {
             <ThemeToggle />
             <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
 
-            <button
-              title={t('adminView')}
-              onClick={() => window.location.href = '/admin'}
-              style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
-            >
-              <span>👑</span>
-              <span>Command Center</span>
-            </button>
+            {user?.role === 'admin' && (
+              <button
+                title={t('adminView')}
+                onClick={() => window.location.href = '/admin'}
+                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
+              >
+                <span>👑</span>
+                <span>Command Center</span>
+              </button>
+            )}
             <button
               title="Sign Out"
               onClick={handleLogout}
@@ -530,7 +657,15 @@ const Dashboard = () => {
           </div>
         </div>
 
+      {isMobile && mobileView === 'menu' ? (
+        renderMobileMenu()
+      ) : isMobile && mobileView === 'attendance' ? (
+        renderAttendanceTracker()
+      ) : (
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        {isMobile && mobileView === 'form' && (
+          <button onClick={() => setMobileView('menu')} style={{ marginBottom: '16px', background: 'none', border: 'none', color: theme.textPrimary, fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>← Back to Menu</button>
+        )}
 
         {/* Top Live Surveillance Radar Banner */}
         <div className="hide-on-mobile" style={{
@@ -1275,6 +1410,7 @@ const Dashboard = () => {
         )}
 
       </div>
+      )}
     </div>
   );
 };
