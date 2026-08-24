@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import api from '../utils/api';
@@ -13,10 +13,21 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+// Component to handle map clicks
+const MapClickHandler = ({ onMapClick }) => {
+  useMapEvents({
+    click(e) {
+      onMapClick(e.latlng);
+    },
+  });
+  return null;
+};
+
 const MinesGISMap = ({ onBack, mode }) => {
   const { theme } = useTheme();
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [clickedLocation, setClickedLocation] = useState(null);
 
   // Default center: Jharia Coal Field (23.7500, 86.4167) or Dhanbad (23.7957, 86.4304)
   const defaultCenter = [23.7500, 86.4167];
@@ -148,6 +159,26 @@ const MinesGISMap = ({ onBack, mode }) => {
               </Popup>
             </Marker>
           ))}
+
+          {/* Interactive Click Handler */}
+          <MapClickHandler onMapClick={(latlng) => setClickedLocation(latlng)} />
+          
+          {/* Render clicked location marker */}
+          {clickedLocation && (
+            <Marker position={[clickedLocation.lat, clickedLocation.lng]}>
+              <Popup>
+                <div style={{ minWidth: '120px' }}>
+                  <h4 style={{ margin: '0 0 4px 0', fontSize: '14px', fontWeight: '700', color: '#1e293b' }}>
+                    📍 Custom Waypoint
+                  </h4>
+                  <p style={{ margin: '0', fontSize: '12px', color: '#64748b' }}>
+                    Lat: {clickedLocation.lat.toFixed(5)}<br/>
+                    Lng: {clickedLocation.lng.toFixed(5)}
+                  </p>
+                </div>
+              </Popup>
+            </Marker>
+          )}
         </MapContainer>
       </div>
     </div>
