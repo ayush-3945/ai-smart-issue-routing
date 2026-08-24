@@ -12,11 +12,6 @@ const LandingPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   React.useEffect(() => {
-    // Mobile users should never see the marketing landing page, route them directly to the app
-    if (window.innerWidth <= 992) {
-      window.location.href = '/dashboard';
-      return;
-    }
     setIsLoggedIn(!!localStorage.getItem('accessToken'));
   }, []);
 
