@@ -142,9 +142,9 @@ const LandingPage = () => {
 
         {/* Trust badges */}
         <div style={{ marginTop: '48px', display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
-          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>🔒 DGMS & MoEFCC Compliant</span>
-          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>📍 Satellite GPS Pit Pinning</span>
-          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>⚡ Real-Time Socket.io Radar</span>
+          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>🛡️ Role-Based Secure Access</span>
+          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>📍 Geo-Tagged Field Reporting</span>
+          <span style={{ fontSize: '13px', color: theme.textSecondary, fontWeight: '700' }}>⚡ Real-Time Risk Alerts</span>
         </div>
 
         {/* Indian Mines Photo Gallery Section */}
