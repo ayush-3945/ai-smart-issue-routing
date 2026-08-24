@@ -446,7 +446,7 @@ const LandingPage = () => {
                       { name: '2025', allocated: 410, disbursed: 310 },
                       { name: '2026', allocated: 500, disbursed: 420 },
                     ]
-                  } margin={{ top: 10, right: 10, left: 10, bottom: 40 }}>
+                  } margin={{ top: 10, right: 10, left: 10, bottom: 70 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                     <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickMargin={10} axisLine={false} tickLine={false} fontWeight="600" angle={-45} textAnchor="end" height={60} />
                     <YAxis stroke="#64748b" fontSize={12} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} axisLine={false} tickLine={false} fontWeight="600" />
@@ -455,7 +455,7 @@ const LandingPage = () => {
                       contentStyle={{ backgroundColor: '#fff', border: `1px solid #e2e8f0`, borderRadius: '4px', color: '#1e293b', padding: '12px 16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }} 
                       itemStyle={{ fontSize: '13px', fontWeight: '600' }}
                     />
-                    <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '12px', color: '#475569', fontWeight: '500' }} iconType="circle" iconSize={10} />
+                    <Legend wrapperStyle={{ paddingTop: '30px', fontSize: '12px', color: '#475569', fontWeight: '500' }} iconType="circle" iconSize={10} />
                     {activeIndicator === 'dmf' && (
                       <>
                         <Bar dataKey="collection" name="DMF Collection in Cr." fill="#8b4513" barSize={16} />
