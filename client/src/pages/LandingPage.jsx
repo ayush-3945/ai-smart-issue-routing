@@ -66,7 +66,7 @@ const LandingPage = () => {
       {/* Navbar */}
       <nav className="landing-nav" style={{ borderBottom: `1px solid ${theme.cardBorder}`, backgroundColor: theme.navBg, position: 'sticky', top: 0, zIndex: 100 }}>
         <div className="landing-nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)' }}>⛏️</div>
+          <img src="/coaldarpan_logo.png" alt="CoalDarpan Logo" style={{ width: '38px', height: '38px', borderRadius: '10px', objectFit: 'cover', boxShadow: '0 0 12px rgba(0, 0, 0, 0.1)', background: '#fff' }} />
           <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>CoalDarpan</span>
         </div>
         
@@ -641,7 +641,7 @@ const LandingPage = () => {
       {/* Footer */}
       <footer style={{ padding: '32px 20px', borderTop: `1px solid ${theme.cardBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '16px' }}>⛏️</span>
+          <img src="/coaldarpan_logo.png" alt="CoalDarpan Logo" style={{ width: '24px', height: '24px', objectFit: 'cover', borderRadius: '6px', background: '#fff' }} />
           <span style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted }}>CoalDarpan</span>
         </div>
         <p style={{ fontSize: '13px', color: theme.textMuted, margin: 0 }}>

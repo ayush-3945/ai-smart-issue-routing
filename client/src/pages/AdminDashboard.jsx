@@ -282,7 +282,7 @@ const AdminDashboard = () => {
                   gap: '4px'
                 }}
               >
-                <span>⛏️</span>
+                <img src="/coaldarpan_logo.png" alt="Logo" style={{ width: '28px', height: '28px', objectFit: 'cover', borderRadius: '8px', background: '#fff' }} />
                 <span>Field Portal</span>
               </button>
             </div>

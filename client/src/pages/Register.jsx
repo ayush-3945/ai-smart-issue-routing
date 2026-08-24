@@ -122,8 +122,8 @@ const Register = () => {
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '50px', height: '50px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', borderRadius: '14px', fontSize: '24px', marginBottom: '14px', boxShadow: '0 8px 20px -3px rgba(245, 158, 11, 0.45)', color: '#fff' }}>
-            ⛏️
+          <div style={{ width: '80px', height: '80px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)', overflow: 'hidden', background: '#fff' }}>
+            <img src="/coaldarpan_logo.png" alt="CoalDarpan Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <h1 style={{ color: theme.textPrimary, fontSize: '24px', fontWeight: '800', margin: '0 0 6px' }}>
             Register Field Officer

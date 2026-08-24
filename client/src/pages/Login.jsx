@@ -96,8 +96,8 @@ const Login = () => {
 
         {/* Logo + Header */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', borderRadius: '18px', fontSize: '28px', marginBottom: '20px', boxShadow: '0 12px 28px -5px rgba(245, 158, 11, 0.5)', animation: 'float3 3s ease-in-out infinite', color: '#fff' }}>
-            ⛏️
+          <div style={{ width: '80px', height: '80px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)', overflow: 'hidden', background: '#fff' }}>
+            <img src="/coaldarpan_logo.png" alt="CoalDarpan Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <h1 style={{ color: theme.textPrimary, fontSize: '28px', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-0.7px' }}>
             CoalDarpan

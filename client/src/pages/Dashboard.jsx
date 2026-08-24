@@ -681,7 +681,7 @@ const Dashboard = () => {
             title={t('backToHome')}
             style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}
           >
-            <div style={{ background: 'linear-gradient(135deg, #f59e0b, #ea580c)', width: '42px', height: '42px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: '#fff', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)' }}>⛏️</div>
+            <img src="/coaldarpan_logo.png" alt="CoalDarpan Logo" style={{ width: '42px', height: '42px', borderRadius: '12px', objectFit: 'cover', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', background: '#fff' }} />
             <div style={{ flex: 1 }}>
               <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: theme.textPrimary, letterSpacing: '-0.5px' }}>{t('appTitle')}</h1>
               {!isMobile && <p style={{ margin: '2px 0 0', color: theme.textSecondary, fontSize: '12px', fontWeight: '500' }}>{t('appSubtitle')}</p>}
