@@ -721,16 +721,16 @@ const Dashboard = () => {
           </div>
         </div>
 
-      {mobileView === 'menu' ? (
+      {isMobile && mobileView === 'menu' ? (
         renderMobileMenu()
-      ) : mobileView === 'attendance' ? (
+      ) : isMobile && mobileView === 'attendance' ? (
         renderAttendanceTracker()
-      ) : mobileView === 'gis' || mobileView === 'explore' ? (
+      ) : isMobile && (mobileView === 'gis' || mobileView === 'explore') ? (
         <MinesGISMap mode={mobileView} onBack={() => setMobileView('menu')} />
       ) : (
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        {mobileView === 'form' && (
-          <button onClick={() => setMobileView('menu')} style={{ marginBottom: '16px', background: 'none', border: 'none', color: theme.textPrimary, fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>← Back to Dashboard</button>
+        {isMobile && mobileView === 'form' && (
+          <button onClick={() => setMobileView('menu')} style={{ marginBottom: '16px', background: 'none', border: 'none', color: theme.textPrimary, fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>← Back to Menu</button>
         )}
 
 
