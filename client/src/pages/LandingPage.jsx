@@ -436,9 +436,9 @@ const LandingPage = () => {
                       { name: '2025', blocks: 42, value: 14000 },
                       { name: '2026', blocks: 68, value: 22000 },
                     ]
-                  } margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                  } margin={{ top: 10, right: 10, left: 10, bottom: 40 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                    <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickMargin={10} axisLine={false} tickLine={false} fontWeight="600" />
+                    <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickMargin={10} axisLine={false} tickLine={false} fontWeight="600" angle={-45} textAnchor="end" height={60} />
                     <YAxis stroke="#64748b" fontSize={12} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} axisLine={false} tickLine={false} fontWeight="600" />
                     <Tooltip 
                       cursor={{fill: '#f8fafc'}}
