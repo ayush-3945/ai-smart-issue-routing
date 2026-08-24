@@ -52,9 +52,9 @@ const LandingPage = () => {
       minHeight: '100vh', 
       backgroundColor: theme.bg, 
       backgroundImage: theme.isDark 
-        ? 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px)' 
+        ? `linear-gradient(rgba(7, 9, 14, 0.80), rgba(7, 9, 14, 0.86)), url('/real_coal_mine_bg.jpg')` 
         : `linear-gradient(rgba(248, 250, 252, 0.76), rgba(248, 250, 252, 0.82)), url('/real_coal_mine_bg.jpg')`,
-      backgroundSize: theme.isDark ? '24px 24px' : 'cover',
+      backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
       color: theme.textPrimary, 
