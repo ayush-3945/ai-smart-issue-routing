@@ -394,6 +394,8 @@ const Dashboard = () => {
     e.preventDefault();
     setLoading(true);
 
+    const finalMineSite = selectedSubsidiary ? `${selectedSubsidiary}, ${selectedState}` : (selectedState || 'Unknown Location');
+
     // If Offline: Save to Local Queue
     if (!navigator.onLine) {
       try {
@@ -412,7 +414,7 @@ const Dashboard = () => {
           id: 'offline_' + Date.now(),
           title: finalTitle,
           description: description.trim(),
-          mineSite: mineSite.trim() || 'Jharia Colliery - Pit 4 (Underground)',
+          mineSite: finalMineSite,
           contractor: contractor.trim() || 'Direct CIL / DGMS Departmental Team',
           equipmentId: equipmentId.trim(),
           reportType: reportType,
@@ -427,7 +429,8 @@ const Dashboard = () => {
 
         setTitle('');
         setDescription('');
-        setMineSite('');
+        setSelectedSubsidiary('');
+        setSelectedState('');
         setContractor('');
         setEquipmentId('');
         setSelectedFiles([]);
@@ -453,7 +456,7 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append('title', finalTitle);
       formData.append('description', description);
-      formData.append('mineSite', mineSite);
+      formData.append('mineSite', finalMineSite);
       if (contractor) formData.append('contractor', contractor);
       if (equipmentId) formData.append('equipmentId', equipmentId);
       if (reportType === 'maintenance') formData.append('category', 'Equipment');
