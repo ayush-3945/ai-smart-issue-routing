@@ -24,6 +24,13 @@ const IndiaMapDashboard = () => {
   const { theme } = useTheme();
   const [selectedState, setSelectedState] = useState("Jharkhand");
   const [hoveredState, setHoveredState] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 992);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const currentData = stateData[selectedState] || stateData["Default"];
 
@@ -41,10 +48,10 @@ const IndiaMapDashboard = () => {
         <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
       </div>
 
-      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(20px)', padding: '20px', borderRadius: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? '0 20px 40px rgba(0,0,0,0.4)' : '0 20px 40px -10px rgba(0,0,0,0.1)' }}>
+      <div style={{ display: 'flex', gap: '40px', flexDirection: isMobile ? 'column' : 'row', background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(20px)', padding: '20px', borderRadius: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? '0 20px 40px rgba(0,0,0,0.4)' : '0 20px 40px -10px rgba(0,0,0,0.1)' }}>
         
         {/* Left Side: Interactive Map */}
-        <div style={{ flex: '2 1 500px', minWidth: '300px', position: 'relative', background: theme.isDark ? 'rgba(0,0,0,0.2)' : 'linear-gradient(135deg, rgba(37,99,235,0.05), rgba(16,185,129,0.05))', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${theme.cardBorder}` }}>
+        <div style={{ flex: '1.2', width: isMobile ? '100%' : 'calc(100% - 340px)', position: 'relative', background: theme.isDark ? 'rgba(0,0,0,0.2)' : 'linear-gradient(135deg, rgba(37,99,235,0.05), rgba(16,185,129,0.05))', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${theme.cardBorder}` }}>
           
           {/* Dashed Concentric Circles Background */}
           <svg style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px', pointerEvents: 'none', opacity: theme.isDark ? 0.2 : 0.5 }} viewBox="0 0 800 800">
@@ -110,7 +117,7 @@ const IndiaMapDashboard = () => {
         </div>
 
         {/* Right Side: State Info & Analytics */}
-        <div style={{ flex: '1 1 300px', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div style={{ flex: '1', width: isMobile ? '100%' : '300px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           
           <div style={{ background: theme.cardBg, borderRadius: '16px', padding: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
             <h3 style={{ fontSize: '24px', fontWeight: '800', color: theme.textPrimary, margin: '0 0 4px', borderBottom: `2px solid #f59e0b`, display: 'inline-block', paddingBottom: '4px' }}>

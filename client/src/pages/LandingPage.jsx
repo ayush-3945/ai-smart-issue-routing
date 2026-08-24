@@ -10,9 +10,13 @@ const LandingPage = () => {
   const { theme } = useTheme();
   const [activeIndicator, setActiveIndicator] = useState('dmf');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
 
   React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 992);
+    window.addEventListener('resize', handleResize);
     setIsLoggedIn(!!localStorage.getItem('accessToken'));
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleLogout = () => {
@@ -363,9 +367,9 @@ const LandingPage = () => {
             <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Real-time statistics for DMF funds and mineral production.</p>
           </div>
 
-          <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '40px', flexDirection: isMobile ? 'column' : 'row' }}>
           {/* Sidebar Tabs */}
-          <div style={{ flex: '1 1 250px', maxWidth: '300px', display: 'flex', flexDirection: 'column', gap: '0' }}>
+          <div style={{ flex: '1', width: isMobile ? '100%' : '300px', display: 'flex', flexDirection: 'column', gap: '0' }}>
             {[
               { id: 'dmf', label: 'DMF Fund Status' },
               { id: 'production', label: 'Mineral Production' },
@@ -412,7 +416,7 @@ const LandingPage = () => {
 
           {/* Chart Container */}
           <div style={{ 
-            flex: '3 1 600px', minWidth: '300px', height: '460px', 
+            flex: '3', width: isMobile ? '100%' : 'calc(100% - 340px)', height: '460px', 
             background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)',
             backdropFilter: 'blur(20px)',
             borderRadius: '24px', 
