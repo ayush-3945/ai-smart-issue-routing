@@ -675,38 +675,42 @@ const Dashboard = () => {
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 20px', transition: 'all 0.3s ease' }}>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
         {/* Top Navbar Header - FULL WIDTH */}
-        <div className="dashboard-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 20px 20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
+        <div className="dashboard-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', marginBottom: '24px', padding: isMobile ? '0 0 16px' : '0 20px 20px', borderBottom: `1px solid ${theme.cardBorder}`, flexDirection: isMobile ? 'column' : 'row', gap: '16px' }}>
           <div
             onClick={() => navigate('/')}
             title={t('backToHome')}
-            style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}
           >
-            <div style={{ background: 'linear-gradient(135deg, #f59e0b, #ea580c)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)' }}>⛏️</div>
-            <div>
-              <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: theme.textPrimary }}>{t('appTitle')}</h1>
-              <p style={{ margin: '1px 0 0', color: theme.textSecondary, fontSize: '12px' }}>{t('appSubtitle')}</p>
+            <div style={{ background: 'linear-gradient(135deg, #f59e0b, #ea580c)', width: '42px', height: '42px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: '#fff', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)' }}>⛏️</div>
+            <div style={{ flex: 1 }}>
+              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: theme.textPrimary, letterSpacing: '-0.5px' }}>{t('appTitle')}</h1>
+              {!isMobile && <p style={{ margin: '2px 0 0', color: theme.textSecondary, fontSize: '12px', fontWeight: '500' }}>{t('appSubtitle')}</p>}
             </div>
           </div>
           
           {/* Controls Toolbar (Opposite Side) */}
-          <div className="dashboard-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginLeft: 'auto' }}>
-            <LanguageToggle />
-            <ThemeToggle />
-            {!isMobile && <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />}
-
+          <div className="dashboard-controls" style={{ display: 'flex', alignItems: 'center', gap: '12px', width: isMobile ? '100%' : 'auto', justifyContent: isMobile ? 'space-between' : 'flex-end' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <LanguageToggle />
+              <ThemeToggle />
+            </div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {!isMobile && <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />}
               <button
                 title={t('adminView')}
                 onClick={() => window.location.href = '/admin'}
-                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
+                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 16px', height: '38px', borderRadius: '10px', cursor: 'pointer', fontSize: '14px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)', transition: 'transform 0.2s' }}
                 onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
                 <span>📊</span>
                 <span>Dashboard</span>
               </button>
-            {/* User Avatar & Sign Out */}
-            <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)', marginLeft: '4px' }}>
-              {user.name ? user.name.charAt(0).toUpperCase() : '⛏️'}
+              {/* User Avatar & Sign Out */}
+              <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)' }}>
+                {user.name ? user.name.charAt(0).toUpperCase() : '⛏️'}
+              </div>
             </div>
           </div>
         </div>
