@@ -412,7 +412,7 @@ const LandingPage = () => {
 
           {/* Chart Container */}
           <div style={{ 
-            flex: '3', minWidth: '100%', height: '460px', 
+            flex: '3', minWidth: '300px', height: '460px', 
             background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)',
             backdropFilter: 'blur(20px)',
             borderRadius: '24px', 

@@ -44,7 +44,7 @@ const IndiaMapDashboard = () => {
       <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(20px)', padding: '20px', borderRadius: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? '0 20px 40px rgba(0,0,0,0.4)' : '0 20px 40px -10px rgba(0,0,0,0.1)' }}>
         
         {/* Left Side: Interactive Map */}
-        <div style={{ flex: '1.2', minWidth: '100%', position: 'relative', background: theme.isDark ? 'rgba(0,0,0,0.2)' : 'linear-gradient(135deg, rgba(37,99,235,0.05), rgba(16,185,129,0.05))', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${theme.cardBorder}` }}>
+        <div style={{ flex: '1.2', minWidth: '350px', position: 'relative', background: theme.isDark ? 'rgba(0,0,0,0.2)' : 'linear-gradient(135deg, rgba(37,99,235,0.05), rgba(16,185,129,0.05))', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${theme.cardBorder}` }}>
           
           {/* Dashed Concentric Circles Background */}
           <svg style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px', pointerEvents: 'none', opacity: theme.isDark ? 0.2 : 0.5 }} viewBox="0 0 800 800">
