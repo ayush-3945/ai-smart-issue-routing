@@ -53,14 +53,9 @@ const LandingPage = () => {
       backgroundColor: theme.bg, 
       backgroundImage: theme.isDark 
         ? 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px)' 
-        : `
-          radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 50%),
-          radial-gradient(circle at 100% 0%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
-          radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
-          radial-gradient(circle at 0% 100%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
-          radial-gradient(circle, rgba(0, 0, 0, 0.07) 1.5px, transparent 1.5px)
-        `,
-      backgroundSize: theme.isDark ? '24px 24px' : '100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px',
+        : `url('/abstract_tech_bg.jpg')`,
+      backgroundSize: theme.isDark ? '24px 24px' : 'cover',
+      backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
       color: theme.textPrimary, 
       fontFamily: "'Inter', system-ui, sans-serif", 
