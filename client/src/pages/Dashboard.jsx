@@ -27,53 +27,15 @@ const base64ToFile = async (base64Data, filename, mimeType) => {
   return new File([blob], filename, { type: mimeType || 'image/jpeg' });
 };
 
-const STATE_MINE_SITES = {
-  'Jharkhand': [
-    'Jharia Colliery - Pit 4 (BCCL)',
-    'Dhanbad Central Coalfield (BCCL)',
-    'Bokaro Colliery - Open-Cast (CCL)',
-    'Piparwar OCP (CCL)',
-    'Rajmahal Open Cast Project (ECL)',
-    'Other Jharkhand Site'
-  ],
-  'West Bengal': [
-    'Raniganj - Shaft 3 (Deep Seam) (ECL)',
-    'Sonepur Bazari Project (ECL)',
-    'Other West Bengal Site'
-  ],
-  'Chhattisgarh': [
-    'Korba West - Block A (SECL)',
-    'Gevra OCP (SECL)',
-    'Kusmunda OCP (SECL)',
-    'Other Chhattisgarh Site'
-  ],
-  'Madhya Pradesh': [
-    'Singrauli Northern Coalfield (NCL)',
-    'Jayant OCP (NCL)',
-    'Dudhichua OCP (NCL)',
-    'Pench Area (WCL)',
-    'Other MP Site'
-  ],
-  'Odisha': [
-    'Talcher Coalfield - Pit 2 (MCL)',
-    'Ib Valley Coalfield (MCL)',
-    'Other Odisha Site'
-  ],
-  'Maharashtra': [
-    'Nagpur Area (WCL)',
-    'Chandrapur Area (WCL)',
-    'Other Maharashtra Site'
-  ],
-  'Telangana': [
-    'Ramagundam OCP (SCCL)',
-    'Kothagudem Collieries (SCCL)',
-    'Other Telangana Site'
-  ],
-  'Uttar Pradesh': [
-    'Bina OCP (NCL)',
-    'Khadia OCP (NCL)',
-    'Other UP Site'
-  ]
+const CIL_SUBSIDIARIES = {
+  'Eastern Coalfields Limited (ECL)': ['West Bengal', 'Jharkhand'],
+  'Bharat Coking Coal Limited (BCCL)': ['Jharkhand', 'West Bengal'],
+  'Central Coalfields Limited (CCL)': ['Jharkhand'],
+  'Western Coalfields Limited (WCL)': ['Maharashtra', 'Madhya Pradesh'],
+  'South Eastern Coalfields Limited (SECL)': ['Chhattisgarh', 'Madhya Pradesh'],
+  'Northern Coalfields Limited (NCL)': ['Madhya Pradesh', 'Uttar Pradesh'],
+  'Mahanadi Coalfields Limited (MCL)': ['Odisha'],
+  'Central Mine Planning & Design Inst. (CMPDIL)': ['Jharkhand', 'All India (HQ)']
 };
 
 const Dashboard = () => {
@@ -82,8 +44,8 @@ const Dashboard = () => {
   const [reportType, setReportType] = useState('hazard'); // 'hazard' | 'maintenance'
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [selectedSubsidiary, setSelectedSubsidiary] = useState('');
   const [selectedState, setSelectedState] = useState('');
-  const [mineSite, setMineSite] = useState('');
   const [contractor, setContractor] = useState('');
   const [equipmentId, setEquipmentId] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -516,7 +478,8 @@ const Dashboard = () => {
 
       setTitle('');
       setDescription('');
-      setMineSite('');
+      setSelectedSubsidiary('');
+      setSelectedState('');
       setContractor('');
       setEquipmentId('');
       setSelectedFiles([]);
@@ -929,10 +892,10 @@ const Dashboard = () => {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <select
-                  value={selectedState}
+                  value={selectedSubsidiary}
                   onChange={(e) => {
-                    setSelectedState(e.target.value);
-                    setMineSite(''); // Reset mine site when state changes
+                    setSelectedSubsidiary(e.target.value);
+                    setSelectedState(''); // Reset state when subsidiary changes
                   }}
                   required
                   style={{
@@ -949,35 +912,35 @@ const Dashboard = () => {
                     boxSizing: 'border-box'
                   }}
                 >
-                  <option value="" disabled>Select State...</option>
-                  {Object.keys(STATE_MINE_SITES).map(state => (
-                    <option key={state} value={state}>{state}</option>
+                  <option value="" disabled>Select Subsidiary...</option>
+                  {Object.keys(CIL_SUBSIDIARIES).map(sub => (
+                    <option key={sub} value={sub}>{sub}</option>
                   ))}
                 </select>
 
                 <select
-                  value={mineSite}
-                  onChange={(e) => setMineSite(e.target.value)}
+                  value={selectedState}
+                  onChange={(e) => setSelectedState(e.target.value)}
                   required
-                  disabled={!selectedState}
+                  disabled={!selectedSubsidiary}
                   style={{
                     width: '100%',
                     padding: '14px 18px',
                     borderRadius: '12px',
-                    backgroundColor: !selectedState ? 'rgba(0,0,0,0.05)' : theme.inputBg,
+                    backgroundColor: !selectedSubsidiary ? 'rgba(0,0,0,0.05)' : theme.inputBg,
                     border: `1px solid ${theme.cardBorder}`,
                     color: theme.textPrimary,
                     fontSize: '14px',
                     outline: 'none',
-                    cursor: !selectedState ? 'not-allowed' : 'pointer',
+                    cursor: !selectedSubsidiary ? 'not-allowed' : 'pointer',
                     appearance: 'none',
                     boxSizing: 'border-box',
-                    opacity: !selectedState ? 0.6 : 1
+                    opacity: !selectedSubsidiary ? 0.6 : 1
                   }}
                 >
-                  <option value="" disabled>Select Area / Mine Site...</option>
-                  {selectedState && STATE_MINE_SITES[selectedState].map(site => (
-                    <option key={site} value={site}>{site}</option>
+                  <option value="" disabled>Select State...</option>
+                  {selectedSubsidiary && CIL_SUBSIDIARIES[selectedSubsidiary].map(state => (
+                    <option key={state} value={state}>{state}</option>
                   ))}
                 </select>
               </div>
