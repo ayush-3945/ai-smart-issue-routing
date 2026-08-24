@@ -150,3 +150,29 @@ h1, h2, h3, h4, .font-heading {
     padding: 16px 12px !important;
   }
 }
+
+/* Mobile Responsive Utility Classes */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+  .mobile-wrap {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  .mobile-col {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .mobile-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Responsive Table Wrapper */
+.table-responsive-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}

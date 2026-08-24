@@ -54,7 +54,7 @@ const LandingPage = () => {
         </div>
         
         {/* Navigation Links - Centered like Government Portal */}
-        <div style={{ display: 'flex', gap: '28px', alignItems: 'center', margin: '0 auto' }}>
+        <div className="hide-on-mobile" style={{ display: 'flex', gap: '28px', alignItems: 'center', margin: '0 auto' }}>
           <a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: theme.textPrimary, textDecoration: 'none', fontWeight: '600', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#2563eb' }}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           </a>
@@ -107,7 +107,7 @@ const LandingPage = () => {
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
       }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+        <div className="mobile-full-width" style={{ width: '100%', maxWidth: '1000px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           {/* Ambient Glow */}
           <div style={{ position: 'absolute', top: '-50px', left: '50%', transform: 'translateX(-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
@@ -122,7 +122,7 @@ const LandingPage = () => {
           Centralized AI-enabled operations hub digitizing statutory compliance, real-time pit inspection tracking, geo-tagged hazard reporting, and predictive surge forecasting across Indian coalfields.
         </p>
 
-        <div style={{ display: 'flex', gap: '18px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className="mobile-col" style={{ display: 'flex', gap: '18px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/dashboard" style={{ padding: '16px 38px', borderRadius: '16px', background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#fff', textDecoration: 'none', fontSize: '16px', fontWeight: '800', letterSpacing: '-0.02em', boxShadow: '0 15px 35px -5px rgba(245, 158, 11, 0.4), 0 0 20px rgba(217, 119, 6, 0.2)', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)' }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
@@ -145,7 +145,7 @@ const LandingPage = () => {
         </div>
 
         {/* Indian Mines Photo Gallery Section */}
-        <div id="gallery" style={{ marginTop: '56px', width: '100%', maxWidth: '1000px', margin: '56px auto 0' }}>
+        <div id="gallery" className="mobile-full-width" style={{ marginTop: '56px', width: '100%', maxWidth: '1000px', margin: '56px auto 0' }}>
           <h2 style={{ fontSize: '20px', fontWeight: '800', color: theme.textPrimary, marginBottom: '24px', textAlign: 'center' }}>
             Active Surveillance Zones
           </h2>

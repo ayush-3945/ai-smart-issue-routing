@@ -533,7 +533,7 @@ const Dashboard = () => {
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
 
         {/* Top Live Surveillance Radar Banner */}
-        <div style={{
+        <div className="mobile-col" style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',

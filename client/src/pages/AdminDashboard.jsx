@@ -630,7 +630,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Charts Section */}
-        <div id="section-analytics" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '36px' }}>
+        <div id="section-analytics" className="mobile-col" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '36px' }}>
           
           <div style={{ backgroundColor: theme.cardBg, backdropFilter: 'blur(12px)', border: `1px solid ${theme.cardBorder}`, borderRadius: '20px', padding: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
             <h3 style={{ margin: '0 0 20px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary }}>🍩 {t('categoryAiDistribution')}</h3>
