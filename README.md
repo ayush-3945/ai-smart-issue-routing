@@ -1,11 +1,11 @@
 # ⚡ CoalDarpan — Smart Mining Governance & Statutory Compliance Platform
 
-[![Live App](https://img.shields.io/badge/Live%20App-ai--smart--issue--routing--jbb8.vercel.app-0ea5e9?style=for-the-badge&logo=vercel)](https://ai-smart-issue-routing-jbb8.vercel.app)
-[![Backend API](https://img.shields.io/badge/API-Railway%20Live-0B0D0E?style=for-the-badge&logo=railway)](https://ai-smart-issue-routing-production.up.railway.app)
+[![Live App](https://img.shields.io/badge/Live%20App-coaldarpan.vercel.app-0ea5e9?style=for-the-badge&logo=vercel)](https://coaldarpan.vercel.app)
+[![Backend API](https://img.shields.io/badge/API-Railway%20Live-0B0D0E?style=for-the-badge&logo=railway)](https://coaldarpan-api.up.railway.app)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-> 🌐 **Live Web Application:** [https://ai-smart-issue-routing-jbb8.vercel.app](https://ai-smart-issue-routing-jbb8.vercel.app)  
+> 🌐 **Live Web Application:** [https://coaldarpan.vercel.app](https://coaldarpan.vercel.app)  
 
 **CoalDarpan** is an enterprise-grade AI-powered smart governance and statutory compliance platform designed specifically for the Indian Coal Mining sector (DGMS & Ministry of Coal regulations). It replaces manual paper-based reporting with a robust digital ecosystem featuring **zero-network offline syncing**, **multilingual voice dictation**, **Haversine GPS geofencing**, and **autonomous hazard triage via Google Gemini AI**.
 
