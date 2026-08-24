@@ -1,6 +1,6 @@
 {
-  "name": "Dispatch OS - Autonomous Incident Triage",
-  "short_name": "Dispatch OS",
+  "name": "CoalGuard - Autonomous Incident Triage",
+  "short_name": "CoalGuard",
   "description": "Autonomous AI Incident Triage, Real-Time Operations & Predictive Surge Forecasting",
   "start_url": "/",
   "id": "/",
@@ -41,7 +41,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Dispatch OS Landing Page"
+      "label": "CoalGuard Landing Page"
     }
   ],
   "categories": ["productivity", "utilities", "business"],

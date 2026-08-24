@@ -1,4 +1,4 @@
-# ⚡ Dispatch OS — Autonomous Incident Triage & Resolution Platform
+# ⚡ CoalGuard — Autonomous Incident Triage & Resolution Platform
 
 [![Live App](https://img.shields.io/badge/Live%20App-ai--smart--issue--routing--jbb8.vercel.app-0ea5e9?style=for-the-badge&logo=vercel)](https://ai-smart-issue-routing-jbb8.vercel.app)
 [![Backend API](https://img.shields.io/badge/API-Railway%20Live-0B0D0E?style=for-the-badge&logo=railway)](https://ai-smart-issue-routing-production.up.railway.app)
@@ -8,7 +8,7 @@
 > 🌐 **Live Web Application:** [https://ai-smart-issue-routing-jbb8.vercel.app](https://ai-smart-issue-routing-jbb8.vercel.app)  
 > ⚡ **Production Backend API:** [https://ai-smart-issue-routing-production.up.railway.app](https://ai-smart-issue-routing-production.up.railway.app)
 
-**Dispatch OS** is an enterprise-grade autonomous incident triage and operations platform. It eliminates manual support triage by instantly analyzing incoming issues, classifying them into departments (`IT`, `HR`, `Finance`, `Operations`), calculating priority and confidence ratings (98%+), and forecasting 7-day workload surges in real-time.
+**CoalGuard** is an enterprise-grade autonomous incident triage and operations platform. It eliminates manual support triage by instantly analyzing incoming issues, classifying them into departments (`IT`, `HR`, `Finance`, `Operations`), calculating priority and confidence ratings (98%+), and forecasting 7-day workload surges in real-time.
 
 ---
 
@@ -16,13 +16,13 @@
 
 <div align="center">
   <p><strong>1. Admin Command Center & Real-Time Predictive AI Analytics Hub</strong></p>
-  <img src="./docs/screenshots/admin-dashboard.png" alt="Dispatch OS Admin Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
+  <img src="./docs/screenshots/admin-dashboard.png" alt="CoalGuard Admin Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
   <br /><br />
   <p><strong>2. User Incident Portal with Real-Time AI Autonomous Triage</strong></p>
-  <img src="./docs/screenshots/user-dashboard.png" alt="Dispatch OS User Incident Portal" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
+  <img src="./docs/screenshots/user-dashboard.png" alt="CoalGuard User Incident Portal" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
   <br /><br />
   <p><strong>3. Enterprise Landing Page & Live Incident Dispatch Pipeline</strong></p>
-  <img src="./docs/screenshots/landing-page.png" alt="Dispatch OS Landing Page" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
+  <img src="./docs/screenshots/landing-page.png" alt="CoalGuard Landing Page" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" />
 </div>
 
 ---
