@@ -53,7 +53,7 @@ const LandingPage = () => {
       backgroundColor: theme.bg, 
       backgroundImage: theme.isDark 
         ? 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px)' 
-        : `linear-gradient(rgba(248, 250, 252, 0.58), rgba(248, 250, 252, 0.65)), url('/real_coal_mine_bg.jpg')`,
+        : `linear-gradient(rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0.92)), url('/real_coal_mine_bg.jpg')`,
       backgroundSize: theme.isDark ? '24px 24px' : 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
@@ -378,7 +378,7 @@ const LandingPage = () => {
 
           <div style={{ display: 'flex', gap: '40px', flexDirection: isMobile ? 'column' : 'row' }}>
           {/* Sidebar Tabs */}
-          <div style={{ flex: '1', width: isMobile ? '100%' : '300px', display: 'flex', flexDirection: 'column', gap: '0' }}>
+          <div style={{ flex: '1', width: isMobile ? '100%' : '300px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {[
               { id: 'dmf', label: 'DMF Fund Status' },
               { id: 'production', label: 'Mineral Production' },
@@ -392,32 +392,42 @@ const LandingPage = () => {
                   key={tab.id}
                   onClick={() => setActiveIndicator(tab.id)}
                   style={{ 
-                    padding: '16px 8px', 
+                    padding: '14px 16px', 
                     cursor: 'pointer', 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'space-between',
-                    borderBottom: '1px solid #f1f5f9',
-                    color: isActive ? '#1e293b' : '#64748b',
-                    fontWeight: '500',
-                    transition: 'all 0.2s ease',
-                    backgroundColor: 'transparent'
+                    borderRadius: '16px',
+                    border: isActive 
+                      ? (theme.isDark ? '1.5px solid #38bdf8' : '1.5px solid #2563eb') 
+                      : `1px solid ${theme.cardBorder}`,
+                    backgroundColor: isActive 
+                      ? (theme.isDark ? 'rgba(30, 41, 59, 0.95)' : '#ffffff') 
+                      : (theme.isDark ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255, 255, 255, 0.85)'),
+                    boxShadow: isActive 
+                      ? (theme.isDark ? '0 8px 24px -4px rgba(56, 189, 248, 0.2)' : '0 10px 25px -5px rgba(37, 99, 235, 0.15)') 
+                      : (theme.isDark ? 'none' : '0 2px 8px rgba(0, 0, 0, 0.04)'),
+                    color: isActive ? theme.textPrimary : theme.textSecondary,
+                    fontWeight: isActive ? '700' : '600',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                    backdropFilter: 'blur(12px)'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                     <div style={{ 
-                      width: '40px', height: '40px', borderRadius: '50%', 
-                      backgroundColor: isActive ? '#1e3a8a' : '#f1f5f9',
+                      width: '38px', height: '38px', borderRadius: '10px', 
+                      backgroundColor: isActive 
+                        ? (theme.isDark ? '#0284c7' : '#1e3a8a') 
+                        : (theme.isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9'),
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: isActive ? '#fff' : '#64748b',
+                      color: isActive ? '#fff' : theme.textMuted,
                       fontSize: '18px'
                     }}>
-                      {/* Document Icon Placeholder */}
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
-                    <span>{tab.label}</span>
+                    <span style={{ fontSize: '15px' }}>{tab.label}</span>
                   </div>
-                  {isActive && <span style={{ color: '#1e293b' }}>›</span>}
+                  {isActive && <span style={{ color: theme.isDark ? '#38bdf8' : '#2563eb', fontWeight: '800' }}>➔</span>}
                 </div>
               );
             })}
@@ -585,7 +595,17 @@ const LandingPage = () => {
         <h3 style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '24px' }}>Enterprise Industrial Tech Architecture</h3>
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           {['React 19', 'Node.js', 'Express.js', 'MongoDB Atlas', 'Google Gemini AI', 'Socket.io', 'Recharts', 'Geolocation API', 'Cloudinary CDN', 'Mobile PWA', 'Vercel / Cloud'].map((tech, i) => (
-            <span key={i} style={{ padding: '8px 18px', borderRadius: '10px', backgroundColor: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.25)', color: '#f59e0b', fontSize: '13px', fontWeight: '600' }}>
+            <span key={i} style={{ 
+              padding: '8px 18px', 
+              borderRadius: '12px', 
+              backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.85)' : '#ffffff', 
+              border: '1.5px solid rgba(245, 158, 11, 0.4)', 
+              color: '#d97706', 
+              fontSize: '13px', 
+              fontWeight: '700',
+              boxShadow: theme.isDark ? 'none' : '0 2px 8px rgba(0,0,0,0.04)',
+              backdropFilter: 'blur(10px)'
+            }}>
               {tech}
             </span>
           ))}
