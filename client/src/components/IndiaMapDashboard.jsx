@@ -36,7 +36,7 @@ const IndiaMapDashboard = () => {
         <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
       </div>
 
-      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '40px 0' }}>
+      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '40px', borderRadius: '24px' }}>
         
         {/* Left Side: Interactive Map */}
         <div style={{ flex: '1.2', minWidth: '350px', position: 'relative', backgroundColor: '#f4f5f7', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
