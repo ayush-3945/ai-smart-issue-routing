@@ -9,6 +9,18 @@ import { useTheme } from '../context/ThemeContext';
 const LandingPage = () => {
   const { theme } = useTheme();
   const [activeIndicator, setActiveIndicator] = useState('dmf');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  React.useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('accessToken'));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+  };
 
   const indicatorData = {
     dmf: [
@@ -66,12 +78,25 @@ const LandingPage = () => {
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <InstallPwaButton />
           <ThemeToggle />
-          <Link to="/login" className="nav-btn-compact nav-btn-text-hide" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(14,165,233,0.35)', display: 'inline-flex', alignItems: 'center' }}>
-            Sign In
-          </Link>
-          <Link to="/register" className="nav-btn-compact" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.35)', display: 'inline-flex', alignItems: 'center' }}>
-            Field Portal
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <button onClick={handleLogout} className="nav-btn-compact" style={{ padding: '10px 24px', borderRadius: '10px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontWeight: '700', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', transition: 'all 0.2s' }}>
+                Sign Off
+              </button>
+              <Link to="/login" className="nav-btn-compact" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.35)', display: 'inline-flex', alignItems: 'center' }}>
+                Go to Dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="nav-btn-compact nav-btn-text-hide" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(14,165,233,0.35)', display: 'inline-flex', alignItems: 'center' }}>
+                Sign In
+              </Link>
+              <Link to="/register" className="nav-btn-compact" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.35)', display: 'inline-flex', alignItems: 'center' }}>
+                Field Portal
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
