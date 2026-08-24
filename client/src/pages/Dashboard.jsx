@@ -770,27 +770,7 @@ const Dashboard = () => {
           <button onClick={() => setMobileView('menu')} style={{ marginBottom: '16px', background: 'none', border: 'none', color: theme.textPrimary, fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>← Back to Menu</button>
         )}
 
-        {/* Top Live Surveillance Radar Banner */}
-        <div className="hide-on-mobile" style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '8px 16px',
-          borderRadius: '12px',
-          backgroundColor: 'rgba(16, 185, 129, 0.08)',
-          border: '1px solid rgba(16, 185, 129, 0.25)',
-          marginBottom: '16px',
-          fontSize: '12px',
-          fontWeight: '700',
-          color: '#10b981',
-          letterSpacing: '0.5px'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block', boxShadow: '0 0 10px #10b981' }}></span>
-            <span>{t('liveRadar')}</span>
-          </div>
-          <span style={{ fontSize: '11px', color: theme.textMuted }}>DGMS REG-124 ACTIVE</span>
-        </div>
+
 
         {/* Sticky Underground Offline Mode Active Banner */}
         {!isOnline && (
