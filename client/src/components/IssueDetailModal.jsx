@@ -3,7 +3,7 @@ import API from '../utils/api';
 import { useSocket } from '../context/SocketContext';
 import { useTheme } from '../context/ThemeContext';
 
-const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser }) => {
+const IssueDetailModal = ({ complaint, onClose, onComplaintUpdated, currentUser, isRegulatory = false }) => {
   const { theme } = useTheme();
   const socket = useSocket();
   const [comments, setComments] = useState(complaint?.comments || []);
