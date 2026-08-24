@@ -719,7 +719,6 @@ const Dashboard = () => {
           
           {/* Controls Toolbar (Opposite Side) */}
           <div className="dashboard-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginLeft: 'auto' }}>
-            {!isMobile && <InstallPwaButton />}
             <LanguageToggle />
             <ThemeToggle />
             {!isMobile && <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />}
@@ -752,17 +751,6 @@ const Dashboard = () => {
                 <span>Regulatory Hub</span>
               </button>
             )}
-            <button
-              title="Sign Out"
-              onClick={handleLogout}
-              style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '6px', transition: 'all 0.2s' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'; e.currentTarget.style.color = '#ef4444'; }}
-            >
-              <span>🚪</span>
-              <span>Sign Off</span>
-            </button>
-
             {/* User Avatar & Sign Out */}
             <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)', marginLeft: '4px' }}>
               {user.name ? user.name.charAt(0).toUpperCase() : '⛏️'}

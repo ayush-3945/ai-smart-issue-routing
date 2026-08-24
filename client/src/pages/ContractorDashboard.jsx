@@ -46,12 +46,6 @@ const ContractorDashboard = () => {
             </p>
           </div>
         </div>
-        <button
-          onClick={() => { localStorage.clear(); navigate('/login'); }}
-          style={{ padding: '8px 16px', borderRadius: '10px', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', color: '#ef4444', fontWeight: '700', cursor: 'pointer', transition: 'transform 0.2s' }}
-        >
-          Sign Out 🚪
-        </button>
       </div>
 
       {/* KPI Cards (Glassmorphism) */}
