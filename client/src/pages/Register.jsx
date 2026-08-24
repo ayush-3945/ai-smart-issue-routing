@@ -240,8 +240,8 @@ const Register = () => {
                 cursor: 'pointer'
               }}
             >
-              <option value="admin">Mine Official / Safety Controller</option>
-              <option value="user">Field Inspector / Shift Worker</option>
+              <option value="admin">Mine Official</option>
+              <option value="user">Field Inspector</option>
               <option value="regulatoryAuthority">Regulatory Authority (Sarkaari Adhikari)</option>
             </select>
           </div>
