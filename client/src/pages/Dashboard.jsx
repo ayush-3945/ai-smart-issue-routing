@@ -488,6 +488,11 @@ const Dashboard = () => {
       setShowCustomLocation(false);
       addToast(`🤖 "${res.data.complaint?.title || finalTitle}" — AI analyzed & logged!`, 'success', 5000);
       fetchMyComplaints();
+      
+      // Auto-redirect to Dashboard for judges demonstration
+      setTimeout(() => {
+        navigate('/admin');
+      }, 1500);
     } catch (err) {
       const serverMsg = err.response?.data?.errors?.join(', ') || err.response?.data?.message || err.message || 'Failed to create complaint';
       addToast(`❌ ${serverMsg}`, 'error', 6000);
@@ -686,34 +691,16 @@ const Dashboard = () => {
             <ThemeToggle />
             {!isMobile && <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />}
 
-            {user?.role === 'admin' && (
               <button
                 title={t('adminView')}
                 onClick={() => window.location.href = '/admin'}
                 style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                <span>👑</span>
-                <span>Command Center</span>
+                <span>📊</span>
+                <span>Dashboard</span>
               </button>
-            )}
-            {user?.role === 'contractor' && (
-              <button
-                onClick={() => window.location.href = '/contractor'}
-                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
-              >
-                <span>👷</span>
-                <span>Contractor Hub</span>
-              </button>
-            )}
-            {user?.role === 'regulatoryAuthority' && (
-              <button
-                onClick={() => window.location.href = '/regulatory-dashboard'}
-                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
-              >
-                <span>⚖️</span>
-                <span>Regulatory Hub</span>
-              </button>
-            )}
             {/* User Avatar & Sign Out */}
             <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)', marginLeft: '4px' }}>
               {user.name ? user.name.charAt(0).toUpperCase() : '⛏️'}
