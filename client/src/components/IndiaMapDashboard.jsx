@@ -28,7 +28,7 @@ const IndiaMapDashboard = () => {
   const currentData = stateData[selectedState] || stateData["Default"];
 
   return (
-    <section style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
+    <section style={{ padding: '80px 20px', maxWidth: '1100px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
           State-wise Mining Summary
@@ -36,10 +36,10 @@ const IndiaMapDashboard = () => {
         <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
       </div>
 
-      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '40px', borderRadius: '24px' }}>
+      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '20px', borderRadius: '24px' }}>
         
         {/* Left Side: Interactive Map */}
-        <div style={{ flex: '1.2', minWidth: '350px', position: 'relative', backgroundColor: '#f4f5f7', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ flex: '1.2', minWidth: '100%', position: 'relative', backgroundColor: '#f4f5f7', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           
           {/* Dashed Concentric Circles Background */}
           <svg style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px', pointerEvents: 'none', opacity: 0.5 }} viewBox="0 0 800 800">

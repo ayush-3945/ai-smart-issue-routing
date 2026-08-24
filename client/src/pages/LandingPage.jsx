@@ -350,7 +350,7 @@ const LandingPage = () => {
       </section>
 
       {/* Key Indicators Interactive Dashboard */}
-      <section id="key-indicators" style={{ padding: '80px 48px', maxWidth: '1200px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
+      <section id="key-indicators" style={{ padding: '80px 20px', maxWidth: '1200px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
         <div style={{ marginBottom: '20px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: '500', margin: '0 0 12px', color: theme.textPrimary, borderBottom: '2px solid #8b4513', display: 'inline-block', paddingBottom: '4px' }}>
             Key Indicators
@@ -406,7 +406,7 @@ const LandingPage = () => {
 
           {/* Chart Container */}
           <div style={{ 
-            flex: '3', minWidth: '300px', height: '420px', 
+            flex: '3', minWidth: '100%', height: '420px', 
             backgroundColor: '#ffffff', 
             borderRadius: '8px', 
             padding: '24px',
@@ -523,7 +523,7 @@ const LandingPage = () => {
       </div>
 
       {/* Features Grid */}
-      <section id="features" style={{ padding: '80px 48px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="features" style={{ padding: '80px 20px', maxWidth: '1100px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
           <h2 style={{ fontSize: '36px', fontWeight: '800', margin: '0 0 12px', letterSpacing: '-0.5px', color: theme.textPrimary }}>
             Engineered for <span style={{ color: '#f59e0b' }}>Indian Coal Mining Operations</span>
@@ -553,7 +553,7 @@ const LandingPage = () => {
       </section>
 
       {/* Tech Stack */}
-      <section style={{ padding: '60px 48px', borderTop: `1px solid ${theme.cardBorder}`, textAlign: 'center' }}>
+      <section style={{ padding: '60px 20px', borderTop: `1px solid ${theme.cardBorder}`, textAlign: 'center' }}>
         <h3 style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '24px' }}>Enterprise Industrial Tech Architecture</h3>
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           {['React 19', 'Node.js', 'Express.js', 'MongoDB Atlas', 'Google Gemini AI', 'Socket.io', 'Recharts', 'Geolocation API', 'Cloudinary CDN', 'Mobile PWA', 'Vercel / Cloud'].map((tech, i) => (
@@ -565,7 +565,7 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section style={{ padding: '80px 48px', textAlign: 'center', position: 'relative' }}>
+      <section style={{ padding: '80px 20px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '500px', height: '300px', background: 'radial-gradient(ellipse, rgba(245, 158, 11, 0.12) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
         
         <h2 style={{ fontSize: '40px', fontWeight: '900', margin: '0 0 16px', letterSpacing: '-1px', color: theme.textPrimary }}>
@@ -579,7 +579,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer style={{ padding: '32px 48px', borderTop: `1px solid ${theme.cardBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+      <footer style={{ padding: '32px 20px', borderTop: `1px solid ${theme.cardBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '16px' }}>⛏️</span>
           <span style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted }}>CoalGuard</span>
