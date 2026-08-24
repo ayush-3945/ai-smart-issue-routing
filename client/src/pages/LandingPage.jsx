@@ -53,8 +53,15 @@ const LandingPage = () => {
       backgroundColor: theme.bg, 
       backgroundImage: theme.isDark 
         ? 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)' 
-        : 'radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px)',
-      backgroundSize: '24px 24px',
+        : `
+          radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.08) 0px, transparent 40%),
+          radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.08) 0px, transparent 40%),
+          radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 40%),
+          radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 40%),
+          radial-gradient(rgba(0, 0, 0, 0.07) 1.5px, transparent 1.5px)
+        `,
+      backgroundSize: theme.isDark ? '24px 24px' : '100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px',
+      backgroundAttachment: 'fixed',
       color: theme.textPrimary, 
       fontFamily: "'Inter', system-ui, sans-serif", 
       overflow: 'hidden', 
@@ -366,10 +373,6 @@ const LandingPage = () => {
 
       {/* Key Indicators Interactive Dashboard */}
       <section id="key-indicators" style={{ position: 'relative', padding: '80px 20px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}`, overflow: 'hidden' }}>
-        {/* Background Gradients */}
-        <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
-        <div style={{ position: 'absolute', bottom: '-100px', left: '-100px', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
-
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ marginBottom: '32px', textAlign: 'center' }}>
             <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
