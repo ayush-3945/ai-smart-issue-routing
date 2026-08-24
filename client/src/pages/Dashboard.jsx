@@ -497,13 +497,23 @@ const Dashboard = () => {
   };
 
   const renderMobileMenu = () => (
-    <div style={{ padding: '10px 0' }}>
+    <div style={{ padding: '0' }}>
+      {/* Blue Header exactly like screenshot */}
+      <div style={{ backgroundColor: '#1d4ed8', color: '#fff', padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '-32px -20px 24px -20px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
+        <h1 style={{ margin: 0, fontSize: '28px', fontWeight: '700' }}>Dashboard</h1>
+        <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '24px', cursor: 'pointer' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+
       {/* Profile Card */}
-      <div style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '24px', display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}>
-        <div style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px' }}>👤</div>
+      <div style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '24px', display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 12px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}>
+        <div style={{ width: '60px', height: '60px', borderRadius: '16px', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1d4ed8', fontSize: '32px' }}>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
         <div>
-          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '700', color: theme.textPrimary }}>Welcome, {user.name || 'User'}!</h2>
-          <p style={{ margin: '4px 0 0', color: theme.textSecondary, fontSize: '14px' }}>{user.phone || '+91 7834949144'}</p>
+          <h2 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: theme.textPrimary }}>Welcome, {user.name || 'User'}!</h2>
+          <p style={{ margin: '4px 0 0', color: '#1d4ed8', fontSize: '15px', fontWeight: '500' }}>{user.phone || '+91 7834949144'}</p>
         </div>
       </div>
 
@@ -601,8 +611,9 @@ const Dashboard = () => {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 20px', transition: 'all 0.3s ease' }}>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-        {/* Top Navbar Header - FULL WIDTH */}
-        <div className="dashboard-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 20px 20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
+        {/* Top Navbar Header - FULL WIDTH (Desktop Only) */}
+        {!isMobile && (
+          <div className="dashboard-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 20px 20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
           <div
             onClick={() => navigate('/')}
             title={t('backToHome')}
@@ -655,7 +666,9 @@ const Dashboard = () => {
               🚪
             </button>
           </div>
+          </div>
         </div>
+        )}
 
       {isMobile && mobileView === 'menu' ? (
         renderMobileMenu()
