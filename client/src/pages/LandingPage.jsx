@@ -402,11 +402,11 @@ const LandingPage = () => {
             <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '12px', marginBottom: '16px' }}>
                 <span style={{ fontSize: '18px', color: '#475569', fontWeight: '400' }}>
-                  {activeIndicator === 'dmf' ? 'DMF Fund Status - Till Jun 2026' : activeIndicator === 'production' ? 'Mineral Production - 2026' : 'Auction & Blocks'}
+                  {activeIndicator === 'dmf' ? 'DMF Fund Status - Till Jun 2026' : activeIndicator === 'production' ? 'Mineral Production - 2026' : activeIndicator === 'auction' ? 'Auction & Blocks' : activeIndicator === 'exploration' ? 'Geological Exploration Analytics' : 'National Mineral Exploration Trust'}
                 </span>
               </div>
               <h3 style={{ margin: '0 0 24px', fontSize: '18px', color: '#1e293b', textAlign: 'center', fontWeight: '400' }}>
-                {activeIndicator === 'dmf' ? 'DMF Fund Status' : activeIndicator === 'production' ? 'Mineral Production' : 'Auction'}
+                {activeIndicator === 'dmf' ? 'DMF Fund Status' : activeIndicator === 'production' ? 'Mineral Production' : activeIndicator === 'auction' ? 'Auction' : activeIndicator === 'exploration' ? 'Exploration' : 'NMEDT'}
               </h3>
               
               <div style={{ flex: 1, position: 'relative' }}>
@@ -430,11 +430,21 @@ const LandingPage = () => {
                       { name: '2024', target: 750, achieved: 780 },
                       { name: '2025', target: 800, achieved: 830 },
                       { name: '2026', target: 900, achieved: 880 },
-                    ] : [
+                    ] : activeIndicator === 'auction' ? [
                       { name: '2023', blocks: 15, value: 5000 },
                       { name: '2024', blocks: 25, value: 8500 },
                       { name: '2025', blocks: 42, value: 14000 },
                       { name: '2026', blocks: 68, value: 22000 },
+                    ] : activeIndicator === 'exploration' ? [
+                      { name: '2023', surveyed: 120, drilled: 45 },
+                      { name: '2024', surveyed: 150, drilled: 60 },
+                      { name: '2025', surveyed: 190, drilled: 85 },
+                      { name: '2026', surveyed: 240, drilled: 110 },
+                    ] : [
+                      { name: '2023', allocated: 250, disbursed: 180 },
+                      { name: '2024', allocated: 320, disbursed: 240 },
+                      { name: '2025', allocated: 410, disbursed: 310 },
+                      { name: '2026', allocated: 500, disbursed: 420 },
                     ]
                   } margin={{ top: 10, right: 10, left: 10, bottom: 40 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
@@ -463,6 +473,18 @@ const LandingPage = () => {
                       <>
                         <Bar dataKey="blocks" name="Blocks Auctioned" fill="#8b4513" barSize={24} />
                         <Bar dataKey="value" name="Value (Cr.)" fill="#0f5132" barSize={24} />
+                      </>
+                    )}
+                    {activeIndicator === 'exploration' && (
+                      <>
+                        <Bar dataKey="surveyed" name="Surveyed Area (sq km)" fill="#8b4513" barSize={24} />
+                        <Bar dataKey="drilled" name="Boreholes Drilled" fill="#0f5132" barSize={24} />
+                      </>
+                    )}
+                    {activeIndicator === 'nmedt' && (
+                      <>
+                        <Bar dataKey="allocated" name="Funds Allocated (Cr.)" fill="#8b4513" barSize={24} />
+                        <Bar dataKey="disbursed" name="Funds Disbursed (Cr.)" fill="#0f5132" barSize={24} />
                       </>
                     )}
                   </BarChart>
