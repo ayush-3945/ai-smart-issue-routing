@@ -27,12 +27,62 @@ const base64ToFile = async (base64Data, filename, mimeType) => {
   return new File([blob], filename, { type: mimeType || 'image/jpeg' });
 };
 
+const CIL_SUBSIDIARIES = {
+  'Eastern Coalfields Limited (ECL)': [
+    'Raniganj - Shaft 3 (Deep Seam)',
+    'Rajmahal Open Cast Project',
+    'Sonepur Bazari Project',
+    'Other ECL Site'
+  ],
+  'Bharat Coking Coal Limited (BCCL)': [
+    'Jharia Colliery - Pit 4 (Underground)',
+    'Dhanbad Central Coalfield',
+    'Block-II OCP',
+    'Other BCCL Site'
+  ],
+  'Central Coalfields Limited (CCL)': [
+    'Bokaro Colliery - Open-Cast Pit B',
+    'Piparwar OCP',
+    'North Karanpura',
+    'Other CCL Site'
+  ],
+  'Western Coalfields Limited (WCL)': [
+    'Nagpur Area',
+    'Chandrapur Area',
+    'Pench Area',
+    'Other WCL Site'
+  ],
+  'South Eastern Coalfields Limited (SECL)': [
+    'Korba West - Block A (HEMM Zone)',
+    'Gevra OCP',
+    'Kusmunda OCP',
+    'Other SECL Site'
+  ],
+  'Northern Coalfields Limited (NCL)': [
+    'Singrauli Northern Coalfield',
+    'Jayant OCP',
+    'Dudhichua OCP',
+    'Other NCL Site'
+  ],
+  'Mahanadi Coalfields Limited (MCL)': [
+    'Talcher Coalfield - Pit 2',
+    'Ib Valley Coalfield',
+    'Other MCL Site'
+  ],
+  'Central Mine Planning & Design Inst. (CMPDIL)': [
+    'HQ Ranchi',
+    'Regional Institute - I to VII',
+    'Other CMPDIL Site'
+  ]
+};
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
   const [reportType, setReportType] = useState('hazard'); // 'hazard' | 'maintenance'
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [selectedSubsidiary, setSelectedSubsidiary] = useState('');
   const [mineSite, setMineSite] = useState('');
   const [contractor, setContractor] = useState('');
   const [equipmentId, setEquipmentId] = useState('');
@@ -885,69 +935,66 @@ const Dashboard = () => {
           </p>
 
           <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {/* Mine Site Selection with Quick Chips */}
+            {/* Mine Site Selection with Cascading Dropdown */}
             <div>
               <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: theme.textSecondary, marginBottom: '8px' }}>
                 🏭 {t('mineSiteLabel')}
               </label>
-              
-              {/* Quick Select Chips */}
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '10px' }}>
-                {[
-                  'Jharia Colliery - Pit 4 (Underground)',
-                  'Bokaro Colliery - Open-Cast Pit B',
-                  'Korba West - Block A',
-                  'Raniganj - Shaft 3'
-                ].map((site) => (
-                  <button
-                    key={site}
-                    type="button"
-                    onClick={() => setMineSite(site)}
-                    style={{
-                      padding: '6px 12px',
-                      borderRadius: '8px',
-                      fontSize: '11px',
-                      fontWeight: '700',
-                      cursor: 'pointer',
-                      border: mineSite === site ? '1px solid #f59e0b' : `1px solid ${theme.cardBorder}`,
-                      backgroundColor: mineSite === site ? 'rgba(245, 158, 11, 0.2)' : theme.badgeBg,
-                      color: mineSite === site ? '#fbbf24' : theme.textSecondary,
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    {site.split(' - ')[0]}
-                  </button>
-                ))}
-              </div>
 
-              <select
-                value={mineSite}
-                onChange={(e) => setMineSite(e.target.value)}
-                required
-                style={{
-                  width: '100%',
-                  padding: '14px 18px',
-                  borderRadius: '12px',
-                  backgroundColor: theme.inputBg,
-                  border: `1px solid ${theme.cardBorder}`,
-                  color: theme.textPrimary,
-                  fontSize: '14px',
-                  outline: 'none',
-                  cursor: 'pointer',
-                  appearance: 'none',
-                  boxSizing: 'border-box'
-                }}
-              >
-                <option value="" disabled>Select Coalfield / Mine Site Location...</option>
-                <option value="Jharia Colliery - Pit 4 (Underground)">Jharia Colliery - Pit 4 (Underground Shaft)</option>
-                <option value="Bokaro Colliery - Open-Cast Pit B">Bokaro Colliery - Open-Cast Pit B</option>
-                <option value="Korba West - Block A (HEMM Zone)">Korba West - Block A (HEMM Zone)</option>
-                <option value="Raniganj - Shaft 3 (Deep Seam)">Raniganj - Shaft 3 (Deep Seam)</option>
-                <option value="Dhanbad Central Coalfield">Dhanbad Central Coalfield</option>
-                <option value="Singrauli Northern Coalfield">Singrauli Northern Coalfield</option>
-                <option value="Talcher Coalfield - Pit 2">Talcher Coalfield - Pit 2</option>
-                <option value="Other Mine Site">Other Mine Site (Specify in Description)</option>
-              </select>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <select
+                  value={selectedSubsidiary}
+                  onChange={(e) => {
+                    setSelectedSubsidiary(e.target.value);
+                    setMineSite(''); // Reset mine site when subsidiary changes
+                  }}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '14px 18px',
+                    borderRadius: '12px',
+                    backgroundColor: theme.inputBg,
+                    border: `1px solid ${theme.cardBorder}`,
+                    color: theme.textPrimary,
+                    fontSize: '14px',
+                    outline: 'none',
+                    cursor: 'pointer',
+                    appearance: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  <option value="" disabled>Select Subsidiary...</option>
+                  {Object.keys(CIL_SUBSIDIARIES).map(sub => (
+                    <option key={sub} value={sub}>{sub}</option>
+                  ))}
+                </select>
+
+                <select
+                  value={mineSite}
+                  onChange={(e) => setMineSite(e.target.value)}
+                  required
+                  disabled={!selectedSubsidiary}
+                  style={{
+                    width: '100%',
+                    padding: '14px 18px',
+                    borderRadius: '12px',
+                    backgroundColor: !selectedSubsidiary ? 'rgba(0,0,0,0.05)' : theme.inputBg,
+                    border: `1px solid ${theme.cardBorder}`,
+                    color: theme.textPrimary,
+                    fontSize: '14px',
+                    outline: 'none',
+                    cursor: !selectedSubsidiary ? 'not-allowed' : 'pointer',
+                    appearance: 'none',
+                    boxSizing: 'border-box',
+                    opacity: !selectedSubsidiary ? 0.6 : 1
+                  }}
+                >
+                  <option value="" disabled>Select Area / Mine Site...</option>
+                  {selectedSubsidiary && CIL_SUBSIDIARIES[selectedSubsidiary].map(site => (
+                    <option key={site} value={site}>{site}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Operating Contractor / Mining Agency */}
