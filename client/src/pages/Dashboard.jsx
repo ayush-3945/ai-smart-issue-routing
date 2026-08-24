@@ -734,6 +734,24 @@ const Dashboard = () => {
                 <span>Command Center</span>
               </button>
             )}
+            {user?.role === 'contractor' && (
+              <button
+                onClick={() => window.location.href = '/contractor'}
+                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
+              >
+                <span>👷</span>
+                <span>Contractor Hub</span>
+              </button>
+            )}
+            {user?.role === 'regulatoryAuthority' && (
+              <button
+                onClick={() => window.location.href = '/regulatory-dashboard'}
+                style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#fff', padding: '0 12px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '13px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)', transition: 'transform 0.2s' }}
+              >
+                <span>⚖️</span>
+                <span>Regulatory Hub</span>
+              </button>
+            )}
             <button
               title="Sign Out"
               onClick={handleLogout}
