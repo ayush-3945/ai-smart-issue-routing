@@ -89,9 +89,6 @@ const LandingPage = () => {
             </>
           ) : (
             <>
-              <Link to="/login" className="nav-btn-compact nav-btn-text-hide" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #0284c7, #2563eb)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(14,165,233,0.35)', display: 'inline-flex', alignItems: 'center' }}>
-                Sign In
-              </Link>
               <Link to="/register" className="nav-btn-compact" style={{ padding: '10px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff', textDecoration: 'none', fontWeight: '700', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.35)', display: 'inline-flex', alignItems: 'center' }}>
                 Field Portal
               </Link>
