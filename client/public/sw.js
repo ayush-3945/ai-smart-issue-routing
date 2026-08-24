@@ -1,5 +1,5 @@
 // CoalGuard Service Worker - Network-First Strategy for Instant Live Updates
-const CACHE_NAME = 'coalguard-v3';
+const CACHE_NAME = 'coalguard-v4';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
