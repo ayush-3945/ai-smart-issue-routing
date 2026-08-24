@@ -53,7 +53,7 @@ const LandingPage = () => {
       backgroundColor: theme.bg, 
       backgroundImage: theme.isDark 
         ? 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px)' 
-        : `url('/abstract_tech_bg.jpg')`,
+        : `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('/abstract_tech_bg_strong.jpg')`,
       backgroundSize: theme.isDark ? '24px 24px' : 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
