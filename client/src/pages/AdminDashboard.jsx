@@ -51,6 +51,8 @@ const AdminDashboard = () => {
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [selectedContractorTier, setSelectedContractorTier] = useState('All');
   const [selectedFleetFilter, setSelectedFleetFilter] = useState('All');
+  const [selectedContractorData, setSelectedContractorData] = useState(null);
+  const [contractorModalTab, setContractorModalTab] = useState('attendance');
   const { toasts, addToast, removeToast } = useToast();
 
   // Autonomous IoT Sensor Telemetry State
@@ -969,13 +971,15 @@ const AdminDashboard = () => {
                 {filteredContractors.map((c) => (
                   <div
                     key={c.id}
+                    onClick={() => setSelectedContractorData(c)}
                     style={{
                       padding: '20px',
                       borderRadius: '18px',
                       backgroundColor: theme.isDark ? 'rgba(18, 21, 33, 0.85)' : '#ffffff',
                       border: `1px solid ${c.score < 70 ? 'rgba(239, 68, 68, 0.4)' : theme.cardBorder}`,
                       transition: 'transform 0.2s, border-color 0.2s',
-                      boxShadow: c.score < 70 ? '0 0 20px rgba(239, 68, 68, 0.15)' : 'none'
+                      boxShadow: c.score < 70 ? '0 0 20px rgba(239, 68, 68, 0.15)' : 'none',
+                      cursor: 'pointer'
                     }}
                     onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
@@ -1480,6 +1484,99 @@ const AdminDashboard = () => {
               setSelectedComplaint(updatedComplaint);
             }}
           />
+        )}
+
+        {/* Contractor Detail Modal */}
+        {selectedContractorData && (
+          <div style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)',
+            zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
+          }} onClick={() => setSelectedContractorData(null)}>
+            <div style={{
+              backgroundColor: theme.isDark ? '#0f172a' : '#ffffff',
+              borderRadius: '24px', width: '100%', maxWidth: '800px',
+              border: `1px solid ${selectedContractorData.color}`,
+              boxShadow: `0 20px 40px -10px ${selectedContractorData.color}40`,
+              overflow: 'hidden', display: 'flex', flexDirection: 'column',
+              maxHeight: '90vh'
+            }} onClick={e => e.stopPropagation()}>
+              
+              {/* Header */}
+              <div style={{ padding: '24px', borderBottom: `1px solid ${theme.cardBorder}`, background: `linear-gradient(to right, ${selectedContractorData.color}15, transparent)` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '800', color: theme.textPrimary }}>{selectedContractorData.name}</h2>
+                    <p style={{ margin: '4px 0 0', color: theme.textSecondary }}>📍 {selectedContractorData.zone} | Lead: {selectedContractorData.lead}</p>
+                  </div>
+                  <button onClick={() => setSelectedContractorData(null)} style={{ background: 'transparent', border: 'none', color: theme.textSecondary, fontSize: '24px', cursor: 'pointer' }}>×</button>
+                </div>
+                
+                {/* Tabs */}
+                <div style={{ display: 'flex', gap: '20px', marginTop: '24px' }}>
+                  <button onClick={() => setContractorModalTab('attendance')} style={{ padding: '8px 16px', border: 'none', background: 'transparent', color: contractorModalTab === 'attendance' ? selectedContractorData.color : theme.textSecondary, borderBottom: contractorModalTab === 'attendance' ? `2px solid ${selectedContractorData.color}` : '2px solid transparent', fontWeight: '700', fontSize: '15px', cursor: 'pointer', transition: 'all 0.2s' }}>Form-D Register (Attendance)</button>
+                  <button onClick={() => setContractorModalTab('violations')} style={{ padding: '8px 16px', border: 'none', background: 'transparent', color: contractorModalTab === 'violations' ? selectedContractorData.color : theme.textSecondary, borderBottom: contractorModalTab === 'violations' ? `2px solid ${selectedContractorData.color}` : '2px solid transparent', fontWeight: '700', fontSize: '15px', cursor: 'pointer', transition: 'all 0.2s' }}>Safety Violations ({selectedContractorData.violationsCount})</button>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
+                {contractorModalTab === 'attendance' ? (
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ color: theme.textMuted, fontSize: '12px', borderBottom: `1px solid ${theme.cardBorder}` }}>
+                        <th style={{ padding: '12px 8px' }}>WORKER ID</th>
+                        <th style={{ padding: '12px 8px' }}>NAME</th>
+                        <th style={{ padding: '12px 8px' }}>SHIFT</th>
+                        <th style={{ padding: '12px 8px' }}>STATUS (TODAY)</th>
+                        <th style={{ padding: '12px 8px' }}>MONTHLY %</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ fontSize: '14px', color: theme.textPrimary }}>
+                      {[
+                        { id: 'W-4091', name: 'Ramesh Singh', shift: 'Morning', status: 'Present', pct: '98%' },
+                        { id: 'W-4092', name: 'Vikash Kumar', shift: 'Morning', status: 'Absent', pct: '82%' },
+                        { id: 'W-4095', name: 'Santosh Yadav', shift: 'Night', status: 'Present', pct: '95%' },
+                        { id: 'W-4102', name: 'Deepak Das', shift: 'Night', status: 'Present', pct: '91%' },
+                        { id: 'W-4115', name: 'Manoj Munda', shift: 'Morning', status: 'Present', pct: '89%' },
+                        { id: 'W-4120', name: 'Arjun Reddy', shift: 'Night', status: 'Absent', pct: '74%' },
+                      ].map((w, i) => (
+                        <tr key={i} style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
+                          <td style={{ padding: '16px 8px', fontWeight: '600' }}>{w.id}</td>
+                          <td style={{ padding: '16px 8px' }}>{w.name}</td>
+                          <td style={{ padding: '16px 8px' }}>{w.shift}</td>
+                          <td style={{ padding: '16px 8px' }}>
+                            <span style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: '700', backgroundColor: w.status === 'Present' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)', color: w.status === 'Present' ? '#10b981' : '#ef4444' }}>
+                              {w.status}
+                            </span>
+                          </td>
+                          <td style={{ padding: '16px 8px', fontWeight: '700' }}>{w.pct}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <div>
+                    {Array.from({ length: Math.max(1, selectedContractorData.violationsCount) }).slice(0, 4).map((_, i) => (
+                      <div key={i} style={{ padding: '16px', borderRadius: '12px', border: `1px solid ${theme.cardBorder}`, marginBottom: '12px', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.02)' : '#f8fafc' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                          <span style={{ fontWeight: '800', color: theme.textPrimary }}>
+                            {i % 2 === 0 ? 'Haul Road Dust Suppression Failure' : 'Methane Sensor Bypass Warning'}
+                          </span>
+                          <span style={{ fontSize: '12px', color: theme.textMuted }}>Today, {10 - i}:30 AM</span>
+                        </div>
+                        <p style={{ margin: 0, fontSize: '13px', color: theme.textSecondary }}>
+                          {i % 2 === 0 
+                            ? `AI detected PM10 levels exceeding 100µg/m³ near ${selectedContractorData.zone}. Water sprinkler truck W-12 was inactive during shift.`
+                            : `Continuous miner telemetry disconnected for >15 minutes. Investigating potential intentional bypass.`}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         )}
 
         </div>
