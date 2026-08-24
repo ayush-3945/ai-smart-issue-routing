@@ -13,7 +13,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const MinesGISMap = ({ onBack }) => {
+const MinesGISMap = ({ onBack, mode }) => {
   const { theme } = useTheme();
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -97,10 +97,10 @@ const MinesGISMap = ({ onBack }) => {
         </button>
         <div>
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>
-            Mines GIS View
+            {mode === 'explore' ? 'Explore Area' : 'Mines GIS View'}
           </h2>
           <p style={{ margin: 0, fontSize: '12px', color: theme.textSecondary }}>
-            {loading ? 'Loading hazards...' : `${complaints.length} hazards mapped`}
+            {mode === 'explore' ? 'Viewing topography & safe zones' : (loading ? 'Loading hazards...' : `${complaints.length} hazards mapped`)}
           </p>
         </div>
       </div>
