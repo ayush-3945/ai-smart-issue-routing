@@ -468,8 +468,8 @@ const LandingPage = () => {
                 }}>
                   Amount (in Cr.)
                 </div>
-                <div style={{ flex: 1, minHeight: 0 }}>
-                  <ResponsiveContainer width="100%" height="100%">
+                <div style={{ flex: 1, minHeight: isMobile ? '300px' : 0, width: '100%' }}>
+                  <ResponsiveContainer width="100%" height={isMobile ? 300 : "100%"}>
                   <BarChart data={
                     activeIndicator === 'dmf' ? [
                       { name: 'Till May 18', collection: 18000, allocated: 12000, spent: 5000 },
