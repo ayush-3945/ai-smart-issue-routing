@@ -231,17 +231,17 @@ const Register = () => {
                 width: '100%',
                 padding: '12px 16px',
                 borderRadius: '12px',
-                backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
+                backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.8)' : '#ffffff',
+                border: `1px solid ${theme.cardBorder}`,
+                color: theme.textPrimary,
                 fontSize: '14px',
                 outline: 'none',
                 boxSizing: 'border-box',
                 cursor: 'pointer'
               }}
             >
-              <option value="admin">Mine Official / Safety Controller (Admin)</option>
-              <option value="user">Field Inspector / Shift Worker (User)</option>
+              <option value="admin">Mine Official / Safety Controller</option>
+              <option value="user">Field Inspector / Shift Worker</option>
               <option value="regulatoryAuthority">Regulatory Authority (Sarkaari Adhikari)</option>
             </select>
           </div>
@@ -258,9 +258,9 @@ const Register = () => {
                   width: '100%',
                   padding: '12px 16px',
                   borderRadius: '12px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  color: '#ffffff',
+                  backgroundColor: theme.isDark ? 'rgba(15, 23, 42, 0.8)' : '#ffffff',
+                  border: `1px solid ${theme.cardBorder}`,
+                  color: theme.textPrimary,
                   fontSize: '14px',
                   outline: 'none',
                   boxSizing: 'border-box',
