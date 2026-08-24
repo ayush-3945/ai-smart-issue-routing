@@ -27,15 +27,15 @@ const base64ToFile = async (base64Data, filename, mimeType) => {
   return new File([blob], filename, { type: mimeType || 'image/jpeg' });
 };
 
-const CIL_SUBSIDIARIES = {
-  'Eastern Coalfields Limited (ECL)': ['West Bengal', 'Jharkhand'],
-  'Bharat Coking Coal Limited (BCCL)': ['Jharkhand', 'West Bengal'],
-  'Central Coalfields Limited (CCL)': ['Jharkhand'],
-  'Western Coalfields Limited (WCL)': ['Maharashtra', 'Madhya Pradesh'],
-  'South Eastern Coalfields Limited (SECL)': ['Chhattisgarh', 'Madhya Pradesh'],
-  'Northern Coalfields Limited (NCL)': ['Madhya Pradesh', 'Uttar Pradesh'],
-  'Mahanadi Coalfields Limited (MCL)': ['Odisha'],
-  'Central Mine Planning & Design Inst. (CMPDIL)': ['Jharkhand', 'All India (HQ)']
+const STATE_SUBSIDIARIES = {
+  'Jharkhand': ['Eastern Coalfields Limited (ECL)', 'Bharat Coking Coal Limited (BCCL)', 'Central Coalfields Limited (CCL)', 'Central Mine Planning & Design Inst. (CMPDIL)'],
+  'West Bengal': ['Eastern Coalfields Limited (ECL)', 'Bharat Coking Coal Limited (BCCL)'],
+  'Madhya Pradesh': ['Western Coalfields Limited (WCL)', 'South Eastern Coalfields Limited (SECL)', 'Northern Coalfields Limited (NCL)'],
+  'Maharashtra': ['Western Coalfields Limited (WCL)'],
+  'Chhattisgarh': ['South Eastern Coalfields Limited (SECL)'],
+  'Uttar Pradesh': ['Northern Coalfields Limited (NCL)'],
+  'Odisha': ['Mahanadi Coalfields Limited (MCL)'],
+  'Telangana': ['Singareni Collieries Company Limited (SCCL)']
 };
 
 const Dashboard = () => {
@@ -892,10 +892,10 @@ const Dashboard = () => {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <select
-                  value={selectedSubsidiary}
+                  value={selectedState}
                   onChange={(e) => {
-                    setSelectedSubsidiary(e.target.value);
-                    setSelectedState(''); // Reset state when subsidiary changes
+                    setSelectedState(e.target.value);
+                    setSelectedSubsidiary(''); // Reset subsidiary when state changes
                   }}
                   required
                   style={{
@@ -912,35 +912,35 @@ const Dashboard = () => {
                     boxSizing: 'border-box'
                   }}
                 >
-                  <option value="" disabled>Select Subsidiary...</option>
-                  {Object.keys(CIL_SUBSIDIARIES).map(sub => (
-                    <option key={sub} value={sub}>{sub}</option>
+                  <option value="" disabled>Select State...</option>
+                  {Object.keys(STATE_SUBSIDIARIES).map(state => (
+                    <option key={state} value={state}>{state}</option>
                   ))}
                 </select>
 
                 <select
-                  value={selectedState}
-                  onChange={(e) => setSelectedState(e.target.value)}
+                  value={selectedSubsidiary}
+                  onChange={(e) => setSelectedSubsidiary(e.target.value)}
                   required
-                  disabled={!selectedSubsidiary}
+                  disabled={!selectedState}
                   style={{
                     width: '100%',
                     padding: '14px 18px',
                     borderRadius: '12px',
-                    backgroundColor: !selectedSubsidiary ? 'rgba(0,0,0,0.05)' : theme.inputBg,
+                    backgroundColor: !selectedState ? 'rgba(0,0,0,0.05)' : theme.inputBg,
                     border: `1px solid ${theme.cardBorder}`,
                     color: theme.textPrimary,
                     fontSize: '14px',
                     outline: 'none',
-                    cursor: !selectedSubsidiary ? 'not-allowed' : 'pointer',
+                    cursor: !selectedState ? 'not-allowed' : 'pointer',
                     appearance: 'none',
                     boxSizing: 'border-box',
-                    opacity: !selectedSubsidiary ? 0.6 : 1
+                    opacity: !selectedState ? 0.6 : 1
                   }}
                 >
-                  <option value="" disabled>Select State...</option>
-                  {selectedSubsidiary && CIL_SUBSIDIARIES[selectedSubsidiary].map(state => (
-                    <option key={state} value={state}>{state}</option>
+                  <option value="" disabled>Select Subsidiary...</option>
+                  {selectedState && STATE_SUBSIDIARIES[selectedState].map(sub => (
+                    <option key={sub} value={sub}>{sub}</option>
                   ))}
                 </select>
               </div>
