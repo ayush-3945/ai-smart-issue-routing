@@ -9,6 +9,7 @@ import { useLanguage } from '../context/LanguageContext';
 import IssueDetailModal from '../components/IssueDetailModal';
 import NotificationBell from '../components/NotificationBell';
 import InstallPwaButton from '../components/InstallPwaButton';
+import MinesGISMap from '../components/MinesGISMap';
 
 // Convert file to Base64 object for offline localStorage storage
 const fileToBase64 = (file) =>
@@ -70,7 +71,7 @@ const Dashboard = () => {
 
   // Mobile Dashboard & Attendance State
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
-  const [mobileView, setMobileView] = useState('menu'); // 'menu' | 'form' | 'attendance'
+  const [mobileView, setMobileView] = useState('menu'); // 'menu' | 'form' | 'attendance' | 'gis'
   const [attendanceStatus, setAttendanceStatus] = useState(() => localStorage.getItem('attendance_status') || 'out');
   const [punchTime, setPunchTime] = useState(() => localStorage.getItem('punch_time') || null);
 
@@ -574,7 +575,7 @@ const Dashboard = () => {
 
         {/* Mines GIS */}
         <div 
-          onClick={() => addToast('Mines GIS feature coming soon!', 'info', 3000)}
+          onClick={() => setMobileView('gis')}
           style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}
         >
           <div style={{ backgroundColor: 'rgba(14, 165, 233, 0.15)', width: '36px', height: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>📍</div>
@@ -705,6 +706,8 @@ const Dashboard = () => {
         renderMobileMenu()
       ) : isMobile && mobileView === 'attendance' ? (
         renderAttendanceTracker()
+      ) : isMobile && mobileView === 'gis' ? (
+        <MinesGISMap onBack={() => setMobileView('menu')} />
       ) : (
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         {isMobile && mobileView === 'form' && (
