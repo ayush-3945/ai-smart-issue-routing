@@ -136,7 +136,7 @@ const LandingPage = () => {
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(25, 29, 45, 0.9)' : '#f8fafc'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(15, 17, 26, 0.8)' : '#ffffff'}
           >
-            Operations Command Center 👑
+            Operations Command Center
           </Link>
         </div>
 
