@@ -587,7 +587,7 @@ const Dashboard = () => {
 
         {/* Explore Area */}
         <div 
-          onClick={() => addToast('Explore Area feature coming soon!', 'info', 3000)}
+          onClick={() => setMobileView('gis')}
           style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', cursor: 'pointer', boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}
         >
           <div style={{ backgroundColor: 'rgba(34, 197, 94, 0.15)', width: '36px', height: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🧭</div>
