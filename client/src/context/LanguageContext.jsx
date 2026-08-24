@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export const translations = {
   en: {
-    appTitle: 'CoalGuard OS',
+    appTitle: 'CoalGuard',
     appSubtitle: 'AI Smart Governance & DGMS Compliance Monitoring System',
     adminCommandCenter: 'Mine Operations & Compliance Command Center',
     adminSubtitle: 'Autonomous AI Ingestion, DGMS Audit & Incident Operations Hub',

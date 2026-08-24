@@ -100,7 +100,7 @@ const Login = () => {
             ⛏️
           </div>
           <h1 style={{ color: theme.textPrimary, fontSize: '28px', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-0.7px' }}>
-            CoalGuard OS
+            CoalGuard
           </h1>
           <p style={{ color: theme.textSecondary, fontSize: '14px', margin: 0, lineHeight: 1.5 }}>
             Sign in to Mine Operations & Compliance Command
