@@ -62,6 +62,9 @@ app.use('/api/complaints', complaintRoutes);
 const analyticsRoutes = require('./routes/analyticsRoutes');
 app.use('/api/analytics', analyticsRoutes);
 
+const attendanceRoutes = require('./routes/attendanceRoutes');
+app.use('/api/attendance', attendanceRoutes);
+
 app.get('/', (req, res) => {
   res.json({ message: '🛡️ AI Smart Issue Routing API is running securely!' });
 });

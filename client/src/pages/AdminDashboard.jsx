@@ -50,6 +50,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [selectedContractorTier, setSelectedContractorTier] = useState('All');
+  const [attendanceLogs, setAttendanceLogs] = useState([]);
   const [selectedFleetFilter, setSelectedFleetFilter] = useState('All');
   const [selectedContractorData, setSelectedContractorData] = useState(null);
   const [contractorModalTab, setContractorModalTab] = useState('attendance');
@@ -116,12 +117,14 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [compRes, analRes] = await Promise.all([
+      const [compRes, analRes, attRes] = await Promise.all([
         api.get('/complaints/all'),
         api.get('/analytics/dashboard'),
+        api.get('/attendance').catch(() => ({ data: { data: [] } }))
       ]);
       setComplaints(compRes.data.complaints || []);
       setAnalytics(analRes.data);
+      setAttendanceLogs(attRes.data.data || []);
     } catch (err) {
       console.error('Admin fetch error:', err);
     } finally {
@@ -704,7 +707,76 @@ const AdminDashboard = () => {
             ]
           };
           return (
-            <div id="section-ai-forecast" className={theme.isDark ? 'glass-panel' : ''} style={{
+            <>
+            {/* Section: Attendance Logs */}
+          <div id="section-attendance" style={{
+            backgroundColor: theme.cardBg,
+            borderRadius: '24px',
+            padding: '28px 32px',
+            marginBottom: '36px',
+            border: `1px solid ${theme.cardBorder}`,
+            boxShadow: theme.isDark ? 'none' : '0 10px 25px -5px rgba(0,0,0,0.05)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
+              <h2 style={{ fontSize: '20px', fontWeight: '800', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: theme.textPrimary }}>
+                <span style={{ color: '#8b5cf6' }}>🕒</span> Geo-Fenced Attendance Logs
+              </h2>
+            </div>
+            
+            <div style={{ overflowX: 'auto', borderRadius: '12px', border: `1px solid ${theme.cardBorder}` }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '800px' }}>
+                <thead style={{ backgroundColor: theme.isDark ? 'rgba(255,255,255,0.02)' : '#f8fafc', borderBottom: `1px solid ${theme.cardBorder}` }}>
+                  <tr>
+                    <th style={{ padding: '16px', fontWeight: '700', fontSize: '13px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Worker / Inspector</th>
+                    <th style={{ padding: '16px', fontWeight: '700', fontSize: '13px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Mine Site</th>
+                    <th style={{ padding: '16px', fontWeight: '700', fontSize: '13px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Action & Time</th>
+                    <th style={{ padding: '16px', fontWeight: '700', fontSize: '13px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Distance from Site</th>
+                    <th style={{ padding: '16px', fontWeight: '700', fontSize: '13px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {attendanceLogs.length === 0 ? (
+                    <tr><td colSpan="5" style={{ padding: '24px', textAlign: 'center', color: theme.textMuted }}>No attendance records found.</td></tr>
+                  ) : (
+                    attendanceLogs.map((log) => (
+                      <tr key={log._id} style={{ borderBottom: `1px solid ${theme.cardBorder}`, transition: 'background-color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.isDark ? 'rgba(255,255,255,0.02)' : '#f8fafc'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                        <td style={{ padding: '16px', fontSize: '14px', fontWeight: '600', color: theme.textPrimary }}>
+                          <div>{log.workerId?.name || 'Unknown Worker'}</div>
+                          <div style={{ fontSize: '12px', color: theme.textMuted, fontWeight: '500' }}>{log.workerId?.phone}</div>
+                        </td>
+                        <td style={{ padding: '16px', fontSize: '14px', color: theme.textSecondary }}>{log.mineSiteId?.name || 'Unknown Site'}</td>
+                        <td style={{ padding: '16px', fontSize: '14px', fontWeight: '600' }}>
+                          <span style={{ color: log.action === 'PUNCH_IN' ? '#10b981' : '#ef4444' }}>
+                            {log.action === 'PUNCH_IN' ? 'IN' : 'OUT'}
+                          </span>
+                          <div style={{ fontSize: '12px', color: theme.textMuted, fontWeight: '500' }}>
+                            {new Date(log.timestamp).toLocaleString()}
+                          </div>
+                        </td>
+                        <td style={{ padding: '16px', fontSize: '14px', color: theme.textSecondary }}>
+                          {(log.distanceFromSite / 1000).toFixed(2)} km
+                        </td>
+                        <td style={{ padding: '16px' }}>
+                          <span style={{
+                            padding: '4px 10px',
+                            borderRadius: '20px',
+                            fontSize: '12px',
+                            fontWeight: '700',
+                            backgroundColor: log.status === 'Verified' ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                            color: log.status === 'Verified' ? '#22c55e' : '#ef4444',
+                          }}>
+                            {log.status === 'Verified' ? 'Verified' : 'Flagged'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-ai-forecast" className={theme.isDark ? 'glass-panel' : ''} style={{
               backgroundColor: theme.cardBg,
               borderRadius: '24px',
               padding: '28px 32px',
@@ -802,6 +874,7 @@ const AdminDashboard = () => {
                 </div>
               )}
             </div>
+            </>
           );
         })()}
 

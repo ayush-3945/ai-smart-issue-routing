@@ -494,13 +494,8 @@ const Dashboard = () => {
     return R * c; // Distance in meters
   };
 
-  const handlePunch = () => {
-    if (attendanceStatus === 'in') {
-      setAttendanceStatus('out');
-      localStorage.setItem('attendance_status', 'out');
-      addToast('Punched OUT successfully!', 'info', 3000);
-      return;
-    }
+  const handlePunch = async () => {
+    const action = attendanceStatus === 'in' ? 'PUNCH_OUT' : 'PUNCH_IN';
 
     if (!navigator.geolocation) {
       addToast('Geolocation is not supported by your browser', 'error', 3000);
@@ -510,26 +505,35 @@ const Dashboard = () => {
     addToast('Verifying your location...', 'info', 2000);
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const userLat = position.coords.latitude;
         const userLng = position.coords.longitude;
         
-        // Example: Jharia Coal Field, Dhanbad coordinates
-        const MINE_LAT = 23.7431;
-        const MINE_LNG = 86.4116;
-        const ALLOWED_RADIUS_METERS = 500;
+        try {
+          const res = await api.post('/attendance', {
+            lat: userLat,
+            lng: userLng,
+            action
+          });
 
-        const distance = calculateDistance(userLat, userLng, MINE_LAT, MINE_LNG);
-
-        if (distance > ALLOWED_RADIUS_METERS) {
-          addToast(`Access Denied! You are ${(distance/1000).toFixed(1)} km away from the mine site. You must be on-site to Punch In.`, 'error', 6000);
-        } else {
-          setAttendanceStatus('in');
-          const time = new Date().toLocaleTimeString();
-          setPunchTime(time);
-          localStorage.setItem('attendance_status', 'in');
-          localStorage.setItem('punch_time', time);
-          addToast('Verified: On-site. Punched IN successfully!', 'success', 3000);
+          if (res.data.success) {
+            const isVerified = res.data.data.status === 'Verified';
+            if (isVerified) {
+              setAttendanceStatus(action === 'PUNCH_IN' ? 'in' : 'out');
+              const time = new Date().toLocaleTimeString();
+              if (action === 'PUNCH_IN') {
+                setPunchTime(time);
+                localStorage.setItem('punch_time', time);
+              }
+              localStorage.setItem('attendance_status', action === 'PUNCH_IN' ? 'in' : 'out');
+              addToast(res.data.message, 'success', 4000);
+            } else {
+              addToast(res.data.message, 'error', 6000); // Flagged message from backend
+            }
+          }
+        } catch (error) {
+          console.error('Attendance Error:', error);
+          addToast(error.response?.data?.message || 'Failed to record attendance', 'error', 4000);
         }
       },
       (error) => {

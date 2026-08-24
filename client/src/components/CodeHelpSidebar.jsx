@@ -13,6 +13,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
     { id: 'contractors', label: 'Contractor Intel', icon: '👷', path: '/admin' },
     { id: 'fleet', label: 'Fleet Maintenance', icon: '🚜', path: '/admin' },
     { id: 'iot', label: 'Live IoT Telemetry', icon: '📡', path: '/admin' },
+    { id: 'attendance', label: 'Attendance Logs', icon: '🕒', path: '/admin' },
     { id: 'predictions', label: 'AI Forecasting', icon: '🔮', path: '/admin' },
   ];
 
@@ -148,6 +149,8 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
                       ? 'section-fleet'
                       : item.id === 'issues'
                       ? 'section-queue'
+                      : item.id === 'attendance'
+                      ? 'section-attendance'
                       : 'section-ai-forecast';
                     const el = document.getElementById(targetId);
                     if (el) {
