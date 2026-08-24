@@ -127,6 +127,13 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -298,6 +305,17 @@ const AdminDashboard = () => {
               </button>
 
               <InstallPwaButton />
+              
+              <button
+                title="Sign Out"
+                onClick={handleLogout}
+                style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', padding: '0 12px', height: '32px', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '6px', transition: 'all 0.2s' }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'; e.currentTarget.style.color = '#ef4444'; }}
+              >
+                <span>🚪</span>
+                <span>Sign Off</span>
+              </button>
               <LanguageToggle />
               <ThemeToggle />
               <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
