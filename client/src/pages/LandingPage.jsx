@@ -48,7 +48,18 @@ const LandingPage = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", overflow: 'hidden', transition: 'all 0.3s ease' }}>
+    <div style={{ 
+      minHeight: '100vh', 
+      backgroundColor: theme.bg, 
+      backgroundImage: theme.isDark 
+        ? 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)' 
+        : 'radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px)',
+      backgroundSize: '24px 24px',
+      color: theme.textPrimary, 
+      fontFamily: "'Inter', system-ui, sans-serif", 
+      overflow: 'hidden', 
+      transition: 'all 0.3s ease' 
+    }}>
 
       {/* Navbar */}
       <nav className="landing-nav" style={{ borderBottom: `1px solid ${theme.cardBorder}`, backgroundColor: theme.navBg, position: 'sticky', top: 0, zIndex: 100 }}>
