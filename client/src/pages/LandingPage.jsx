@@ -439,7 +439,7 @@ const LandingPage = () => {
             background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)',
             backdropFilter: 'blur(20px)',
             borderRadius: '24px', 
-            padding: '32px',
+            padding: isMobile ? '20px 10px' : '32px',
             position: 'relative',
             boxShadow: theme.isDark ? '0 20px 40px rgba(0,0,0,0.4)' : '0 20px 40px -10px rgba(0,0,0,0.1)',
             border: `1px solid ${theme.cardBorder}`,
@@ -454,11 +454,22 @@ const LandingPage = () => {
                 </span>
               </div>
               
-              <div style={{ flex: 1, position: 'relative' }}>
-                <div style={{ position: 'absolute', left: '-30px', top: '50%', transform: 'translateY(-50%) rotate(-90deg)', fontSize: '12px', fontWeight: '700', color: theme.textSecondary, whiteSpace: 'nowrap' }}>
+              <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ 
+                  position: isMobile ? 'relative' : 'absolute', 
+                  left: isMobile ? '10px' : '-30px', 
+                  top: isMobile ? '0' : '50%', 
+                  transform: isMobile ? 'none' : 'translateY(-50%) rotate(-90deg)', 
+                  fontSize: '11px', 
+                  fontWeight: '700', 
+                  color: theme.textSecondary, 
+                  whiteSpace: 'nowrap',
+                  marginBottom: isMobile ? '10px' : '0'
+                }}>
                   Amount (in Cr.)
                 </div>
-                <ResponsiveContainer width="100%" height="100%">
+                <div style={{ flex: 1, minHeight: 0 }}>
+                  <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={
                     activeIndicator === 'dmf' ? [
                       { name: 'Till May 18', collection: 18000, allocated: 12000, spent: 5000 },
@@ -548,6 +559,7 @@ const LandingPage = () => {
                     )}
                   </BarChart>
                 </ResponsiveContainer>
+                </div>
               </div>
             </div>
           </div>
