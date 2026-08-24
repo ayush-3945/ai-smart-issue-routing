@@ -802,26 +802,6 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Back to Home Link */}
-        <div style={{ marginBottom: '20px' }}>
-          <div
-            onClick={() => navigate('/')}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              color: '#94a3b8',
-              fontSize: '13px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'color 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
-          >
-            <span>←</span> {t('backToHome')}
-          </div>
-        </div>
 
         {/* Report Mine Violation / Safety Observation Form Card */}
         <div className={theme.isDark ? 'glass-panel' : ''} style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.isDark ? 'rgba(245, 158, 11, 0.25)' : theme.cardBorder}`, borderRadius: '24px', padding: '32px', marginBottom: '40px', boxShadow: theme.isDark ? '0 20px 40px -15px rgba(245, 158, 11, 0.1)' : '0 10px 25px -5px rgba(0,0,0,0.05)' }}>
