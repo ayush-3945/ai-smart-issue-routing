@@ -498,14 +498,6 @@ const Dashboard = () => {
 
   const renderMobileMenu = () => (
     <div style={{ padding: '0' }}>
-      {/* Blue Header exactly like screenshot */}
-      <div style={{ backgroundColor: '#1d4ed8', color: '#fff', padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '-32px -20px 24px -20px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
-        <h1 style={{ margin: 0, fontSize: '28px', fontWeight: '700' }}>Dashboard</h1>
-        <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '24px', cursor: 'pointer' }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-        </button>
-      </div>
-
       {/* Profile Card */}
       <div style={{ backgroundColor: theme.cardBg, borderRadius: '16px', padding: '24px', display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px', boxShadow: theme.isDark ? 'none' : '0 4px 12px rgba(0,0,0,0.05)', border: `1px solid ${theme.cardBorder}` }}>
         <div style={{ width: '60px', height: '60px', borderRadius: '16px', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1d4ed8', fontSize: '32px' }}>
@@ -611,9 +603,8 @@ const Dashboard = () => {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: theme.bg, color: theme.textPrimary, fontFamily: "'Inter', system-ui, sans-serif", padding: '32px 20px', transition: 'all 0.3s ease' }}>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
-        {/* Top Navbar Header - FULL WIDTH (Desktop Only) */}
-        {!isMobile && (
-          <div className="dashboard-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 20px 20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
+        {/* Top Navbar Header - FULL WIDTH */}
+        <div className="dashboard-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 20px 20px', borderBottom: `1px solid ${theme.cardBorder}`, flexWrap: 'wrap', gap: '16px' }}>
           <div
             onClick={() => navigate('/')}
             title={t('backToHome')}
@@ -628,10 +619,10 @@ const Dashboard = () => {
           
           {/* Controls Toolbar (Opposite Side) */}
           <div className="dashboard-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginLeft: 'auto' }}>
-            <InstallPwaButton />
+            {!isMobile && <InstallPwaButton />}
             <LanguageToggle />
             <ThemeToggle />
-            <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />
+            {!isMobile && <NotificationBell onSelectComplaint={(complaint) => setSelectedComplaint(complaint)} />}
 
             {user?.role === 'admin' && (
               <button
@@ -658,17 +649,8 @@ const Dashboard = () => {
             <div title={`${user.name || 'User'} (${user.role || 'Member'})`} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #ea580c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: '800', color: '#fff', cursor: 'default', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)', marginLeft: '4px' }}>
               {user.name ? user.name.charAt(0).toUpperCase() : '⛏️'}
             </div>
-            <button
-              title={t('signOut')}
-              onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
-              style={{ backgroundColor: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.2s' }}
-            >
-              🚪
-            </button>
-          </div>
           </div>
         </div>
-        )}
 
       {isMobile && mobileView === 'menu' ? (
         renderMobileMenu()
