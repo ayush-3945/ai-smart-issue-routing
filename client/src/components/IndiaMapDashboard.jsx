@@ -28,7 +28,12 @@ const IndiaMapDashboard = () => {
   const currentData = stateData[selectedState] || stateData["Default"];
 
   return (
-    <section style={{ padding: '80px 20px', maxWidth: '1100px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
+    <section style={{ position: 'relative', padding: '80px 20px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}`, overflow: 'hidden' }}>
+      {/* Background Gradients */}
+      <div style={{ position: 'absolute', top: '20%', left: '-150px', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+      <div style={{ position: 'absolute', bottom: '-50px', right: '-150px', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+
+      <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
           State-wise Mining Summary
@@ -36,15 +41,15 @@ const IndiaMapDashboard = () => {
         <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Interactive geospatial overview of mining operations and DMF funds across India.</p>
       </div>
 
-      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', backgroundColor: '#ffffff', padding: '20px', borderRadius: '24px' }}>
+      <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(20px)', padding: '20px', borderRadius: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? '0 20px 40px rgba(0,0,0,0.4)' : '0 20px 40px -10px rgba(0,0,0,0.1)' }}>
         
         {/* Left Side: Interactive Map */}
-        <div style={{ flex: '1.2', minWidth: '100%', position: 'relative', backgroundColor: '#f4f5f7', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ flex: '1.2', minWidth: '100%', position: 'relative', background: theme.isDark ? 'rgba(0,0,0,0.2)' : 'linear-gradient(135deg, rgba(37,99,235,0.05), rgba(16,185,129,0.05))', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${theme.cardBorder}` }}>
           
           {/* Dashed Concentric Circles Background */}
-          <svg style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px', pointerEvents: 'none', opacity: 0.5 }} viewBox="0 0 800 800">
+          <svg style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px', pointerEvents: 'none', opacity: theme.isDark ? 0.2 : 0.5 }} viewBox="0 0 800 800">
             {[...Array(15)].map((_, i) => (
-              <circle key={i} cx="400" cy="400" r={(i + 1) * 30} fill="none" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4 4" />
+              <circle key={i} cx="400" cy="400" r={(i + 1) * 30} fill="none" stroke={theme.isDark ? '#475569' : '#cbd5e1'} strokeWidth="1" strokeDasharray="4 4" />
             ))}
           </svg>
 
@@ -104,48 +109,50 @@ const IndiaMapDashboard = () => {
           )}
         </div>
 
-        {/* Right Side: Data Panel */}
-        <div style={{ flex: '1', minWidth: '300px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div>
-            <h3 style={{ fontSize: '24px', fontWeight: '800', color: '#1e293b', margin: '0 0 4px', borderBottom: `2px solid #f59e0b`, display: 'inline-block', paddingBottom: '4px' }}>
+        {/* Right Side: State Info & Analytics */}
+        <div style={{ flex: '1', minWidth: '300px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          
+          <div style={{ background: theme.cardBg, borderRadius: '16px', padding: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+            <h3 style={{ fontSize: '24px', fontWeight: '800', color: theme.textPrimary, margin: '0 0 4px', borderBottom: `2px solid #f59e0b`, display: 'inline-block', paddingBottom: '4px' }}>
               {selectedState || "India"}
             </h3>
-            <p style={{ color: '#64748b', fontSize: '13px', margin: '4px 0 0' }}>Live District Mineral Foundation (DMF) Data</p>
+            <p style={{ color: theme.textSecondary, fontSize: '13px', margin: '4px 0 0' }}>Live District Mineral Foundation (DMF) Data</p>
           </div>
 
-          <div style={{ backgroundColor: '#78350f', borderRadius: '12px', padding: '24px', color: '#fff', boxShadow: '0 10px 25px -5px rgba(120, 53, 15, 0.4)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '10px' }}>
-              <span style={{ fontWeight: '700', fontSize: '16px' }}>DMF Fund Status</span>
-              <span style={{ fontSize: '12px', opacity: 0.8 }}>Till Jun 2026</span>
+          <div style={{ background: theme.cardBg, borderRadius: '16px', padding: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid rgba(128,128,128,0.2)', paddingBottom: '10px' }}>
+              <span style={{ fontWeight: '700', fontSize: '16px', color: theme.textPrimary }}>DMF Fund Status</span>
+              <span style={{ fontSize: '12px', color: theme.textSecondary }}>Till Jun 2026</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ opacity: 0.9 }}>Fund Collected:</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: theme.textPrimary }}>
+                <span>Fund Collected:</span>
                 <span style={{ fontWeight: '800' }}>{currentData.dmfCollected}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ opacity: 0.9 }}>Fund Allocated:</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: theme.textPrimary }}>
+                <span>Fund Allocated:</span>
                 <span style={{ fontWeight: '800' }}>{currentData.dmfAllocated}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ opacity: 0.9 }}>Fund Utilized:</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: theme.textPrimary }}>
+                <span>Fund Utilized:</span>
                 <span style={{ fontWeight: '800' }}>{currentData.dmfUtilized}</span>
               </div>
             </div>
           </div>
 
-          <div style={{ backgroundColor: '#064e3b', borderRadius: '12px', padding: '24px', color: '#fff', boxShadow: '0 10px 25px -5px rgba(6, 78, 59, 0.4)' }}>
-            <h4 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: '700', borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '10px' }}>Important Minerals</h4>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', fontSize: '14px' }}>
+          {/* Minerals Chips */}
+          <div style={{ background: theme.cardBg, borderRadius: '16px', padding: '24px', border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? 'none' : '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+            <h4 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: '700', color: theme.textPrimary, borderBottom: '1px solid rgba(128,128,128,0.2)', paddingBottom: '10px' }}>Important Minerals</h4>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {currentData.minerals.map((mineral, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: '#34d399' }}>●</span> {mineral}
-                </div>
+                <span key={i} style={{ padding: '6px 12px', borderRadius: '20px', background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', color: '#f59e0b', fontSize: '13px', fontWeight: '600' }}>
+                  {mineral}
+                </span>
               ))}
             </div>
           </div>
         </div>
-
+      </div>
       </div>
     </section>
   );

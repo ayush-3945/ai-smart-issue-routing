@@ -350,14 +350,20 @@ const LandingPage = () => {
       </section>
 
       {/* Key Indicators Interactive Dashboard */}
-      <section id="key-indicators" style={{ padding: '80px 20px', maxWidth: '1200px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}` }}>
-        <div style={{ marginBottom: '20px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: '500', margin: '0 0 12px', color: theme.textPrimary, borderBottom: '2px solid #8b4513', display: 'inline-block', paddingBottom: '4px' }}>
-            Key Indicators
-          </h2>
-        </div>
+      <section id="key-indicators" style={{ position: 'relative', padding: '80px 20px', margin: '0 auto', borderBottom: `1px solid ${theme.cardBorder}`, overflow: 'hidden' }}>
+        {/* Background Gradients */}
+        <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+        <div style={{ position: 'absolute', bottom: '-100px', left: '-100px', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
-        <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+            <h2 style={{ fontSize: '32px', fontWeight: '800', margin: '0 0 12px', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
+              Key Analytics <span style={{ color: '#f59e0b' }}>&amp; Indicators</span>
+            </h2>
+            <p style={{ color: theme.textSecondary, fontSize: '16px', margin: 0 }}>Real-time statistics for DMF funds and mineral production.</p>
+          </div>
+
+          <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
           {/* Sidebar Tabs */}
           <div style={{ flex: '1', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '0' }}>
             {[
@@ -406,47 +412,41 @@ const LandingPage = () => {
 
           {/* Chart Container */}
           <div style={{ 
-            flex: '3', minWidth: '100%', height: '420px', 
-            backgroundColor: '#ffffff', 
-            borderRadius: '8px', 
-            padding: '24px',
+            flex: '3', minWidth: '100%', height: '460px', 
+            background: theme.isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '24px', 
+            padding: '32px',
             position: 'relative',
-            boxShadow: '0 10px 40px -10px rgba(0,0,0,0.08)',
-            border: '1px solid #e2e8f0',
-            backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 0)',
-            backgroundSize: '16px 16px',
-            backgroundPosition: 'calc(100% + 8px) -8px, -8px calc(100% + 8px)',
-            backgroundRepeat: 'no-repeat',
+            boxShadow: theme.isDark ? '0 20px 40px rgba(0,0,0,0.4)' : '0 20px 40px -10px rgba(0,0,0,0.1)',
+            border: `1px solid ${theme.cardBorder}`,
           }}>
-            {/* White overlay to cover dots except in corners */}
-            <div style={{ position: 'absolute', top: '16px', left: '16px', right: '16px', bottom: '16px', backgroundColor: '#fff', borderRadius: '4px', zIndex: 0 }}></div>
-            
             <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '12px', marginBottom: '16px' }}>
-                <span style={{ fontSize: '18px', color: '#475569', fontWeight: '400' }}>
-                  {activeIndicator === 'dmf' ? 'DMF Fund Status - Till Jun 2026' : activeIndicator === 'production' ? 'Mineral Production - 2026' : activeIndicator === 'auction' ? 'Auction & Blocks' : activeIndicator === 'exploration' ? 'Geological Exploration Analytics' : 'National Mineral Exploration Trust'}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', borderBottom: `1px solid ${theme.cardBorder}`, paddingBottom: '16px' }}>
+                <h3 style={{ margin: '0', fontSize: '20px', color: theme.textPrimary, fontWeight: '700' }}>
+                  {activeIndicator === 'dmf' ? 'DMF Fund Status' : activeIndicator === 'production' ? 'Mineral Production' : activeIndicator === 'auction' ? 'Auction' : activeIndicator === 'exploration' ? 'Exploration' : 'NMEDT'}
+                </h3>
+                <span style={{ fontSize: '14px', color: theme.textSecondary, fontWeight: '500', backgroundColor: theme.isDark ? 'rgba(255,255,255,0.05)' : '#f1f5f9', padding: '6px 12px', borderRadius: '20px' }}>
+                  {activeIndicator === 'dmf' ? 'Till Jun 2026' : activeIndicator === 'production' ? '2026 Target' : activeIndicator === 'auction' ? 'Blocks' : activeIndicator === 'exploration' ? 'Analytics' : 'Trust Fund'}
                 </span>
               </div>
-              <h3 style={{ margin: '0 0 24px', fontSize: '18px', color: '#1e293b', textAlign: 'center', fontWeight: '400' }}>
-                {activeIndicator === 'dmf' ? 'DMF Fund Status' : activeIndicator === 'production' ? 'Mineral Production' : activeIndicator === 'auction' ? 'Auction' : activeIndicator === 'exploration' ? 'Exploration' : 'NMEDT'}
-              </h3>
               
               <div style={{ flex: 1, position: 'relative' }}>
-                <div style={{ position: 'absolute', left: '-30px', top: '50%', transform: 'translateY(-50%) rotate(-90deg)', fontSize: '12px', fontWeight: '600', color: '#1e293b', whiteSpace: 'nowrap' }}>
+                <div style={{ position: 'absolute', left: '-30px', top: '50%', transform: 'translateY(-50%) rotate(-90deg)', fontSize: '12px', fontWeight: '700', color: theme.textSecondary, whiteSpace: 'nowrap' }}>
                   Amount (in Cr.)
                 </div>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={
                     activeIndicator === 'dmf' ? [
-                      { name: 'Till May\n2018', collection: 18000, allocated: 12000, spent: 5000 },
-                      { name: 'Till march\n2019', collection: 25000, allocated: 22000, spent: 8000 },
-                      { name: 'Till march\n2020', collection: 35000, allocated: 30000, spent: 12000 },
-                      { name: 'Till march\n2021', collection: 48000, allocated: 45000, spent: 22000 },
-                      { name: 'Till march\n2022', collection: 62000, allocated: 55000, spent: 30000 },
-                      { name: 'Till Jun\n2023', collection: 80000, allocated: 72000, spent: 42000 },
-                      { name: 'Till Aug\n2024', collection: 85000, allocated: 78000, spent: 45000 },
-                      { name: 'Till Nov\n2025', collection: 125000, allocated: 105000, spent: 65000 },
-                      { name: 'Till Jun\n2026', collection: 135000, allocated: 110000, spent: 70000 },
+                      { name: 'Till May 18', collection: 18000, allocated: 12000, spent: 5000 },
+                      { name: 'Till Mar 19', collection: 25000, allocated: 22000, spent: 8000 },
+                      { name: 'Till Mar 20', collection: 35000, allocated: 30000, spent: 12000 },
+                      { name: 'Till Mar 21', collection: 48000, allocated: 45000, spent: 22000 },
+                      { name: 'Till Mar 22', collection: 62000, allocated: 55000, spent: 30000 },
+                      { name: 'Till Jun 23', collection: 80000, allocated: 72000, spent: 42000 },
+                      { name: 'Till Aug 24', collection: 85000, allocated: 78000, spent: 45000 },
+                      { name: 'Till Nov 25', collection: 125000, allocated: 105000, spent: 65000 },
+                      { name: 'Till Jun 26', collection: 135000, allocated: 110000, spent: 70000 },
                     ] : activeIndicator === 'production' ? [
                       { name: '2023', target: 700, achieved: 690 },
                       { name: '2024', target: 750, achieved: 780 },
@@ -468,45 +468,59 @@ const LandingPage = () => {
                       { name: '2025', allocated: 410, disbursed: 310 },
                       { name: '2026', allocated: 500, disbursed: 420 },
                     ]
-                  } margin={{ top: 10, right: 10, left: 10, bottom: 70 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                    <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickMargin={10} axisLine={false} tickLine={false} fontWeight="600" angle={-45} textAnchor="end" height={60} />
-                    <YAxis stroke="#64748b" fontSize={12} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} axisLine={false} tickLine={false} fontWeight="600" />
+                  } margin={{ top: 10, right: 10, left: 10, bottom: 20 }}>
+                    <defs>
+                      <linearGradient id="color1" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.9}/>
+                        <stop offset="95%" stopColor="#d97706" stopOpacity={0.9}/>
+                      </linearGradient>
+                      <linearGradient id="color2" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.9}/>
+                        <stop offset="95%" stopColor="#2563eb" stopOpacity={0.9}/>
+                      </linearGradient>
+                      <linearGradient id="color3" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.9}/>
+                        <stop offset="95%" stopColor="#059669" stopOpacity={0.9}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke={theme.isDark ? '#334155' : '#f1f5f9'} vertical={false} />
+                    <XAxis dataKey="name" stroke={theme.textSecondary} fontSize={12} tickMargin={10} axisLine={false} tickLine={false} fontWeight="600" />
+                    <YAxis stroke={theme.textSecondary} fontSize={12} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} axisLine={false} tickLine={false} fontWeight="600" />
                     <Tooltip 
-                      cursor={{fill: '#f8fafc'}}
-                      contentStyle={{ backgroundColor: '#fff', border: `1px solid #e2e8f0`, borderRadius: '4px', color: '#1e293b', padding: '12px 16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }} 
-                      itemStyle={{ fontSize: '13px', fontWeight: '600' }}
+                      cursor={{fill: theme.isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}}
+                      contentStyle={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: '12px', color: theme.textPrimary, padding: '12px 16px', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }} 
+                      itemStyle={{ fontSize: '13px', fontWeight: '700' }}
                     />
-                    <Legend wrapperStyle={{ paddingTop: '30px', fontSize: '12px', color: '#475569', fontWeight: '500' }} iconType="circle" iconSize={10} />
+                    <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '13px', color: theme.textPrimary, fontWeight: '600' }} iconType="circle" iconSize={12} />
                     {activeIndicator === 'dmf' && (
                       <>
-                        <Bar dataKey="collection" name="DMF Collection in Cr." fill="#8b4513" barSize={16} />
-                        <Bar dataKey="allocated" name="Amount Allocated in Cr." fill="#0f5132" barSize={16} />
-                        <Bar dataKey="spent" name="Amount Spent in Cr." fill="#084298" barSize={16} />
+                        <Bar dataKey="collection" name="DMF Collection" fill="url(#color1)" radius={[6, 6, 0, 0]} barSize={20} />
+                        <Bar dataKey="allocated" name="Amount Allocated" fill="url(#color2)" radius={[6, 6, 0, 0]} barSize={20} />
+                        <Bar dataKey="spent" name="Amount Spent" fill="url(#color3)" radius={[6, 6, 0, 0]} barSize={20} />
                       </>
                     )}
                     {activeIndicator === 'production' && (
                       <>
-                        <Bar dataKey="target" name="Target (MT)" fill="#8b4513" barSize={24} />
-                        <Bar dataKey="achieved" name="Achieved (MT)" fill="#0f5132" barSize={24} />
+                        <Bar dataKey="target" name="Target (MT)" fill="url(#color1)" radius={[8, 8, 0, 0]} barSize={32} />
+                        <Bar dataKey="achieved" name="Achieved (MT)" fill="url(#color3)" radius={[8, 8, 0, 0]} barSize={32} />
                       </>
                     )}
                     {activeIndicator === 'auction' && (
                       <>
-                        <Bar dataKey="blocks" name="Blocks Auctioned" fill="#8b4513" barSize={24} />
-                        <Bar dataKey="value" name="Value (Cr.)" fill="#0f5132" barSize={24} />
+                        <Bar dataKey="blocks" name="Blocks Auctioned" fill="url(#color1)" radius={[8, 8, 0, 0]} barSize={32} />
+                        <Bar dataKey="value" name="Value (Cr.)" fill="url(#color2)" radius={[8, 8, 0, 0]} barSize={32} />
                       </>
                     )}
                     {activeIndicator === 'exploration' && (
                       <>
-                        <Bar dataKey="surveyed" name="Surveyed Area (sq km)" fill="#8b4513" barSize={24} />
-                        <Bar dataKey="drilled" name="Boreholes Drilled" fill="#0f5132" barSize={24} />
+                        <Bar dataKey="surveyed" name="Surveyed Area" fill="url(#color1)" radius={[8, 8, 0, 0]} barSize={32} />
+                        <Bar dataKey="drilled" name="Boreholes Drilled" fill="url(#color2)" radius={[8, 8, 0, 0]} barSize={32} />
                       </>
                     )}
                     {activeIndicator === 'nmedt' && (
                       <>
-                        <Bar dataKey="allocated" name="Funds Allocated (Cr.)" fill="#8b4513" barSize={24} />
-                        <Bar dataKey="disbursed" name="Funds Disbursed (Cr.)" fill="#0f5132" barSize={24} />
+                        <Bar dataKey="allocated" name="Funds Allocated" fill="url(#color1)" radius={[8, 8, 0, 0]} barSize={32} />
+                        <Bar dataKey="disbursed" name="Funds Disbursed" fill="url(#color3)" radius={[8, 8, 0, 0]} barSize={32} />
                       </>
                     )}
                   </BarChart>
