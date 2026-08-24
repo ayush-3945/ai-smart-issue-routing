@@ -533,7 +533,7 @@ const Dashboard = () => {
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
 
         {/* Top Live Surveillance Radar Banner */}
-        <div className="mobile-col" style={{
+        <div className="hide-on-mobile" style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -1181,10 +1181,11 @@ const Dashboard = () => {
         </div>
 
         {/* My Submitted Issues Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-          <span style={{ fontSize: '20px' }}>📜</span>
-          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>{t('mySubmittedIssues')} ({complaints.length})</h2>
-        </div>
+        <div className="hide-on-mobile">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+            <span style={{ fontSize: '20px' }}>📜</span>
+            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: theme.textPrimary }}>{t('mySubmittedIssues')} ({complaints.length})</h2>
+          </div>
         
         {fetching ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -1256,6 +1257,7 @@ const Dashboard = () => {
             ))}
           </div>
         )}
+        </div>
 
         {/* Issue Detail & Chat Modal */}
         {selectedComplaint && (
