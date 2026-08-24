@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CoalGuard OS — Complete Tech Stack & Architecture Specification</title>
+  <title>CoalDarpan OS — Complete Tech Stack & Architecture Specification</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -238,7 +238,7 @@
       <div class="brand">
         <div class="brand-icon">⛏️</div>
         <div>
-          <h1>CoalGuard OS — Tech Stack & Architecture</h1>
+          <h1>CoalDarpan OS — Tech Stack & Architecture</h1>
           <div class="subtitle">Smart India Hackathon 2026 • Ministry of Coal / DGMS Solution</div>
         </div>
       </div>
@@ -251,7 +251,7 @@
     <div class="section">
       <h2>🎯 1. Executive Summary & Problem Scope</h2>
       <p>
-        <strong>CoalGuard OS</strong> is an AI-powered Smart Governance & Statutory Compliance Monitoring Platform engineered specifically for Indian coalfields (Jharia, Bokaro, Korba, Raniganj).
+        <strong>CoalDarpan OS</strong> is an AI-powered Smart Governance & Statutory Compliance Monitoring Platform engineered specifically for Indian coalfields (Jharia, Bokaro, Korba, Raniganj).
       </p>
       <div class="highlight-card">
         <strong>Key Real-World Mine Constraints Solved:</strong>
@@ -269,7 +269,7 @@
       <h2>🏛️ 2. High-Level Architecture Diagram</h2>
       <div class="code-block">
 +-----------------------------------------------------------------------------------------------+
-|                                   COALGUARD OS SYSTEM ARCHITECTURE                            |
+|                                   COALDARPAN OS SYSTEM ARCHITECTURE                            |
 +-----------------------------------------------------------------------------------------------+
 
  [ FIELD LEVEL: Ground Miners / Inspectors ]       [ COMMAND LEVEL: DGMS General Managers / Audit ]
@@ -313,7 +313,7 @@
           <tr>
             <th>Technology</th>
             <th>Version</th>
-            <th>Core Role in CoalGuard OS</th>
+            <th>Core Role in CoalDarpan OS</th>
           </tr>
         </thead>
         <tbody>
@@ -366,7 +366,7 @@
           <tr>
             <th>Technology</th>
             <th>Version</th>
-            <th>Core Role in CoalGuard OS</th>
+            <th>Core Role in CoalDarpan OS</th>
           </tr>
         </thead>
         <tbody>
@@ -448,7 +448,7 @@
       
       <div class="qa-box">
         <div class="qa-q">Q1: How does Offline Sync operate in zero-network underground seams?</div>
-        <div class="qa-a">When <code>navigator.onLine</code> is false, the submission handler serializes report data and attached photos (Base64) into <code>localStorage</code> under <code>coalguard_offline_queue</code>. When network connectivity is restored at the surface, <code>window.addEventListener('online')</code> automatically dispatches queued items to the server with zero data loss.</div>
+        <div class="qa-a">When <code>navigator.onLine</code> is false, the submission handler serializes report data and attached photos (Base64) into <code>localStorage</code> under <code>coaldarpan_offline_queue</code>. When network connectivity is restored at the surface, <code>window.addEventListener('online')</code> automatically dispatches queued items to the server with zero data loss.</div>
       </div>
 
       <div class="qa-box">

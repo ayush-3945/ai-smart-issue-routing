@@ -1,4 +1,4 @@
-# ⛏️ CoalGuard OS — Complete Tech Stack & Architecture Specification
+# ⛏️ CoalDarpan OS — Complete Tech Stack & Architecture Specification
 **Smart India Hackathon (SIH) 2026 • Ministry of Coal / DGMS**  
 *AI-Powered Smart Governance, Hazard Triage & Statutory Compliance Monitoring System for Coal Mines*
 
@@ -26,8 +26,8 @@ Traditional coal mining operations across Indian coalfields (e.g., Jharia, Bokar
 * **Language & Literacy Barriers:** Heavy-gear workers in dust environments cannot easily type long reports.
 * **Lack of Predictive Governance:** Regulators and mine managers react *after* accidents rather than preemptively predicting risk surges.
 
-### 💡 The Solution: CoalGuard OS
-CoalGuard OS is an enterprise industrial platform that digitizes statutory compliance (DGMS & Coal Mines Regulations 2017), introduces **zero-network offline sync**, **multilingual voice-to-text reporting**, **real-time IoT gas transducers**, and **Google Gemini 1.5 Flash autonomous hazard triage** with instant step-by-step containment SOPs.
+### 💡 The Solution: CoalDarpan OS
+CoalDarpan OS is an enterprise industrial platform that digitizes statutory compliance (DGMS & Coal Mines Regulations 2017), introduces **zero-network offline sync**, **multilingual voice-to-text reporting**, **real-time IoT gas transducers**, and **Google Gemini 1.5 Flash autonomous hazard triage** with instant step-by-step containment SOPs.
 
 ---
 
@@ -35,7 +35,7 @@ CoalGuard OS is an enterprise industrial platform that digitizes statutory compl
 
 ```
 +---------------------------------------------------------------------------------------------------+
-|                                      COALGUARD OS ARCHITECTURE                                     |
+|                                      COALDARPAN OS ARCHITECTURE                                     |
 +---------------------------------------------------------------------------------------------------+
 
  [ FIELD LEVEL: Ground Miners / Inspectors ]           [ COMMAND LEVEL: DGMS General Managers / Audit ]
@@ -90,7 +90,7 @@ CoalGuard OS is an enterprise industrial platform that digitizes statutory compl
 2. **Geolocation API (`navigator.geolocation`):**
    * Acquires GPS latitude, longitude, and accuracy coordinates at the mine pit and generates Google Satellite Map links.
 3. **Offline-First Synchronization Engine (`localStorage`):**
-   * Underground coal seams have zero cellular connectivity. Reports, metadata, and Base64-encoded inspection photos are serialized into `coalguard_offline_queue`.
+   * Underground coal seams have zero cellular connectivity. Reports, metadata, and Base64-encoded inspection photos are serialized into `coaldarpan_offline_queue`.
    * Automatically dispatches all queued reports sequentially via `FormData` when `window.addEventListener('online')` triggers.
 4. **Bilingual i18n Engine (`LanguageContext`):**
    * Zero-dependency dynamic dictionary supporting instant switching between English and Native Hindi across all pages, modals, and charts.
@@ -181,13 +181,13 @@ The system leverages Google's Gemini multimodal generative model with strict pro
 ### 🎓 5-Minute Crash Course for Teammates
 
 #### Q1: "What makes this project different from a standard Helpdesk?"
-> *"CoalGuard OS is purpose-built for the hazardous mining domain. Unlike standard IT ticket tools, it implements underground zero-connectivity offline synchronization, Web Speech API for gloved miners in Hindi/English, real-time IoT multi-gas sensor autonomous dispatching, contractor compliance scoreboards, and DGMS CMR 2017 statute enforcement via Gemini AI."*
+> *"CoalDarpan OS is purpose-built for the hazardous mining domain. Unlike standard IT ticket tools, it implements underground zero-connectivity offline synchronization, Web Speech API for gloved miners in Hindi/English, real-time IoT multi-gas sensor autonomous dispatching, contractor compliance scoreboards, and DGMS CMR 2017 statute enforcement via Gemini AI."*
 
 #### Q2: "How does Offline Sync work when a miner is 300 meters underground?"
-> *"When `navigator.onLine` is false, the form submission is intercepted. All data and attached images are converted into serialized Base64 and placed into `localStorage` (`coalguard_offline_queue`). When the inspector returns to the surface and network connectivity is restored, a background event triggers sequential auto-dispatch to the REST API with zero data loss."*
+> *"When `navigator.onLine` is false, the form submission is intercepted. All data and attached images are converted into serialized Base64 and placed into `localStorage` (`coaldarpan_offline_queue`). When the inspector returns to the surface and network connectivity is restored, a background event triggers sequential auto-dispatch to the REST API with zero data loss."*
 
 #### Q3: "How is Google Gemini integrated?"
 > *"The backend passes the raw incident title and description to `@google/genai` (Gemini 1.5 Flash) with an engineered system prompt acting as a DGMS Chief Safety Auditor. Gemini returns a structured JSON response containing the category, priority, confidence score, executive brief, assigned lead, and 3-step immediate containment SOP."*
 
 ---
-*Created for Smart India Hackathon 2026 • CoalGuard OS Team*
+*Created for Smart India Hackathon 2026 • CoalDarpan OS Team*

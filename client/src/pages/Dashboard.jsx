@@ -73,7 +73,7 @@ const Dashboard = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [offlineQueue, setOfflineQueue] = useState(() => {
     try {
-      const saved = localStorage.getItem('coalguard_offline_queue');
+      const saved = localStorage.getItem('coaldarpan_offline_queue');
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
@@ -123,7 +123,7 @@ const Dashboard = () => {
     if (!navigator.onLine) return;
     let currentQueue = [];
     try {
-      const saved = localStorage.getItem('coalguard_offline_queue');
+      const saved = localStorage.getItem('coaldarpan_offline_queue');
       currentQueue = saved ? JSON.parse(saved) : [];
     } catch (e) {
       currentQueue = [];
@@ -164,7 +164,7 @@ const Dashboard = () => {
 
         syncedCount++;
         remainingQueue.shift();
-        localStorage.setItem('coalguard_offline_queue', JSON.stringify(remainingQueue));
+        localStorage.setItem('coaldarpan_offline_queue', JSON.stringify(remainingQueue));
         setOfflineQueue([...remainingQueue]);
       } catch (err) {
         console.error('Failed to sync offline item:', err);
@@ -424,7 +424,7 @@ const Dashboard = () => {
         };
 
         const updatedQueue = [...offlineQueue, offlineItem];
-        localStorage.setItem('coalguard_offline_queue', JSON.stringify(updatedQueue));
+        localStorage.setItem('coaldarpan_offline_queue', JSON.stringify(updatedQueue));
         setOfflineQueue(updatedQueue);
 
         setTitle('');

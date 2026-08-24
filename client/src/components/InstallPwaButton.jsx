@@ -29,7 +29,7 @@ export default function InstallPwaButton({ style = {} }) {
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      alert('To install CoalGuard on your device, tap Share / Settings (⋮) in your browser and choose "Add to Home Screen" or "Install App".');
+      alert('To install CoalDarpan on your device, tap Share / Settings (⋮) in your browser and choose "Add to Home Screen" or "Install App".');
       return;
     }
 
@@ -47,7 +47,7 @@ export default function InstallPwaButton({ style = {} }) {
     <button
       type="button"
       onClick={handleInstallClick}
-      title="Install CoalGuard as a Native Mobile/Desktop App"
+      title="Install CoalDarpan as a Native Mobile/Desktop App"
       style={{
         display: 'inline-flex',
         alignItems: 'center',

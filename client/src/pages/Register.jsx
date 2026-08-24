@@ -129,7 +129,7 @@ const Register = () => {
             Register Field Officer
           </h1>
           <p style={{ color: theme.textSecondary, fontSize: '13px', margin: 0 }}>
-            Join CoalGuard Smart Mining Compliance Hub
+            Join CoalDarpan Smart Mining Compliance Hub
           </p>
         </div>
 

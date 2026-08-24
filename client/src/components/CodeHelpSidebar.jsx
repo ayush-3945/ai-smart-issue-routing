@@ -66,7 +66,7 @@ const CodeHelpSidebar = ({ activeTab, setActiveTab, currentUser, onOpenSearch })
             {!collapsed && (
               <div>
                 <div style={{ fontSize: '18px', fontWeight: '900', color: theme.textPrimary, letterSpacing: '-0.5px' }}>
-                  CoalGuard <span className="gradient-text">OS</span>
+                  CoalDarpan <span className="gradient-text">OS</span>
                 </div>
                 <div style={{ fontSize: '11px', color: theme.textMuted, fontWeight: '700', letterSpacing: '0.2px' }}>DGMS Telemetry Command</div>
               </div>

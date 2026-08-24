@@ -100,7 +100,7 @@ const Login = () => {
             ⛏️
           </div>
           <h1 style={{ color: theme.textPrimary, fontSize: '28px', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-0.7px' }}>
-            CoalGuard
+            CoalDarpan
           </h1>
           <p style={{ color: theme.textSecondary, fontSize: '14px', margin: 0, lineHeight: 1.5 }}>
             Sign in to Mine Operations & Compliance Command
@@ -192,7 +192,7 @@ const Login = () => {
                 <span style={{ width: '18px', height: '18px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.8s linear infinite' }}></span>
                 Authenticating...
               </span>
-            ) : 'Access CoalGuard Hub ➔'}
+            ) : 'Access CoalDarpan Hub ➔'}
           </button>
         </form>
 

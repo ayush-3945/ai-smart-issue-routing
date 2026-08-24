@@ -1,6 +1,6 @@
 {
-  "name": "CoalGuard - Autonomous Incident Triage",
-  "short_name": "CoalGuard",
+  "name": "CoalDarpan - Autonomous Incident Triage",
+  "short_name": "CoalDarpan",
   "description": "Autonomous AI Incident Triage, Real-Time Operations & Predictive Surge Forecasting",
   "start_url": "/",
   "id": "/",
@@ -41,7 +41,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "CoalGuard Landing Page"
+      "label": "CoalDarpan Landing Page"
     }
   ],
   "categories": ["productivity", "utilities", "business"],

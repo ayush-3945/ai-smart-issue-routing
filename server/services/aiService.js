@@ -61,7 +61,7 @@ async function callGeminiApi(prompt, base64Image = null) {
 }
 
 const analyzeComplaint = async (title, description, mineSite = 'Jharia Colliery - Pit 4') => {
-  const prompt = `You are CoalGuard AI, an expert AI Smart Governance, Statutory Compliance & Hazard Monitoring System for Indian Coal Mining Operations (regulated by DGMS, MoEFCC, and Ministry of Coal).
+  const prompt = `You are CoalDarpan AI, an expert AI Smart Governance, Statutory Compliance & Hazard Monitoring System for Indian Coal Mining Operations (regulated by DGMS, MoEFCC, and Ministry of Coal).
 
 Analyze the following field inspection, safety observation, or compliance violation reported from mine site "${mineSite}":
 
@@ -175,7 +175,7 @@ Classification Guidelines:
 };
 
 const predictWorkloadSurge = async (recentStats) => {
-  const prompt = `You are CoalGuard AI Predictive Hazard & Statutory Compliance Intelligence Forecaster for Indian Coal Mines.
+  const prompt = `You are CoalDarpan AI Predictive Hazard & Statutory Compliance Intelligence Forecaster for Indian Coal Mines.
 Analyze the following mine violation and incident statistics from the past week and forecast high-risk hazard zones, compliance bottlenecks, and surge risks for the next 7 days across mine sites.
 
 Current Mine Violation Statistics:
@@ -220,7 +220,7 @@ Return ONLY a valid JSON response with this exact structure:
 };
 
 const extractTextFromImage = async (base64Image) => {
-  const prompt = `You are CoalGuard AI, an expert mining safety compliance OCR engine.
+  const prompt = `You are CoalDarpan AI, an expert mining safety compliance OCR engine.
 Read the attached image (which could be a handwritten logbook, safety challan, violation slip, or incident photo).
 Extract the core issue and return a JSON object with 'title' (a short, clear summary) and 'description' (the full extracted details or context).
 

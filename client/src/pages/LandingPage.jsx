@@ -67,7 +67,7 @@ const LandingPage = () => {
       <nav className="landing-nav" style={{ borderBottom: `1px solid ${theme.cardBorder}`, backgroundColor: theme.navBg, position: 'sticky', top: 0, zIndex: 100 }}>
         <div className="landing-nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <div style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', padding: '7px 10px', borderRadius: '10px', fontSize: '16px', color: '#fff', boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)' }}>⛏️</div>
-          <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>CoalGuard</span>
+          <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px', color: theme.textPrimary }}>CoalDarpan</span>
         </div>
         
         {/* Navigation Links - Centered like Government Portal */}
@@ -307,7 +307,7 @@ const LandingPage = () => {
                 <span style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
               </div>
               <span style={{ fontSize: '12px', fontWeight: '700', color: '#94a3b8', letterSpacing: '0.5px' }}>
-                coalguard.dgms.gov.in • Live Surveillance Command
+                coaldarpan.dgms.gov.in • Live Surveillance Command
               </span>
               <span style={{ fontSize: '11px', padding: '3px 10px', borderRadius: '12px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981', fontWeight: '800' }}>
                 ● 4 COALFIELDS ONLINE
@@ -630,7 +630,7 @@ const LandingPage = () => {
       <footer style={{ padding: '32px 20px', borderTop: `1px solid ${theme.cardBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '16px' }}>⛏️</span>
-          <span style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted }}>CoalGuard</span>
+          <span style={{ fontSize: '14px', fontWeight: '700', color: theme.textMuted }}>CoalDarpan</span>
         </div>
         <p style={{ fontSize: '13px', color: theme.textMuted, margin: 0 }}>
           Autonomous AI Smart Governance & Compliance Monitoring System • © 2026

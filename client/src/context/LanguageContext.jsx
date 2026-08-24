@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export const translations = {
   en: {
-    appTitle: 'CoalGuard',
+    appTitle: 'CoalDarpan',
     appSubtitle: 'AI Smart Governance & DGMS Compliance Monitoring System',
     adminCommandCenter: 'Mine Operations & Compliance Command Center',
     adminSubtitle: 'Autonomous AI Ingestion, DGMS Audit & Incident Operations Hub',
@@ -116,7 +116,7 @@ export const translations = {
     fleetSectionSubtitle: 'AI-Predicted Lifecycle Overhauls & DGMS Statutory Calibration Schedules'
   },
   hi: {
-    appTitle: 'कोल-गार्ड (CoalGuard) OS',
+    appTitle: 'कोल-दर्पण (CoalDarpan) OS',
     appSubtitle: 'एआई-संचालित स्मार्ट गवर्नेंस एवं डीजीएमएस अनुपालन निगरानी प्रणाली',
     adminCommandCenter: 'खदान संचालन एवं अनुपालन नियंत्रण केंद्र',
     adminSubtitle: 'AI स्वचालित विश्लेषण, डीजीएमएस ऑडिट एवं आपातकालीन संचालन हब',

@@ -5,14 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0ea5e9" />
-    <meta name="description" content="CoalGuard - Autonomous Incident Triage & Operations Platform" />
+    <meta name="description" content="CoalDarpan - Autonomous Incident Triage & Operations Platform" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="CoalGuard" />
+    <meta name="apple-mobile-web-app-title" content="CoalDarpan" />
     <link rel="apple-touch-icon" href="/pwa-icon.svg" />
     <link rel="manifest" href="/manifest.json" />
-    <title>CoalGuard | Autonomous Incident Triage & Operations Platform</title>
+    <title>CoalDarpan | Autonomous Incident Triage & Operations Platform</title>
   </head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js')
             .then((reg) => {
-              console.log('⚡ CoalGuard PWA Service Worker Registered:', reg.scope);
+              console.log('⚡ CoalDarpan PWA Service Worker Registered:', reg.scope);
               reg.update();
             })
             .catch((err) => console.log('Service Worker registration failed:', err));
