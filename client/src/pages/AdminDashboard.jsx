@@ -1588,8 +1588,9 @@ const AdminDashboard = () => {
                         <tr style={{ color: theme.textMuted, fontSize: '12px', borderBottom: `1px solid ${theme.cardBorder}` }}>
                           <th style={{ padding: '12px 8px' }}>WORKER ID</th>
                           <th style={{ padding: '12px 8px' }}>NAME</th>
+                          <th style={{ padding: '12px 8px' }}>DATE</th>
                           <th style={{ padding: '12px 8px' }}>SHIFT</th>
-                          <th style={{ padding: '12px 8px' }}>STATUS (TODAY)</th>
+                          <th style={{ padding: '12px 8px' }}>STATUS</th>
                           <th style={{ padding: '12px 8px' }}>MONTHLY %</th>
                         </tr>
                       </thead>
@@ -1605,6 +1606,7 @@ const AdminDashboard = () => {
                           <tr key={i} style={{ borderBottom: `1px solid ${theme.cardBorder}` }}>
                             <td style={{ padding: '16px 8px', fontWeight: '600' }}>{w.id}</td>
                             <td style={{ padding: '16px 8px' }}>{w.name}</td>
+                            <td style={{ padding: '16px 8px' }}>{new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
                             <td style={{ padding: '16px 8px' }}>{w.shift}</td>
                             <td style={{ padding: '16px 8px' }}>
                               <span style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: '700', backgroundColor: w.status === 'Present' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)', color: w.status === 'Present' ? '#10b981' : '#ef4444' }}>
