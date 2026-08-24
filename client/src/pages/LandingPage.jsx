@@ -533,6 +533,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* Interactive India Map Dashboard */}
