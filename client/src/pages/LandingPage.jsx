@@ -53,7 +53,7 @@ const LandingPage = () => {
       backgroundColor: theme.bg, 
       backgroundImage: theme.isDark 
         ? 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px)' 
-        : `linear-gradient(rgba(248, 250, 252, 0.65), rgba(248, 250, 252, 0.65)), url('/mining_ai_bg.jpg')`,
+        : `linear-gradient(rgba(248, 250, 252, 0.58), rgba(248, 250, 252, 0.65)), url('/real_coal_mine_bg.jpg')`,
       backgroundSize: theme.isDark ? '24px 24px' : 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
