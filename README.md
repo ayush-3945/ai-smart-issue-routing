@@ -1,4 +1,4 @@
-# ⚡ CoalDarpan — Smart Mining Governance & Statutory Compliance Platform
+# ⚡ CoalDarpan - Smart Mining Governance & Statutory Compliance Platform
 
 [![Live App](https://img.shields.io/badge/Live%20App-coaldarpan.vercel.app-0ea5e9?style=for-the-badge&logo=vercel)](https://coaldarpan.vercel.app)
 [![Backend API](https://img.shields.io/badge/API-Railway%20Live-0B0D0E?style=for-the-badge&logo=railway)](https://coaldarpan-api.up.railway.app)
