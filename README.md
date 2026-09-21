@@ -1,5 +1,3 @@
-<div align="center">
-
 # ⛏️ CoalDarpan
 
 **AI-Powered Smart Mining Governance & Statutory Compliance PWA**
@@ -8,11 +6,7 @@
 [![Backend API](https://img.shields.io/badge/API-Railway%20Live-0B0D0E?style=for-the-badge&logo=railway)](https://coaldarpan-api.up.railway.app)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 
-<br/>
-
-<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=22&pause=1000&color=0ea5e9&center=true&vCenter=true&width=600&lines=Zero-Network+Offline+Sync;Gemini+AI+Hazard+Triage;Real-Time+WebSocket+Telemetry;Multilingual+Voice+Dictation"/>
-
-</div>
+![Features](https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=22&pause=1000&color=0ea5e9&center=false&vCenter=true&width=600&lines=Zero-Network+Offline+Sync;Gemini+AI+Hazard+Triage;Real-Time+WebSocket+Telemetry;Multilingual+Voice+Dictation)
 
 ---
 
@@ -36,16 +30,9 @@ Designed for extreme field conditions, it features **zero-network offline syncin
 
 ## 🚀 Tech Stack
 
-<div align="center">
+![Tech Stack](https://skillicons.dev/icons?i=react,tailwind,vite,nodejs,express,mongodb,git,github,vercel,postman)
 
-<br/>
-<img src="https://skillicons.dev/icons?i=react,tailwind,vite,nodejs,express,mongodb,git,github,vercel,postman"/>
-<br/>
-<br/>
-
-<b>React.js | Node.js | Express | MongoDB Atlas | Socket.io | Google Gemini API</b>
-
-</div>
+**React.js | Node.js | Express | MongoDB Atlas | Socket.io | Google Gemini API**
 
 ---
 
@@ -126,6 +113,4 @@ npm run dev
 
 ---
 
-<div align="center">
-  <b>Built for Smart India Hackathon 2026 by The Bootloaders 🚀</b>
-</div>
+**Built for Smart India Hackathon 2026 by The Bootloaders 🚀**
