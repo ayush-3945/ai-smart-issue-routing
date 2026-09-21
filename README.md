@@ -20,7 +20,7 @@ Designed for extreme field conditions, it features **zero-network offline syncin
 
 ## ✨ Key Features
 
-- **🤖 Autonomous AI Triage**: Utilizes Google Gemini 1.5 Flash to analyze unstructured field reports and automatically classify hazards (e.g., Gas Leak, Machinery Failure).
+- **🤖 Autonomous AI Triage**: Utilizes Google Gemini 2.5 Flash to analyze unstructured field reports and automatically classify hazards (e.g., Gas Leak, Machinery Failure).
 - **📶 Offline-First PWA**: Built for deep underground mines. Forms are saved locally via `localStorage` and auto-sync the moment network access is restored.
 - **⚡ Real-Time Telemetry**: Socket.io integration pushes live alerts to the DGMS Command Center without page refreshes.
 - **🎙️ Voice Dictation**: Integrated Web Speech API allows gloved miners to dictate notes in Hindi/English.
@@ -64,8 +64,8 @@ Follow these steps to run CoalDarpan locally on your machine.
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/ayush-3945/ai-smart-issue-routing.git
-cd ai-smart-issue-routing
+git clone https://github.com/ayush-3945/CoalDarpan.git
+cd CoalDarpan
 ```
 
 ### 2. Setup Backend
@@ -113,4 +113,5 @@ npm run dev
 
 ---
 
-**Built for Smart India Hackathon 2026 by The Bootloaders 🚀**
+**Built for Smart India Hackathon 2026 by The Bootloaders.**<br/>
+**My contributions:** AI hazard triage engine (Gemini integration), real-time WebSocket alert system, offline-first PWA sync architecture, and JWT/RBAC authentication layer.
