@@ -1,59 +1,55 @@
-# ⚡ CoalDarpan — Smart Mining Governance & Statutory Compliance Platform
+<div align="center">
+
+# ⛏️ CoalDarpan
+
+**AI-Powered Smart Mining Governance & Statutory Compliance PWA**
 
 [![Live App](https://img.shields.io/badge/Live%20App-coaldarpan.vercel.app-0ea5e9?style=for-the-badge&logo=vercel)](https://coaldarpan.vercel.app)
 [![Backend API](https://img.shields.io/badge/API-Railway%20Live-0B0D0E?style=for-the-badge&logo=railway)](https://coaldarpan-api.up.railway.app)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-> 🌐 **Live Web Application:** [https://coaldarpan.vercel.app](https://coaldarpan.vercel.app)  
+<br/>
 
-**CoalDarpan** is an enterprise-grade AI-powered smart governance and statutory compliance platform designed specifically for the Indian Coal Mining sector (DGMS & Ministry of Coal regulations). It replaces manual paper-based reporting with a robust digital ecosystem featuring **zero-network offline syncing**, **multilingual voice dictation**, **Haversine GPS geofencing**, and **autonomous hazard triage via Google Gemini AI**.
+<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=22&pause=1000&color=0ea5e9&center=true&vCenter=true&width=600&lines=Zero-Network+Offline+Sync;Gemini+AI+Hazard+Triage;Real-Time+WebSocket+Telemetry;Multilingual+Voice+Dictation"/>
 
----
-
-## 🖥️ Platform Showcase
-
-*(Please update the `docs/screenshots/` folder with new screenshots of the CoalDarpan application)*
-
-<div align="center">
-  <p><strong>1. DGMS Central Command Center & Live Analytics Hub</strong></p>
-  <!-- <img src="./docs/screenshots/admin-dashboard.png" alt="CoalDarpan Admin Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" /> -->
-  <p><em>[Admin Dashboard Screenshot Placeholder]</em></p>
-  <br /><br />
-  <p><strong>2. Field Miner Portal with Offline PWA & Voice Dictation</strong></p>
-  <!-- <img src="./docs/screenshots/user-dashboard.png" alt="CoalDarpan Field Portal" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" /> -->
-  <p><em>[Field Portal Screenshot Placeholder]</em></p>
-  <br /><br />
-  <p><strong>3. Contractor / Subsidiary Action Hub</strong></p>
-  <!-- <img src="./docs/screenshots/contractor-hub.png" alt="CoalDarpan Contractor Hub" width="100%" style="border-radius: 12px; border: 1px solid #1e293b;" /> -->
-  <p><em>[Contractor Hub Screenshot Placeholder]</em></p>
 </div>
 
 ---
 
-## 🌟 Key Technical Innovations
+## 📖 Overview
 
-### 🤖 1. Gemini AI Autonomous Routing & Triage
-- **Natural Language Processing (NLP)**: Analyzes unstructured field reports using Google Gemini 1.5 Flash.
-- **Auto-Categorization**: Automatically classifies issues into `Machinery Failure`, `Gas Leak`, `Statutory Violation`, or `General Hazard`.
-- **Intelligent Routing**: Instantly routes specific violations directly to outsourced contractors, mine management, or regulatory authorities to prevent blame-shifting.
+**CoalDarpan** is an enterprise-grade statutory compliance platform designed specifically for the Indian Coal Mining sector (DGMS & Ministry of Coal regulations). It replaces manual paper-based reporting with a robust digital ecosystem. 
 
-### 📶 2. Offline-First PWA (Zero Network Support)
-- **Local Storage Queue**: Deep underground mines have zero cellular connectivity. Form submissions are intercepted, serialized into Base64, and saved locally via `localStorage`.
-- **Auto-Sync Mechanism**: The moment a miner returns to the surface and regains network access, background event listeners trigger sequential auto-dispatch to the REST API with zero data loss.
-
-### 🎙️ 3. Accessibility & Field Usability
-- **Multilingual Voice AI**: Integrated Web Speech API allows gloved miners to dictate field notes in Hindi/English, which the AI auto-translates and structures.
-- **Logbook OCR**: Converts photographs of physical paper logbooks into digital text instantly.
-- **Haversine GPS Geofencing**: Verifies attendance and hazard coordinates by calculating spherical geometry distances to prevent proxy reporting.
-
-### 📊 4. Command Center & Real-Time Dashboards
-- **Live Sockets**: Real-time Socket.io integration pushes alerts to the DGMS Admin Dashboard without requiring a page refresh.
-- **Hierarchical Dropdowns**: Precise geospatial mapping routing data accurately by State and CIL Subsidiary.
+Designed for extreme field conditions, it features **zero-network offline syncing**, **multilingual voice dictation**, **Haversine GPS geofencing**, and **autonomous hazard triage via Google Gemini AI**.
 
 ---
 
-## 🏗️ System Architecture Flow
+## ✨ Key Features
+
+- **🤖 Autonomous AI Triage**: Utilizes Google Gemini 1.5 Flash to analyze unstructured field reports and automatically classify hazards (e.g., Gas Leak, Machinery Failure).
+- **📶 Offline-First PWA**: Built for deep underground mines. Forms are saved locally via `localStorage` and auto-sync the moment network access is restored.
+- **⚡ Real-Time Telemetry**: Socket.io integration pushes live alerts to the DGMS Command Center without page refreshes.
+- **🎙️ Voice Dictation**: Integrated Web Speech API allows gloved miners to dictate notes in Hindi/English.
+- **📍 GPS Geofencing**: Verifies attendance and hazard coordinates using spherical geometry to prevent proxy reporting.
+
+---
+
+## 🚀 Tech Stack
+
+<div align="center">
+
+<br/>
+<img src="https://skillicons.dev/icons?i=react,tailwind,vite,nodejs,express,mongodb,git,github,vercel,postman"/>
+<br/>
+<br/>
+
+<b>React.js | Node.js | Express | MongoDB Atlas | Socket.io | Google Gemini API</b>
+
+</div>
+
+---
+
+## 🏗️ Architecture Flow
 
 ```mermaid
 graph TD;
@@ -61,7 +57,7 @@ graph TD;
     LocalStorage -->|Auto-Sync when Online| Express[Express REST API];
     Miner -->|Online Submit| Express;
     Express -->|Token Check| AuthMiddleware[JWT Auth & RBAC];
-    AuthMiddleware -->|Hazard Text Context| Gemini[Google Gemini AI Engine];
+    AuthMiddleware -->|Hazard Context| Gemini[Google Gemini AI Engine];
     Gemini -->|JSON Analysis & Routing| Express;
     Express -->|Persist Document| MongoDB[(MongoDB Atlas Database)];
     Express -->|Socket Alert| Admin[DGMS Command Center];
@@ -70,18 +66,51 @@ graph TD;
 
 ---
 
-## 🛠️ Tech Stack
+## ⚙️ Installation & Setup
 
-| Layer | Technology | Why |
-| :--- | :--- | :--- |
-| **Frontend** | React.js + Tailwind CSS | Industry standard, lightweight, responsive PWA |
-| **Backend** | Node.js + Express.js | Fast & scalable non-blocking I/O processing |
-| **Database** | MongoDB + Mongoose | Flexible NoSQL schema for unstructured mining reports |
-| **AI Engine** | Google Gemini API | Modern LLM integration for contextual intelligence |
-| **Authentication**| JWT + bcrypt | Highly secure token-based authentication |
-| **Real-time** | Socket.io | Live hazard alerts & status updates |
-| **Security** | Helmet.js + express-rate-limit | Production-grade security hardening |
-| **Deployment** | Vercel (Frontend) + Railway/Render | Free, reliable, CI/CD automated deployment |
+Follow these steps to run CoalDarpan locally on your machine.
+
+### Prerequisites
+- Node.js (v18+)
+- MongoDB URI
+- Google Gemini API Key
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/ayush-3945/ai-smart-issue-routing.git
+cd ai-smart-issue-routing
+```
+
+### 2. Setup Backend
+```bash
+cd server
+npm install
+```
+Create a `.env` file in the `server` directory:
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+GEMINI_API_KEY=your_google_gemini_api_key
+```
+Start the backend server:
+```bash
+npm run dev
+```
+
+### 3. Setup Frontend
+```bash
+cd ../client
+npm install
+```
+Create a `.env` file in the `client` directory:
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+Start the frontend development server:
+```bash
+npm run dev
+```
 
 ---
 
@@ -89,7 +118,7 @@ graph TD;
 
 | Method | Endpoint | Description | Access |
 | :--- | :--- | :--- | :--- |
-| `POST` | `/api/auth/login` | Authenticate user (Miner, Admin, Contractor) & issue JWT | Public |
+| `POST` | `/api/auth/login` | Authenticate user & issue JWT | Public |
 | `POST` | `/api/complaints` | Submit hazard for Gemini AI triage & routing | Protected (User) |
 | `GET`  | `/api/complaints/my` | Fetch user's submitted logs | Protected (User) |
 | `GET`  | `/api/complaints/all` | Fetch hierarchical logs for management | Protected (Admin) |
@@ -97,4 +126,6 @@ graph TD;
 
 ---
 
-*Created for Smart India Hackathon 2026 • The Bootloaders*
+<div align="center">
+  <b>Built for Smart India Hackathon 2026 by The Bootloaders 🚀</b>
+</div>
